@@ -47,7 +47,6 @@ function fetch(){
     });
 }
 
-
 // worker Saga
 function* fetchContactList(action) {
     try {

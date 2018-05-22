@@ -6,15 +6,18 @@ import createSagaMiddleware from 'redux-saga'
 
 // Components
 import rootReducer from './src/reducers/index';
-import contactListSaga from './src/sagas/contactListSaga'
+import rootSaga from './src/sagas/index'
+
+
 import App from './src/App';
+
 
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(contactListSaga)
+sagaMiddleware.run(rootSaga);
 
 const Index = () => {
     return (

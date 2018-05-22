@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import counter from './counterReducer';
 import contactList from './contactListReducer';
+import zizhi from "./zizhiReducer";
 
 const rootReducer = combineReducers({
-    counter:counter,
-    contactList:contactList
+    contactList,
+    zizhi,
 });
 
 export default rootReducer;
