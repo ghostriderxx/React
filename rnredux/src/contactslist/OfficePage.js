@@ -20,6 +20,10 @@ class OfficePage extends Component {
         this.props.navigation.navigate("Baogong");
     }
 
+    gotoZizhi = () => {
+        this.props.navigation.navigate("Zizhi");
+    }
+
     render(){
         return (
             <View style={{
@@ -45,6 +49,7 @@ class OfficePage extends Component {
                         </View>
 
                         <View style={{marginTop:20, marginBottom:20, display:"flex", flexDirection:"row", justifyContent:"space-around", alignItems:"center"}}>
+                            {/** 报工 **/}
                             <TouchableNativeFeedback onPress={()=>{this.gotoBaogong()}}>
                                 <View style={{width:60, display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
                                     <Ionicons name={"logo-github"} size={40}/>
@@ -72,10 +77,14 @@ class OfficePage extends Component {
                         </View>
 
                         <View style={{marginTop:20, marginBottom:20, display:"flex", flexDirection:"row", justifyContent:"space-around", alignItems:"center"}}>
-                            <View style={{width:60, display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-                                <Ionicons name={"ios-headset"} size={40}/>
-                                <Text>资质</Text>
-                            </View>
+                            {/** 资质 **/}
+                            <TouchableNativeFeedback onPress={()=>{this.gotoZizhi()}}>
+                                <View style={{width:60, display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                                    <Ionicons name={"ios-headset"} size={40}/>
+                                    <Text>资质</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+
                             <View style={{width:60, display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
                                 <Ionicons name={"ios-umbrella"} size={40}/>
                                 <Text>请假</Text>
