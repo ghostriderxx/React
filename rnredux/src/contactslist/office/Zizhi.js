@@ -57,6 +57,7 @@ class Zizhi extends Component {
 
 
     render() {
+        // 数据统计
         let zizhiList = this.props.zizhi.zizhiList;
         let zizhiMap = zizhiList.reduce((prevMap, curZizhi)=>{
             let curType = curZizhi["type"];
