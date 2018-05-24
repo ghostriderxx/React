@@ -111,6 +111,7 @@ class ContactList extends Component {
                             alignItems: "center",
                         }}>
 
+                        <Image source={{uri: "https://pic.qqtn.com/up/2018-4/15241053732525556.jpg"}} style={{width:70, height:70, marginRight:10}}/>
                         <Text key={"xm"} style={{width: 60}} onPress={()=>this.showContactDetail(item.empno)}>{item.xm}</Text>
 
                         <View key={"info"} style={{flex:1}} onPress={()=>this.showContactDetail(item.empno)}>
