@@ -14,6 +14,7 @@ class VisibleTodos extends React.Component {
     }
 
     render() {
+        // todos + visibilityFilter ==> visibilityTodos
         const todos = this.props.todoapp.todos;
         const visibilityFilter = this.props.todoapp.visibilityFilter;
         const visibilityTodos = todos.filter((todo)=>{
@@ -32,14 +33,9 @@ class VisibleTodos extends React.Component {
             <ul>
                 {
                     visibilityTodos.map(todo => <li key={todo.id}>
-                            <span className={"todoapp-visibletodos-todo"}
-                                 onClick={() => {
-                                     this.toggleTodo(todo.id)
-                                 }}
-                                 style={{textDecoration: todo.complete ? "line-through" : "none"}}>
-                                {todo.text}
-                                >>>>
-                                {todo.date.toLocaleTimeString()}
+                            <span className={todo.complete ? "todoapp-visibletodos-todo complete" : "todoapp-visibletodos-todo"}
+                                  onClick={() => this.toggleTodo(todo.id)}>
+                                {todo.text}>>>>{todo.date.toLocaleTimeString()}
                             </span>
                         </li>
                     )

@@ -13,23 +13,32 @@ class TodoFilter extends React.Component {
         });
     }
 
-    render() {
-
+    getBtnClassName(p){
         const visibilityFilter = this.props.todoapp.visibilityFilter;
+        const activeClassName = p == visibilityFilter ? "active" : "";
+        return `todoapp-todofilter-btn ${activeClassName}`;
+    }
 
+    render() {
         return (
             <div className={"todoapp-todofilter"}>
-                <span className={"todoapp-todofilter-label"}>SHOW:</span>
-                <button className={"todoapp-todofilter-btn"} style={{
-                    color: visibilityFilter == "SHOW_ALL" ? "red" : "black"
-                }} onClick={() => this.setVisibilityFilter("SHOW_ALL")}>All</button>
-                <button className={"todoapp-todofilter-btn"} style={{
-                    color: visibilityFilter == "SHOW_COMPLETED" ? "red" : "black"
-                }} onClick={() => this.setVisibilityFilter("SHOW_COMPLETED")}>Completed
+                <span className={"todoapp-todofilter-label"}>
+                    Filter:
+                </span>
+
+                <button className={this.getBtnClassName("SHOW_ALL")}
+                        onClick={() => this.setVisibilityFilter("SHOW_ALL")}>
+                    All
                 </button>
-                <button className={"todoapp-todofilter-btn"} style={{
-                    color: visibilityFilter == "SHOW_ACTIVE" ? "red" : "black"
-                }} onClick={() => this.setVisibilityFilter("SHOW_ACTIVE")}>Active
+
+                <button className={this.getBtnClassName("SHOW_COMPLETED")}
+                        onClick={() => this.setVisibilityFilter("SHOW_COMPLETED")}>
+                    Completed
+                </button>
+
+                <button className={this.getBtnClassName("SHOW_ACTIVE")}
+                        onClick={() => this.setVisibilityFilter("SHOW_ACTIVE")}>
+                    Active
                 </button>
             </div>
         );

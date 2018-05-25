@@ -27,6 +27,9 @@
     align-items: center;
     font: normal 14px/1 "微软雅黑";
 }
+.todoapp-visibletodos-todo.complete{
+    text-decoration: line-through;
+}
 
 /**
  * TodoFilter
@@ -42,4 +45,8 @@
 .todoapp-todofilter-btn{
     min-width: 40px;
     font: normal 14px/1 "微软雅黑";
+}
+.todoapp-todofilter-btn.active{
+    color: red;
+    font-weight: bold;
 }

@@ -20,7 +20,7 @@ class AddTodo extends React.Component {
     }
 
     addTodo() {
-        if(!this.state.text.trim()){
+        if (!this.state.text.trim()) {
             return;
         }
 
@@ -38,8 +38,13 @@ class AddTodo extends React.Component {
     render() {
         return (
             <div className={"todoapp-addtodo"}>
-                <input className={"todoapp-addtodo-text"} value={this.state.text} onChange={(e) => this.textOnChange(e)}/>
-                <button className={"todoapp-addtodo-btnadd"} onClick={() => this.addTodo()}>AddTodo</button>
+                <input className={"todoapp-addtodo-text"}
+                       value={this.state.text}
+                       onChange={(e) => this.textOnChange(e)}/>
+
+                <button className={"todoapp-addtodo-btnadd"} onClick={() => this.addTodo()}>
+                    AddTodo
+                </button>
             </div>
         );
     }
@@ -47,5 +52,5 @@ class AddTodo extends React.Component {
 
 export default connect(
     null,
-    (dispatch)=>({dispatch})
+    (dispatch) => ({dispatch})
 )(AddTodo)
