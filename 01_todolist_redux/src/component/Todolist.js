@@ -1,31 +1,31 @@
 import React from "react"
+import { connect } from 'react-redux'
 
-class Todolist extends React.Component {
+@connect(({todoapp})=>({todoapp}), (dispatch)=>({dispatch}))
+export default class TodoList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            count: 0
-        }
     }
 
-    handleInc() {
-        this.setState({
-            count: this.state.count + 1
-        });
-    }
-
-    handleDec() {
-        this.setState({
-            count: this.state.count - 1
+    toggleTodo(id) {
+        this.props.dispatch({
+            type: "TOGGLE_TODO_COMPLETE_STATE",
+            payload: id,
         });
     }
 
     render() {
-        return <div>
-            <h2>count:{this.state.count}</h2>
-            <button onClick={() => this.handleDec()}>Dec</button>
-            <button onClick={() => this.handleInc()}>Inc</button>
-        </div>;
+        const todos = this.props.todoapp.todos;
+        return (
+            <ul>
+                {
+                    todos.map((todo) => {
+                        <li key={todo.id} onClick={() => {
+                            this.toggleTodo(todo.id)
+                        }}>{todo.text}</li>
+                    })
+                }
+            </ul>
+        );
     }
 }
-export default Todolist;
