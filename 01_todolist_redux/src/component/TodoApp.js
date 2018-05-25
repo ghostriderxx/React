@@ -1,7 +1,9 @@
 import React from "react"
 import TodoFilter from "./TodoFilter";
 import AddTodo from "./AddTodo";
-import TodoList from "./TodoList";
+import VisibleTodos from "./VisibleTodos";
+
+import "./TodoApp.css"
 
 class TodoApp extends React.Component {
     constructor(props) {
@@ -10,9 +12,9 @@ class TodoApp extends React.Component {
 
     render() {
         return (
-            <div>
-                <TodoList/>
+            <div className={"todoapp"}>
                 <AddTodo/>
+                <VisibleTodos/>
                 <TodoFilter/>
             </div>
         );
