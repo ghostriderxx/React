@@ -5,17 +5,17 @@ import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 
 import rootReducer from './reducer/index'
-//import rootSaga from './saga/index'
+import rootSaga from './saga/index'
 import UserMngApp from "./component/UserMngApp"
 
-//const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
     rootReducer,
-  //  applyMiddleware(sagaMiddleware)
+    applyMiddleware(sagaMiddleware)
 );
 
-//sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>

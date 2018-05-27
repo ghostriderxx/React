@@ -1,29 +1,31 @@
 import { call, put, takeEvery, takeLatest, all } from 'redux-saga/effects'
 
+import request from "../util/request"
+
 /**
  * Worker Saga
  */
-function* fetchUserList(action) {
+function* fetchUserListWorker(action) {
     try {
-        yield put({type: "FETCH_ZIZHILIST_INPROGRESS"});
+        yield put({type: "FETCH_USERLIST_INPROGRESS"});
 
-        const zizhiList = yield call(fetch);
+        const userList = yield call(request, "/userMng/fetchUserList");
 
-        yield put({type: "FETCH_ZIZHILIST_SUCCESS", payload: zizhiList});
+        yield put({type: "FETCH_USERLIST_SUCCESS", payload: userList});
     } catch (e) {
-        yield put({type: "FETCH_ZIZHILIST_FAILED", payload: e.message});
+        yield put({type: "FETCH_USERLIST_FAILED", payload: e.message});
     }
 }
 
 /**
  * Watcher Saga
  */
-function* fetchUserList() {
-    yield takeLatest("FETCH_USERLIST_REQUESTED", fetchUserList);
+function* fetchUserListWatcher() {
+    yield takeLatest("FETCH_USERLIST_REQUESTED", fetchUserListWorker);
 }
 
 export default function* userMngSaga(){
     yield all([
-        fetchUserList()
+        fetchUserListWatcher()
     ]);
 };
