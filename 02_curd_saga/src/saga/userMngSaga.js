@@ -1,14 +1,4 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import {all} from "redux-saga/es/effects";
-
-// api
-function fetch(){
-    return new Promise((resolve) => {
-        setTimeout(()=>{
-            resolve([]);
-        }, 3000);
-    });
-}
+import { call, put, takeEvery, takeLatest, all } from 'redux-saga/effects'
 
 /**
  * Worker Saga
@@ -32,14 +22,8 @@ function* fetchUserList() {
     yield takeLatest("FETCH_USERLIST_REQUESTED", fetchUserList);
 }
 
-function* modifyUser() {
-    yield takeLatest("MODIFY_USER_REQUESTED", fetchUserList);
-}
-
-
 export default function* userMngSaga(){
     yield all([
-        fetchUserList(),
-        modifyUser(),
+        fetchUserList()
     ]);
 };
