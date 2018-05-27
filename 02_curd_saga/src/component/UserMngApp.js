@@ -73,8 +73,6 @@ class UserMngApp extends React.Component{
                     </Col>
                 </Row>
 
-
-
             </Form>
             <Table  loading={loading}
                     rowKey="key"
