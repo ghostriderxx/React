@@ -14,6 +14,20 @@ function checkStatus(response) {
     throw error;
 }
 
+let id = 1;
+
+let userList = [{
+    empno: id++,
+    name: "张三",
+    age: "39",
+    address: "火锅城1号楼"
+}, {
+    empno: id++,
+    name: "李四",
+    age: "25",
+    address: "烧烤城2号楼"
+}];
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -29,17 +43,17 @@ export default function request(url, options) {
     //     .catch(err => ({ err }));
 
 
+
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve([{
-                name: "张三",
-                age: "39",
-                address: "火锅城1号楼"
-            }, {
-                name: "李四",
-                age: "25",
-                address: "烧烤城2号楼"
-            }]);
+            if(url == "/userMng/addUser"){
+                userList.push({
+                    empno: id++,
+                    ...options
+                });
+            }
+
+            resolve(userList);
         }, 2000);
     });
 
