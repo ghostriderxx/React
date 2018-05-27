@@ -31,6 +31,19 @@ function* addUserWorker(action) {
     }
 }
 
+function* deleteUserWorker(action) {
+    try {
+        yield put({type: "DELETE_USER_INPROGRESS"});
+
+        yield call(request, "/userMng/deleteUser", {
+            empno: action.payload
+        });
+
+        yield put({type: "DELETE_USER_SUCCESS"});
+    } catch (e) {
+        yield put({type: "DELETE_USER_FAILED", payload: e.message});
+    }
+}
 
 
 /**
@@ -44,9 +57,14 @@ function* addUserWatcher() {
     yield takeLatest("ADD_USER_REQUESTED", addUserWorker);
 }
 
+function* deleteUserWatcher() {
+    yield takeLatest("DELETE_USER_REQUESTED", deleteUserWorker);
+}
+
 export default function* userMngSaga(){
     yield all([
         fetchUserListWatcher(),
         addUserWatcher(),
+        deleteUserWatcher(),
     ]);
 };

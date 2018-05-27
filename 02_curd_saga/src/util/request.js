@@ -51,8 +51,11 @@ export default function request(url, options) {
                     empno: id++,
                     ...options
                 });
+            }else if(url == "/userMng/deleteUser"){
+                userList = userList.filter((user)=>{
+                    return user.empno != options.empno
+                });
             }
-
             resolve(userList);
         }, 2000);
     });

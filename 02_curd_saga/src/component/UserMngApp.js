@@ -11,6 +11,8 @@ import {
     Table,
     Row,
     Col,
+    Divider,
+    Icon,
 } from 'antd';
 
 // Component
@@ -44,14 +46,19 @@ class UserMngApp extends React.Component {
         alert(userId);
     }
 
+    delete(userId) {
+        this.props.dispatch({
+            type: "DELETE_USER_REQUESTED",
+            payload: userId
+        });
+
+        this.query();
+    }
+
     openUserAddDialog() {
         this.setState({
             isUserAddDialogOpen: true
         });
-    }
-
-    addUser() {
-
     }
 
     render() {
@@ -96,6 +103,13 @@ class UserMngApp extends React.Component {
                    }, {
                        title: '住址',
                        dataIndex: 'address',
+                   },{
+                       title: '操作',
+                       render:(text, record) => (
+                           <a onClick={()=>this.delete(record.empno)}>
+                               <Icon type="delete" />
+                           </a>
+                       )
                    }]}
             />
 

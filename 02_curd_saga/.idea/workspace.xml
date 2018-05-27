@@ -23,8 +23,8 @@
       <file leaf-file-name="userMngReducer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/reducer/userMngReducer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+            <state relative-caret-position="828">
+              <caret line="46" column="18" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -38,14 +38,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserMngApp.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserMngApp.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
+            <state relative-caret-position="522">
+              <caret line="54" column="13" selection-start-line="54" selection-start-column="13" selection-end-line="54" selection-end-column="13" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
-                <element signature="e#67#95#0" expanded="true" />
+                <element signature="e#87#115#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,8 +78,8 @@
       <file leaf-file-name="userMngSaga.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saga/userMngSaga.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="23" column="45" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="45" />
+            <state relative-caret-position="316">
+              <caret line="41" column="49" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="49" />
               <folding>
                 <element signature="e#0#74#0" expanded="true" />
               </folding>
@@ -87,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="request.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="request.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/request.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
+            <state relative-caret-position="424">
+              <caret line="55" column="39" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -122,11 +122,11 @@
         <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/.babelrc" />
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/saga/userMngSaga.js" />
-        <option value="$PROJECT_DIR$/src/reducer/userMngReducer.js" />
         <option value="$PROJECT_DIR$/src/component/UserAdd.js" />
-        <option value="$PROJECT_DIR$/src/component/UserMngApp.js" />
+        <option value="$PROJECT_DIR$/src/saga/userMngSaga.js" />
         <option value="$PROJECT_DIR$/src/util/request.js" />
+        <option value="$PROJECT_DIR$/src/reducer/userMngReducer.js" />
+        <option value="$PROJECT_DIR$/src/component/UserMngApp.js" />
       </list>
     </option>
   </component>
@@ -139,9 +139,9 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="23" />
-    <option name="y" value="27" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-41" />
+    <option name="y" value="12" />
     <option name="width" value="1386" />
     <option name="height" value="788" />
   </component>
@@ -289,15 +289,15 @@
       <option name="presentableId" value="Default" />
       <updated>1527235945690</updated>
       <workItem from="1527235947774" duration="3318000" />
-      <workItem from="1527301802654" duration="24975000" />
+      <workItem from="1527301802654" duration="25905000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28293000" />
+    <option name="totallyTimeSpent" value="29223000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="23" y="27" width="1386" height="788" extended-state="0" />
+    <frame x="-41" y="12" width="1386" height="788" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -450,23 +450,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saga/userMngSaga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="23" column="45" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#74#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducer/userMngReducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/reducer/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -474,12 +457,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saga/index.js">
+    <entry file="file://$PROJECT_DIR$/src/util/request.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="19" />
+        <state relative-caret-position="424">
+          <caret line="55" column="39" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducer/userMngReducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="828">
+          <caret line="46" column="18" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saga/userMngSaga.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="41" column="49" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="49" />
           <folding>
-            <element signature="e#0#46#0" expanded="true" />
+            <element signature="e#0#74#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -494,21 +491,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
+    <entry file="file://$PROJECT_DIR$/src/saga/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
+        <state relative-caret-position="108">
+          <caret line="6" column="19" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="19" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#67#95#0" expanded="true" />
+            <element signature="e#0#46#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/request.js">
+    <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
+        <state relative-caret-position="522">
+          <caret line="54" column="13" selection-start-line="54" selection-start-column="13" selection-end-line="54" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#87#115#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

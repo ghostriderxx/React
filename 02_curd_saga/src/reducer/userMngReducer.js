@@ -41,7 +41,19 @@ export default function userMngReducer(state = initialState, action) {
             };
 
 
-
+        /**
+         * DelteUser
+         */
+        case "DELETE_USER_INPROGRESS":
+            return {
+                ...state,
+                loading: true,
+            };
+        case 'DELETE_USER_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+            };
 
         default:
             return state;
