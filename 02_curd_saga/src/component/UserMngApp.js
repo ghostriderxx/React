@@ -42,10 +42,6 @@ class UserMngApp extends React.Component {
         });
     }
 
-    edit(userId) {
-        alert(userId);
-    }
-
     delete(userId) {
         this.props.dispatch({
             type: "DELETE_USER_REQUESTED",
@@ -59,6 +55,10 @@ class UserMngApp extends React.Component {
         this.setState({
             isUserAddDialogOpen: true
         });
+    }
+
+    openUserEditDialog(userId) {
+        alert(userId);
     }
 
     render() {
@@ -103,24 +103,32 @@ class UserMngApp extends React.Component {
                    }, {
                        title: '住址',
                        dataIndex: 'address',
-                   },{
+                   }, {
                        title: '操作',
-                       render:(text, record) => (
-                           <a onClick={()=>this.delete(record.empno)}>
-                               <Icon type="delete" />
-                           </a>
+                       render: (text, record) => (
+                           <span>
+                               <a onClick={() => this.delete(record.empno)}>
+                                   <Icon type="delete"/>
+                               </a>
+
+                               <Divider type="vertical"/>
+
+                               <a onClick={() => this.openUserEditDialog(record.empno)}>
+                                    <Icon type="edit"/>
+                               </a>
+                           </span>
                        )
                    }]}
             />
 
             {
                 this.state.isUserAddDialogOpen && <UserAdd onOk={() => {
-                                                               this.setState({
-                                                                   isUserAddDialogOpen: false
-                                                               });
+                    this.setState({
+                        isUserAddDialogOpen: false
+                    });
 
-                                                               this.query();
-                                                           }}
+                    this.query();
+                }}
                                                            onCancel={() => {
                                                                this.setState({
                                                                    isUserAddDialogOpen: false

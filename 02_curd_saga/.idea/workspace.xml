@@ -59,20 +59,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
+      <file leaf-file-name="UserMngApp.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+            <state relative-caret-position="468">
+              <caret line="129" column="33" lean-forward="true" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="33" />
+              <folding>
+                <element signature="e#87#115#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserMngApp.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
+      <file leaf-file-name="UserEdit.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/component/UserEdit.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-900">
-              <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+            <state relative-caret-position="162">
+              <caret line="42" column="23" lean-forward="true" selection-start-line="42" selection-start-column="23" selection-end-line="42" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,8 +95,8 @@
       <file leaf-file-name="UserAdd.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/component/UserAdd.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-99">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="396">
+              <caret line="58" column="33" lean-forward="true" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -142,8 +148,9 @@
         <option value="$PROJECT_DIR$/src/saga/userMngSaga.js" />
         <option value="$PROJECT_DIR$/src/util/request.js" />
         <option value="$PROJECT_DIR$/src/reducer/userMngReducer.js" />
-        <option value="$PROJECT_DIR$/src/component/UserMngApp.js" />
         <option value="$PROJECT_DIR$/src/component/UserAdd.js" />
+        <option value="$PROJECT_DIR$/src/component/UserMngApp.js" />
+        <option value="$PROJECT_DIR$/src/component/UserEdit.js" />
       </list>
     </option>
   </component>
@@ -156,7 +163,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="76" />
     <option name="y" value="244" />
     <option name="width" value="1607" />
@@ -337,10 +344,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31667000" />
+    <option name="totallyTimeSpent" value="34755000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1872" height="1096" extended-state="7" />
+    <frame x="-8" y="-8" width="1872" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -668,17 +675,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/UserEdit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="42" column="23" lean-forward="true" selection-start-line="42" selection-start-column="23" selection-end-line="42" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-900">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+        <state relative-caret-position="468">
+          <caret line="129" column="33" lean-forward="true" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="33" />
+          <folding>
+            <element signature="e#87#115#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/component/UserAdd.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-99">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="396">
+          <caret line="58" column="33" lean-forward="true" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
