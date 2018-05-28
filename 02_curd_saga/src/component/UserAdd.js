@@ -21,7 +21,6 @@ class UserAdd extends React.Component {
     }
 
     addUser() {
-
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let {name, age, address} = values;
@@ -32,7 +31,6 @@ class UserAdd extends React.Component {
                 });
             }
         });
-
     }
 
     render() {
@@ -41,11 +39,22 @@ class UserAdd extends React.Component {
 
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
 
+        const formItemLayout = {
+            labelCol: {
+                sm: { span: 4 },
+            },
+            wrapperCol: {
+                sm: { span: 20 },
+            },
+        };
+
         return (
             <Modal
                 title="新增用户"
                 visible={true}
                 confirmLoading={loading}
+                okText={"确定"}
+                cancelText={"取消"}
                 onOk={() => {
                     this.addUser();
                     this.props.onOk();
@@ -53,7 +62,8 @@ class UserAdd extends React.Component {
                 onCancel={() => this.props.onCancel()}
             >
                 <Form>
-                    <FormItem label={"姓名"}>
+                    <FormItem label={"姓名"}
+                              {...formItemLayout}>
                         {
                             getFieldDecorator('name', {})(
                                 <Input placeholder="姓名..."/>
@@ -61,7 +71,8 @@ class UserAdd extends React.Component {
                         }
                     </FormItem>
 
-                    <FormItem label={"年龄"}>
+                    <FormItem label={"年龄"}
+                              {...formItemLayout}>
                         {
                             getFieldDecorator('age', {})(
                                 <Input placeholder="年龄..."/>
@@ -69,7 +80,8 @@ class UserAdd extends React.Component {
                         }
                     </FormItem>
 
-                    <FormItem label={"住址"}>
+                    <FormItem label={"住址"}
+                              {...formItemLayout}>
                         {
                             getFieldDecorator('address', {})(
                                 <Input placeholder="住址..."/>
