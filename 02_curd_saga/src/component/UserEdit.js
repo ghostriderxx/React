@@ -1,6 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 
+// antd
 import 'antd/dist/antd.css';
 import {
     Form,
@@ -11,7 +12,7 @@ import {
     Col,
     Modal,
 } from 'antd';
-import userMng from "../reducer/userMngReducer";
+
 
 const FormItem = Form.Item;
 
@@ -20,20 +21,23 @@ class UserAdd extends React.Component {
         super(props);
     }
 
-    addUser() {
+    saveUser() {
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let {name, age, address} = values;
+                let {empno, name, age, address} = values;
 
                 this.props.dispatch({
-                    type: "ADD_USER_REQUESTED",
-                    payload: {name, age, address,}
+                    type: "EDIT_USER_REQUESTED",
+                    payload: {empno, name, age, address,}
                 });
+
+                this.props.onOk();
             }
         });
     }
 
     render() {
+        const empno = this.props.empno;
 
         const {loading} = this.props.userMng;
 
@@ -50,18 +54,26 @@ class UserAdd extends React.Component {
 
         return (
             <Modal
-                title="新增用户"
+                title="修改用户信息"
                 visible={true}
                 confirmLoading={loading}
                 okText={"确定"}
                 cancelText={"取消"}
                 onOk={() => {
-                    this.addUser();
-                    this.props.onOk();
+                    this.saveUser();
                 }}
                 onCancel={() => this.props.onCancel()}
             >
                 <Form>
+                    <FormItem label={"EMPNO"}
+                              {...formItemLayout}>
+                        {
+                            getFieldDecorator('empno', {})(
+                                <Input placeholder="EMPNO..." disabled={true}/>
+                            )
+                        }
+                    </FormItem>
+
                     <FormItem label={"姓名"}
                               {...formItemLayout}>
                         {
@@ -97,4 +109,12 @@ class UserAdd extends React.Component {
 export default connect(
     ({userMng}) => ({userMng}),
     (dispatch) => ({dispatch})
-)(Form.create()(UserAdd));
+)(Form.create({
+    mapPropsToFields(props) {
+        return {
+            empno: Form.createFormField({ // Form与props中的值绑定
+                value: props.empno,
+            }),
+        };
+    },
+})(UserAdd));

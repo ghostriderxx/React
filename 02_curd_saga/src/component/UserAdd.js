@@ -1,6 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 
+// antd
 import 'antd/dist/antd.css';
 import {
     Form,
@@ -11,7 +12,6 @@ import {
     Col,
     Modal,
 } from 'antd';
-import userMng from "../reducer/userMngReducer";
 
 const FormItem = Form.Item;
 
@@ -29,6 +29,8 @@ class UserAdd extends React.Component {
                     type: "ADD_USER_REQUESTED",
                     payload: {name, age, address,}
                 });
+
+                this.props.onOk();
             }
         });
     }
@@ -57,7 +59,6 @@ class UserAdd extends React.Component {
                 cancelText={"取消"}
                 onOk={() => {
                     this.addUser();
-                    this.props.onOk();
                 }}
                 onCancel={() => this.props.onCancel()}
             >
@@ -65,7 +66,11 @@ class UserAdd extends React.Component {
                     <FormItem label={"姓名"}
                               {...formItemLayout}>
                         {
-                            getFieldDecorator('name', {})(
+                            getFieldDecorator('name', {
+                                rules: [{
+                                    required: true, message: '请输入姓名!',
+                                }],
+                            })(
                                 <Input placeholder="姓名..."/>
                             )
                         }
@@ -74,8 +79,12 @@ class UserAdd extends React.Component {
                     <FormItem label={"年龄"}
                               {...formItemLayout}>
                         {
-                            getFieldDecorator('age', {})(
-                                <Input placeholder="年龄..."/>
+                            getFieldDecorator('age', {
+                                rules: [{
+                                    required: true, message: '请输入年龄!',
+                                }],
+                            })(
+                                <Input type={"number"} placeholder="年龄..."/>
                             )
                         }
                     </FormItem>
@@ -83,7 +92,11 @@ class UserAdd extends React.Component {
                     <FormItem label={"住址"}
                               {...formItemLayout}>
                         {
-                            getFieldDecorator('address', {})(
+                            getFieldDecorator('address', {
+                                rules: [{
+                                    required: true, message: '请输入住址!',
+                                }],
+                            })(
                                 <Input placeholder="住址..."/>
                             )
                         }

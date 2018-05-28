@@ -2,7 +2,7 @@
 import React from "react"
 import {connect} from "react-redux"
 
-// AntD
+// antd
 import 'antd/dist/antd.css';
 import {
     Form,
@@ -17,12 +17,15 @@ import {
 
 // Component
 import UserAdd from "./UserAdd"
+import UserEdit from "./UserEdit"
 
 class UserMngApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isUserAddDialogOpen: false,
+            isUserEditDialogOpen: false,
+            userEditEmpno: null,
         }
     }
 
@@ -57,8 +60,11 @@ class UserMngApp extends React.Component {
         });
     }
 
-    openUserEditDialog(userId) {
-        alert(userId);
+    openUserEditDialog(empno) {
+        this.setState({
+            isUserEditDialogOpen: true,
+            userEditEmpno: empno,
+        });
     }
 
     render() {
@@ -122,20 +128,40 @@ class UserMngApp extends React.Component {
             />
 
             {
-                this.state.isUserAddDialogOpen && <UserAdd onOk={() => {
-                    this.setState({
-                        isUserAddDialogOpen: false
-                    });
+                this.state.isUserAddDialogOpen &&
+                <UserAdd onOk={() => {
+                            this.setState({
+                                isUserAddDialogOpen: false
+                            });
 
-                    this.query();
-                }}
-                                                           onCancel={() => {
-                                                               this.setState({
-                                                                   isUserAddDialogOpen: false
-                                                               });
-                                                           }}/>
+                            this.query();
+                        }}
+                       onCancel={() => {
+                           this.setState({
+                               isUserAddDialogOpen: false
+                           });
+                       }}
+                />
             }
 
+
+            {
+                this.state.isUserEditDialogOpen &&
+                <UserEdit empno={this.state.userEditEmpno}
+                        onOk={() => {
+                            this.setState({
+                                isUserEditDialogOpen: false
+                            });
+
+                            this.query();
+                        }}
+                         onCancel={() => {
+                             this.setState({
+                                 isUserEditDialogOpen: false
+                             });
+                         }}
+                />
+            }
 
         </div>;
     }
