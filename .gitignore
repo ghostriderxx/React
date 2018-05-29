@@ -1,14 +1,7 @@
+.idea
+
 /rnredux/node_modules
-/rnredux/.idea
-
 /00_counter_react/node_modules
-/00_counter_react/.idea
-
 /01_todoapp_redux/node_modules
-/01_todoapp_redux/.idea
-
 /02_curd_saga/node_modules
-/02_curd_saga/.idea
-
 /03_example1_router/node_modules
-/03_example1_router/.idea
