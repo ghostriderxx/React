@@ -1,15 +1,9 @@
-```
-npm init
-npm install --save react 
-npm install --save react-dom
+Counter
+===
 
-npm install --save-dev babel-cli 
-npm install --save-dev babel-preset-env
-npm install --save-dev babel-preset-react
+### 安装
+    npm install
 
-npm install --save-dev webpack
-npm install --save-dev webpack-cli
-npm install --save-dev webpack-dev-server 
+### 启动
+    npm start
 
-npm install --save-dev babel-loader
-```

@@ -66,7 +66,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="244" />
     <option name="y" value="327" />
     <option name="width" value="1539" />
@@ -114,7 +114,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../00_counter_react" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -208,15 +208,15 @@
       <workItem from="1527212364998" duration="2402000" />
       <workItem from="1527214882447" duration="12376000" />
       <workItem from="1527232546882" duration="3067000" />
-      <workItem from="1527575142078" duration="8305000" />
+      <workItem from="1527575142078" duration="8369000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36473000" />
+    <option name="totallyTimeSpent" value="36537000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="666" y="264" width="1539" height="1100" extended-state="0" />
+    <frame x="244" y="327" width="1539" height="1100" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="5" />
@@ -227,7 +227,7 @@
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="4" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.1506708" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.1506708" />
       <window_info anchor="bottom" id="Version Control" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.32876712" />
       <window_info id="Capture Tool" order="2" />
