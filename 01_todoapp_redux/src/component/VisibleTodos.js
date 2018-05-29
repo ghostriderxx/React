@@ -1,3 +1,4 @@
+// React、Redux
 import React from "react"
 import {connect} from 'react-redux'
 
@@ -44,7 +45,6 @@ class VisibleTodos extends React.Component {
         );
     }
 }
-
 export default connect(
     ({todoapp}) => ({todoapp}),
     (dispatch) => ({dispatch})

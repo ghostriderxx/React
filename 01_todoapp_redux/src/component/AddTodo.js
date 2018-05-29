@@ -1,3 +1,4 @@
+// React、Redux
 import React from "react"
 import {connect} from "react-redux";
 
@@ -12,18 +13,15 @@ class AddTodo extends React.Component {
             text: ""
         }
     }
-
     textOnChange(e) {
         this.setState({
             text: e.target.value
         })
     }
-
     addTodo() {
         if (!this.state.text.trim()) {
             return;
         }
-
         this.props.dispatch({
             type: "ADD_TODO",
             payload: {
@@ -34,14 +32,12 @@ class AddTodo extends React.Component {
             },
         });
     }
-
     render() {
         return (
             <div className={"todoapp-addtodo"}>
                 <input className={"todoapp-addtodo-text"}
                        value={this.state.text}
                        onChange={(e) => this.textOnChange(e)}/>
-
                 <button className={"todoapp-addtodo-btnadd"} onClick={() => this.addTodo()}>
                     AddTodo
                 </button>
@@ -49,7 +45,6 @@ class AddTodo extends React.Component {
         );
     }
 }
-
 export default connect(
     null,
     (dispatch) => ({dispatch})

@@ -1,8 +1,12 @@
+// React、Redux
 import React from "react"
+
+// Component
 import TodoFilter from "./TodoFilter";
 import AddTodo from "./AddTodo";
 import VisibleTodos from "./VisibleTodos";
 
+// CSS
 import "./TodoApp.css"
 
 class TodoApp extends React.Component {
