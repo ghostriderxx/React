@@ -25,6 +25,7 @@ let yzList = [{
     zzys: "",
     kshs: "",
     zzhs: "",
+    klsj: "2016-01-01 08:12:10",
     zzsj: "2020-01-01 00:00:00",
     shr: "",
     yzlx: "嘱托",
@@ -37,6 +38,7 @@ let yzList = [{
     zzys: "",
     kshs: "",
     zzhs: "",
+    klsj: "2017-05-06 08:12:10",
     zzsj: "2020-01-01 00:00:00",
     shr: "",
     yzlx: "嘱托",
@@ -49,10 +51,46 @@ let yzList = [{
     zzys: "",
     kshs: "系统管理员",
     zzhs: "",
+    klsj: "2018-03-04 08:12:10",
     zzsj: "2020-01-01 00:00:00",
     shr: "系统管理员",
     yzlx: "药品",
 },];
+
+
+let sub2List = [{
+    xmmc: "2级护理",
+    sl: 1,
+    hljb: "",
+    dw: "次",
+    gg: "",
+    dj: 0,
+    je: 0,
+    zxks: "综合门诊",
+    zfbl: 0,
+    bz: "",
+    jz: true,
+}];
+
+let sub3List = [{
+    fz: "",
+    fzbh: "",
+    xmmc: "0.9%氯化钠注射液",
+    gg: "",
+    ycjl: 3,
+    jldw: "",
+    fysl: 0.09,
+    dw: "袋",
+    dj: 5.20,
+    je: 0.47,
+    xkc: 9796.91,
+    zfbl: 0,
+    ds: "",
+    bz: "",
+    jz: true,
+}];
+
+
 
 /**
  * Requests a URL, returning a promise.
@@ -72,7 +110,13 @@ export default function request(url, options) {
 
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(yzList);
+            if(url == "/yzMng/fetchYzList"){
+                resolve(yzList);
+            }else if(url == "/yzMng/fetchSub2List"){
+                resolve(sub2List);
+            }else if(url == "/yzMng/fetchSub3List"){
+                resolve(sub3List);
+            }
         }, 2000);
     });
 

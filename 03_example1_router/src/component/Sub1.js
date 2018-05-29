@@ -27,7 +27,7 @@ class Sub1 extends React.Component {
 
         return <div>
             医嘱描述：
-            <TextArea rows={4} value={yzList[selectedRowIndex].yzms} disabled={true}/>
+            <TextArea rows={6} value={yzList[selectedRowIndex].yzms} disabled={true}/>
         </div>
     }
 }

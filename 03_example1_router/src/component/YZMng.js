@@ -42,7 +42,7 @@ class YZMng extends React.Component {
         const RadioGroup = Radio.Group;
 
         // Modal
-        const {yzList, loading} = this.props.yzMng;
+        const {yzList, loading, selectedRowIndex} = this.props.yzMng;
 
         // Form
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
@@ -77,7 +77,7 @@ class YZMng extends React.Component {
                             )
                         }
                     </FormItem>
-                    <Button onClick={() => this.query()}>医嘱开立</Button>
+                    <Button onClick={() => this.clear()}>医嘱开立</Button>
                     <Button onClick={() => this.clear()}>保存</Button>
                     <Button onClick={() => this.clear()}>审核</Button>
                     <Button onClick={() => this.clear()}>全审核</Button>
@@ -94,6 +94,7 @@ class YZMng extends React.Component {
                 <Table loading={loading}
                        rowKey="yzid"
                        dataSource={yzList}
+                       style={{height: 300}}
                        onRow={(record, index) => {
                            return {
                                onClick: () => {
@@ -142,8 +143,16 @@ class YZMng extends React.Component {
                        },]}
                 />
 
-                <div>
-
+                {/* Summary */}
+                <div style={{marginBottom:40}}>
+                    <Form layout="inline">
+                        <FormItem label={"开立时间"}>
+                            <Input value={yzList.length && selectedRowIndex!=-1 ? yzList[selectedRowIndex].klsj : ""} disabled={true}/>
+                        </FormItem>
+                        <FormItem label={"医嘱类型"}>
+                            <Input value={yzList.length && selectedRowIndex!=-1 ? yzList[selectedRowIndex].yzlx : ""} disabled={true}/>
+                        </FormItem>
+                    </Form>
                 </div>
 
                 {/* 路由 */}

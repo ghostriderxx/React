@@ -51,13 +51,29 @@ export default function request(url, options) {
                     empno: id++,
                     ...options
                 });
+                resolve(userList);
+                return;
             }else if(url == "/userMng/deleteUser"){
                 userList = userList.filter((user)=>{
                     return user.empno != options.empno
                 });
+                resolve(userList);
+                return;
+            }else if(url == "/userMng/fetchUser"){
+                resolve(
+                    (userList.filter((user)=>{
+                        return user.empno == options.empno
+                    }))[0]
+                );
+                return;
+            }else if(url == "/userMng/saveUser"){
+                userList = userList.map((user)=>{
+                    return user.empno == options.empno ? options : user;
+                });
+                return;
             }
             resolve(userList);
-        }, 2000);
+        }, 1000);
     });
 
 }

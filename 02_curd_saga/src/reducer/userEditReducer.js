@@ -1,26 +1,20 @@
 const initialState = {
-    yzList: [],
-    selectedRowIndex: -1,
+    user: {},
     loading: false,
 };
 
 export default function userMngReducer(state = initialState, action) {
     switch (action.type) {
-        case "FETCH_YZLIST_INPROGRESS":
+        case "FETCH_USER_INPROGRESS":
             return {
                 ...state,
                 loading: true,
             };
-        case 'FETCH_YZLIST_SUCCESS':
+        case 'FETCH_USER_SUCCESS':
             return {
                 ...state,
-                yzList: action.payload,
+                user: action.payload,
                 loading: false,
-            };
-        case 'SELECT_ROW':
-            return {
-                ...state,
-                selectedRowIndex: action.payload
             };
         default:
             return state;

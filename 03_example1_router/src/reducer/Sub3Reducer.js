@@ -1,23 +1,30 @@
 const initialState = {
-    yzList: [],
+    sub3List: [],
     selectedRowIndex: -1,
     loading: false,
 };
 
-export default function userMngReducer(state = initialState, action) {
+export default function sub3Reducer(state = initialState, action) {
     switch (action.type) {
-        case "FETCH_YZLIST_INPROGRESS":
+        case "FETCH_SUB3LIST_INPROGRESS":
             return {
                 ...state,
                 loading: true,
             };
-        case 'FETCH_YZLIST_SUCCESS':
+        case 'FETCH_SUB3LIST_SUCCESS':
             return {
                 ...state,
-                yzList: action.payload,
+                sub3List: action.payload,
                 loading: false,
             };
-        case 'SELECT_ROW':
+        case "CLEAR_SUB3LIST":
+            return {
+                ...state,
+                sub3List:[],
+                loading: false,
+                selectedRowIndex: -1,
+            };
+        case 'SELECT_SUB3_ROW':
             return {
                 ...state,
                 selectedRowIndex: action.payload
