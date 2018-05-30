@@ -25,7 +25,7 @@ class UserAdd extends React.Component {
         this.props.dispatch({
             type: "FETCH_USER_REQUESTED",
             payload: {
-                empno: this.props.empno
+                empno: this.props.location.state.empno
             }
         });
     }
@@ -46,8 +46,6 @@ class UserAdd extends React.Component {
     }
 
     render() {
-        const empno = this.props.empno;
-
         const {loading} = this.props.userEdit;
 
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
@@ -124,16 +122,16 @@ export default connect(
 )(Form.create({
     mapPropsToFields(props) {
         return {
-            empno: Form.createFormField({ // Form与props中的值绑定
-                value: props.empno,
+            empno: Form.createFormField({
+                value: props.location.state.empno, // 从Route中获取参数
             }),
-            name: Form.createFormField({ // Form与props中的值绑定
+            name: Form.createFormField({
                 value: props.userEdit.user.name,
             }),
-            age: Form.createFormField({ // Form与props中的值绑定
+            age: Form.createFormField({
                 value: props.userEdit.user.age,
             }),
-            address: Form.createFormField({ // Form与props中的值绑定
+            address: Form.createFormField({
                 value: props.userEdit.user.address,
             }),
         };

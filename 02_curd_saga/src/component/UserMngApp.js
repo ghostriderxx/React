@@ -1,6 +1,7 @@
-// React, Redux
+// React, Redux、Router
 import React from "react"
 import {connect} from "react-redux"
+import { withRouter, Route } from 'react-router'
 
 // antd
 import 'antd/dist/antd.css';
@@ -55,16 +56,11 @@ class UserMngApp extends React.Component {
     }
 
     openUserAddDialog() {
-        this.setState({
-            isUserAddDialogOpen: true
-        });
+        this.props.history.push("/userAdd");
     }
 
     openUserEditDialog(empno) {
-        this.setState({
-            isUserEditDialogOpen: true,
-            userEditEmpno: empno,
-        });
+        this.props.history.push("/userEdit",  { empno: empno });
     }
 
     render() {
@@ -127,47 +123,38 @@ class UserMngApp extends React.Component {
                    }]}
             />
 
-            {
-                this.state.isUserAddDialogOpen &&
+
+            {/* UserAdd */}
+            <Route path="/userAdd" render={props => (
                 <UserAdd onOk={() => {
-                            this.setState({
-                                isUserAddDialogOpen: false
-                            });
-
-                            this.query();
-                        }}
-                       onCancel={() => {
-                           this.setState({
-                               isUserAddDialogOpen: false
-                           });
-                       }}
-                />
-            }
-
-
-            {
-                this.state.isUserEditDialogOpen &&
-                <UserEdit empno={this.state.userEditEmpno}
-                        onOk={() => {
-                            this.setState({
-                                isUserEditDialogOpen: false
-                            });
-
+                            this.props.history.goBack();
                             this.query();
                         }}
                          onCancel={() => {
-                             this.setState({
-                                 isUserEditDialogOpen: false
-                             });
+                             this.props.history.goBack();
                          }}
                 />
-            }
+            )}/>
 
+            {/* UserEdit */}
+            <Route path="/userEdit" render={props => (
+                <UserEdit {...props}
+                          onOk={() => {
+                              this.props.history.goBack();
+                              this.query();
+                          }}
+                          onCancel={() => {
+                              this.props.history.goBack();
+                          }}
+                />
+            )}/>
         </div>;
     }
 }
 
-export default connect(
-    ({userMng}) => ({userMng}),
-    (dispatch) => ({dispatch})
-)(Form.create()(UserMngApp));
+export default withRouter(
+    connect(
+        ({userMng}) => ({userMng}),
+        (dispatch) => ({dispatch})
+    )(Form.create()(UserMngApp))
+);
