@@ -1,4 +1,5 @@
 import React from "react"
+import {connect} from "react-redux"
 
 // antd
 import 'antd/dist/antd.css';
@@ -18,45 +19,39 @@ let cnt = 0;
 class Filter extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: data,
-            filterVal: ""
-        }
     }
 
     handleTextChange(value){
-        this.setState({
-            filterVal: value
+        this.props.dispatch({
+            type: "SET_FILTER_VAL_REQUESTED",
+            payload: value,
         });
     }
 
-
     handleCellTextChange(index, cell, val){
-        var newData = this.state.data.slice();
+        var newData = this.props.data.slice();
         newData[index][cell] = val;
         newData[index]["ypbh"] = (cnt++)+newData[index]["ypbh"];
-        this.setState({
-            data: newData
+        this.props.dispatch({
+            type: "SET_DATA",
+            payload: newData,
         });
     }
 
     render() {
         const FormItem = Form.Item;
 
-        let filteredData = this.state.data.filter((one)=>{
-            let ret =  one.ypbh.toUpperCase().indexOf( this.state.filterVal.toUpperCase() ) > -1;
+        let filteredData = this.props.data.filter((one)=>{
+            let ret =  one.ypbh.toUpperCase().indexOf( this.props.filterVal.toUpperCase() ) > -1;
             return ret;
         });
-
         filteredData = filteredData.slice(0, 50);
-
 
         return <div>
                     <Form layout={"inline"}>
                         <FormItem label="药品首码">
                             <Input
                                 type="text"
-                                value={this.state.filterVal}
                                 onChange={(e)=>this.handleTextChange(e.target.value)}
                             />
                         </FormItem>
@@ -127,4 +122,7 @@ class Filter extends React.Component {
                 </div>;
     }
 }
-export default Filter;
+export default connect(
+    ({data, filterVal})=>({data, filterVal}),
+    (dispatch) => ({dispatch})
+)(Filter);
