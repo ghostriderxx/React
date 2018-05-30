@@ -19,12 +19,24 @@ let cnt = 0;
 class Filter extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            interval: 100
+        }
+    }
+
+    handleIntervalChange(value){
+        this.setState({
+            interval: value
+        });
     }
 
     handleTextChange(value){
         this.props.dispatch({
             type: "SET_FILTER_VAL_REQUESTED",
-            payload: value,
+            payload: {
+                filterValue:value,
+                interval: this.state.interval
+            },
         });
     }
 
@@ -55,6 +67,22 @@ class Filter extends React.Component {
                                 onChange={(e)=>this.handleTextChange(e.target.value)}
                             />
                         </FormItem>
+
+                        <FormItem label="数据总量">
+                            <Input
+                                type="text"
+                                disabled={true}
+                                value={this.props.data.length}
+                            />
+                        </FormItem>
+
+                        <FormItem label="响应延时">
+                            <Input
+                                value={this.state.interval}
+                                type="number"
+                                onChange={(e)=>this.handleIntervalChange(e.target.value)}
+                            />
+                        </FormItem>
                     </Form>
 
 
@@ -73,7 +101,7 @@ class Filter extends React.Component {
                                dataIndex: 'ypsl',
                                render: (text, record) => (
                                    <span>
-                                       <Input defaultValue={text} onBlur={(e)=>{
+                                       <Input type={"number"} defaultValue={text} onBlur={(e)=>{
                                            this.handleCellTextChange(record.__index__, "ypsl", e.target.value);
                                        }}/>
                                    </span>

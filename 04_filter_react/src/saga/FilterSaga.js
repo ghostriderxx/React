@@ -5,8 +5,10 @@ import { delay } from 'redux-saga'
  * Worker Saga
  */
 function* setFilterValWorker(action) {
-    yield delay(70);
-    yield put({type: "SET_FILTER_VAL", payload: action.payload});
+    if(action.payload.interval > 0){
+        yield delay(action.payload.interval);
+    }
+    yield put({type: "SET_FILTER_VAL", payload: action.payload.filterValue});
 }
 
 /**
