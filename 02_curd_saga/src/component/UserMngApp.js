@@ -2,6 +2,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import { withRouter, Route } from 'react-router'
+import { push, goBack } from 'react-router-redux'
 
 // antd
 import 'antd/dist/antd.css';
@@ -23,11 +24,6 @@ import UserEdit from "./UserEdit"
 class UserMngApp extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isUserAddDialogOpen: false,
-            isUserEditDialogOpen: false,
-            userEditEmpno: null,
-        }
     }
 
     query() {
@@ -56,11 +52,11 @@ class UserMngApp extends React.Component {
     }
 
     openUserAddDialog() {
-        this.props.history.push("/userAdd");
+        this.props.dispatch(push("/userAdd"));
     }
 
     openUserEditDialog(empno) {
-        this.props.history.push("/userEdit",  { empno: empno });
+        this.props.dispatch(push("/userEdit",  { empno: empno }));
     }
 
     render() {
@@ -127,11 +123,11 @@ class UserMngApp extends React.Component {
             {/* UserAdd */}
             <Route path="/userAdd" render={props => (
                 <UserAdd onOk={() => {
-                            this.props.history.goBack();
+                            this.props.dispatch(goBack());
                             this.query();
                         }}
                          onCancel={() => {
-                             this.props.history.goBack();
+                             this.props.dispatch(goBack());
                          }}
                 />
             )}/>
@@ -140,11 +136,11 @@ class UserMngApp extends React.Component {
             <Route path="/userEdit" render={props => (
                 <UserEdit {...props}
                           onOk={() => {
-                              this.props.history.goBack();
+                              this.props.dispatch(goBack());
                               this.query();
                           }}
                           onCancel={() => {
-                              this.props.history.goBack();
+                              this.props.dispatch(goBack());
                           }}
                 />
             )}/>
@@ -152,9 +148,7 @@ class UserMngApp extends React.Component {
     }
 }
 
-export default withRouter(
-    connect(
-        ({userMng}) => ({userMng}),
-        (dispatch) => ({dispatch})
-    )(Form.create()(UserMngApp))
-);
+export default connect(
+    ({userMng, location}) => ({userMng, location}),
+    (dispatch) => ({dispatch})
+)(Form.create()(UserMngApp));

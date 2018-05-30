@@ -1,6 +1,5 @@
 import React from "react"
 import {connect} from "react-redux"
-import { withRouter } from 'react-router'
 
 // antd
 import 'antd/dist/antd.css';
@@ -108,9 +107,7 @@ class UserAdd extends React.Component {
     }
 }
 
-export default withRouter(
-    connect(
-        ({userMng}) => ({userMng}),
-        (dispatch) => ({dispatch})
-    )(Form.create()(UserAdd))
-);
+export default connect(
+    ({userMng}) => ({userMng}),
+    (dispatch) => ({dispatch})
+)(Form.create()(UserAdd));

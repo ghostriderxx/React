@@ -1,10 +1,15 @@
 // React、Redux、Router
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
-import { BrowserRouter as Router} from "react-router-dom";
+
+import createHistory from 'history/createBrowserHistory'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+
+const history = createHistory();
 
 // rootReducer
 import rootReducer from './reducer/index'
@@ -19,16 +24,16 @@ const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
     rootReducer,
-    applyMiddleware(sagaMiddleware)
+    applyMiddleware(sagaMiddleware, routerMiddleware(history))
 );
 
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <ConnectedRouter history={history}>
             <UserMngApp/>
-        </Router>
+        </ConnectedRouter>
     </Provider>,
     document.getElementById('app')
 );

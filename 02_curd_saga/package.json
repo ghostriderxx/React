@@ -12,13 +12,16 @@
     "antd": "^3.5.3",
     "babel-polyfill": "^6.26.0",
     "cross-fetch": "^2.2.0",
+    "history": "^4.7.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^4.0.0",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "redux-saga-router": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
