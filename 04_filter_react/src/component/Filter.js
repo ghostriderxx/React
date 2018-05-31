@@ -14,8 +14,6 @@ import {
     Icon,
 } from 'antd';
 
-let cnt = 0;
-
 class Filter extends React.Component {
     constructor(props) {
         super(props);
@@ -43,7 +41,6 @@ class Filter extends React.Component {
     handleCellTextChange(index, cell, val){
         var newData = this.props.data.slice();
         newData[index][cell] = val;
-        newData[index]["ypbh"] = (cnt++)+newData[index]["ypbh"];
         this.props.dispatch({
             type: "SET_DATA",
             payload: newData,
@@ -52,13 +49,11 @@ class Filter extends React.Component {
 
     render() {
         const FormItem = Form.Item;
-
         let filteredData = this.props.data.filter((one)=>{
             let ret =  one.ypbh.toUpperCase().indexOf( this.props.filterVal.toUpperCase() ) > -1;
             return ret;
         });
         filteredData = filteredData.slice(0, 50);
-
         return <div>
                     <Form layout={"inline"}>
                         <FormItem label="药品首码">
@@ -91,6 +86,14 @@ class Filter extends React.Component {
                            dataSource={filteredData}
                            pagination={false}
                            columns={[{
+                               title: '行号',
+                               dataIndex: '__index__',
+                               width:50,
+                           },{
+                               title: '药品编号',
+                               dataIndex: 'ypbh',
+                               width:200,
+                           },{
                                title: '药品名称',
                                dataIndex: 'ypmc',
                            }, {
@@ -133,9 +136,6 @@ class Filter extends React.Component {
                            },{
                                title: '库存转换数量',
                                dataIndex: 'kczhsl',
-                           },{
-                               title: '盘点转换数量',
-                               dataIndex: 'pdzhsl',
                            },{
                                title: '供应商编号',
                                dataIndex: 'gysbh',
