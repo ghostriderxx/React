@@ -6,10 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 
-import createHistory from 'history/createBrowserHistory'
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
-
-const history = createHistory();
+import { BrowserRouter as Router} from "react-router-dom";
 
 // rootReducer
 import rootReducer from './reducer/index'
@@ -24,16 +21,16 @@ const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
     rootReducer,
-    applyMiddleware(sagaMiddleware, routerMiddleware(history))
+    applyMiddleware(sagaMiddleware)
 );
 
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <Router>
             <UserMngApp/>
-        </ConnectedRouter>
+        </Router>
     </Provider>,
     document.getElementById('app')
 );

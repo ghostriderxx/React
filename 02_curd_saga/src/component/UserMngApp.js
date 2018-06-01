@@ -1,8 +1,7 @@
 // React, Redux、Router
 import React from "react"
-import {connect} from "react-redux"
+import { connect } from "react-redux"
 import { withRouter, Route } from 'react-router'
-import { push, goBack } from 'react-router-redux'
 
 // antd
 import 'antd/dist/antd.css';
@@ -52,11 +51,11 @@ class UserMngApp extends React.Component {
     }
 
     openUserAddDialog() {
-        this.props.dispatch(push("/userAdd"));
+        this.props.history.push("/userAdd");
     }
 
     openUserEditDialog(empno) {
-        this.props.dispatch(push("/userEdit",  { empno: empno }));
+        this.props.history.push("/userEdit",  { empno: empno });
     }
 
     render() {
@@ -123,11 +122,11 @@ class UserMngApp extends React.Component {
             {/* UserAdd */}
             <Route path="/userAdd" render={props => (
                 <UserAdd onOk={() => {
-                            this.props.dispatch(goBack());
+                            this.props.history.goBack();
                             this.query();
                         }}
                          onCancel={() => {
-                             this.props.dispatch(goBack());
+                             this.props.history.goBack();
                          }}
                 />
             )}/>
@@ -136,11 +135,11 @@ class UserMngApp extends React.Component {
             <Route path="/userEdit" render={props => (
                 <UserEdit {...props}
                           onOk={() => {
-                              this.props.dispatch(goBack());
+                              this.props.history.goBack();
                               this.query();
                           }}
                           onCancel={() => {
-                              this.props.dispatch(goBack());
+                              this.props.history.goBack();
                           }}
                 />
             )}/>
@@ -148,7 +147,9 @@ class UserMngApp extends React.Component {
     }
 }
 
-export default connect(
-    ({userMng, location}) => ({userMng, location}),
-    (dispatch) => ({dispatch})
-)(Form.create()(UserMngApp));
+export default withRouter(
+    connect(
+        ({userMng, location}) => ({userMng, location}),
+        (dispatch) => ({dispatch})
+    )(Form.create()(UserMngApp))
+);
