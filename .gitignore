@@ -1,4 +1,5 @@
 .idea
+node_modules
 
 /rnredux/node_modules
 /00_counter_react/node_modules
