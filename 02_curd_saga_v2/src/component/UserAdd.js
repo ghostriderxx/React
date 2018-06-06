@@ -37,7 +37,7 @@ class UserAdd extends React.Component {
 
     render() {
 
-        const {loading} = this.props.userMng;
+        const {loading} = this.props.userAdd;
 
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
 
@@ -108,6 +108,6 @@ class UserAdd extends React.Component {
 }
 
 export default connect(
-    ({userMng}) => ({userMng}),
+    ({userAdd}) => ({userAdd}),
     (dispatch) => ({dispatch})
 )(Form.create()(UserAdd));

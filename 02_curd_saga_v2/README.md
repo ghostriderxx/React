@@ -1,10 +1,3 @@
-npm init
+数据模型设计的变化：
 
-
-npm install --save redux
-npm install --save react-redux
-
-
-npm install --save-dev css-loader
-
-https://webpack.js.org/loaders/
+connect只能联系自己的Modal，其它数据通过接口获取；

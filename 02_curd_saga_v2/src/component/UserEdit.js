@@ -16,7 +16,7 @@ import {
 
 const FormItem = Form.Item;
 
-class UserAdd extends React.Component {
+class UserEdit extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -136,4 +136,4 @@ export default connect(
             }),
         };
     },
-})(UserAdd));
+})(UserEdit));

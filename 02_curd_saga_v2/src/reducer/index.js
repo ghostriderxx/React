@@ -1,11 +1,13 @@
-import { combineReducers } from 'redux'
+
 
 import userMng from './userMngReducer'
 import userEdit from "./userEditReducer"
+import userAdd from "./userAddReducer"
 
-const rootReducer = combineReducers({
+const bizReducers = ({
     userMng,
     userEdit,
-})
+    userAdd,
+});
 
-export default rootReducer
+export default bizReducers

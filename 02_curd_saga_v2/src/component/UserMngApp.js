@@ -16,6 +16,10 @@ import {
     Icon,
 } from 'antd';
 
+
+// framework
+import Grid from "../framework/Grid"
+
 // Component
 import UserAdd from "./UserAdd"
 import UserEdit from "./UserEdit"
@@ -48,6 +52,10 @@ class UserMngApp extends React.Component {
         });
 
         this.query();
+    }
+
+    saveData(){
+
     }
 
     openUserAddDialog() {
@@ -88,9 +96,11 @@ class UserMngApp extends React.Component {
                 </Row>
 
             </Form>
-            <Table loading={loading}
-                   rowKey="empno"
+            {/* 这里是让开发实现类似getObject的功能，this.gridUserList.fnXXX访问Grid */}
+            <Grid  ref={(ele)=>{this.gridUserList = ele} }
                    dataSource={userList}
+                   loading={loading}
+                   rowKey="empno"
                    columns={[{
                        title: '姓名',
                        dataIndex: 'name',
@@ -117,6 +127,48 @@ class UserMngApp extends React.Component {
                        )
                    }]}
             />
+            <Button type="primary" icon="plus-circle-o" onClick={() => { this.gridUserList.getWrappedInstance().sort("asc"); }}>排序</Button>
+
+
+            {/* 这里是让开发实现类似getObject的功能，this.gridUserList.fnXXX访问Grid */}
+            <Grid  ref={(ele)=>{this.gridUserList1 = ele} }
+                   dataSource={userList}
+                   loading={loading}
+                   rowKey="empno"
+                   columns={[{
+                       title: '姓名',
+                       dataIndex: 'name',
+                   }, {
+                       title: '年龄',
+                       dataIndex: 'age',
+                   }, {
+                       title: '住址',
+                       dataIndex: 'address',
+                   }, {
+                       title: '操作',
+                       render: (text, record) => (
+                           <span>
+                               <a onClick={() => this.delete(record.empno)}>
+                                   <Icon type="delete"/>
+                               </a>
+
+                               <Divider type="vertical"/>
+
+                               <a onClick={() => this.openUserEditDialog(record.empno)}>
+                                    <Icon type="edit"/>
+                               </a>
+                           </span>
+                       )
+                   }]}
+            />
+            <Button type="primary" icon="plus-circle-o" onClick={() => { this.gridUserList1.getWrappedInstance().sort("asc"); }}>排序</Button>
+
+
+
+            <br/><br/><br/><br/>
+            <Button type="primary" onClick={() => { this.saveData() }}>保存数据</Button>
+
+
 
 
             {/* UserAdd */}

@@ -20,26 +20,15 @@ export default function userMngReducer(state = initialState, action) {
                 userList: action.payload,
                 loading: false,
             };
+
+        /**
+         * ClearUserList
+         */
         case 'CLEAR_USERLIST':
             return {
                 ...state,
                 userList: [],
             };
-
-        /**
-         * AddUser
-         */
-        case "ADD_USER_INPROGRESS":
-            return {
-                ...state,
-                loading: true,
-            };
-        case 'ADD_USER_SUCCESS':
-            return {
-                ...state,
-                loading: false,
-            };
-
 
         /**
          * DelteUser
