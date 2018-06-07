@@ -96,6 +96,15 @@ class Grid extends React.Component{
         });
     }
 
+    filter(condition){
+        this.props.dispatch({
+            type: this.state.namespace+"/GRID_FILTER_REQUESTED",
+            payload:{
+                condition
+            }
+        });
+    }
+
     render(){
         //const data = this.props.grid.data;
         return (

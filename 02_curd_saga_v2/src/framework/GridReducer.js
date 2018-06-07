@@ -1,6 +1,7 @@
 const initialState = {
     data: [],
     loading: false,
+    filterCondition: null,
 };
 
 export default function GridReducerFactory(namespace){
@@ -14,6 +15,21 @@ export default function GridReducerFactory(namespace){
                 };
 
 
+            // 过滤
+            case namespace+"/GRID_FILTER_INPROGRESS":
+                return {
+                    ...state,
+                    loading: true,
+                };
+            case namespace+"/GRID_FILTER_SUCCESS":
+                return {
+                    ...state,
+                    loading: false,
+                    filterCondition: action.payload
+                };
+
+
+            // 排序
             case namespace+"/GRID_SORT_INPROGRESS":
                 return {
                     ...state,

@@ -11,6 +11,16 @@ export default function gridSagaFactory(namespace){
 
                 yield put({type: namespace+"/GRID_SORT_SUCCESS"});
             });
-        })
+        });
+
+        yield fork(function* gridSortWatcher() {
+            yield takeLatest(namespace+"/GRID_FILTER_REQUESTED", function*(action){
+                yield put({type: namespace+"/GRID_FILTER_INPROGRESS"});
+
+                yield delay(1000);
+
+                yield put({type: namespace+"/GRID_FILTER_SUCCESS"});
+            });
+        });
     }
 }
