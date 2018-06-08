@@ -1,0 +1,22 @@
+import React from 'react';
+
+/////////////////////////////////////////////////////////////////////////////
+
+import Panel from "../../framework/taglib/panel/Panel";
+
+/////////////////////////////////////////////////////////////////////////////
+
+import "./top.css"
+
+/////////////////////////////////////////////////////////////////////////////
+
+export default class Top extends React.Component {
+
+    render() {
+        return (
+            <Panel className={"app-top"}>
+                <Panel className={"app-top-title"}></Panel>
+            </Panel>
+        );
+    }
+}

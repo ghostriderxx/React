@@ -10,7 +10,7 @@ module.exports = {
     },
     devtool: "source-map",
     devServer: {
-        publicPath: "/dist/",
+        publicPath: "/",
         port: 9000,
         open: true,
         hot: true,
@@ -32,6 +32,15 @@ module.exports = {
                     'css-loader',
                 ]
             },
+            {
+                test: /\.(png|jpg)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {}
+                    }
+                ]
+            }
         ]
     },
     plugins: [
