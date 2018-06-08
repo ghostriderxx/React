@@ -24,22 +24,54 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import 'antd/dist/antd.css';
 
 /////////////////////////////////////////////////////////////////////////////
-
+// App
+//
 import App from "./app/App";
 
 /////////////////////////////////////////////////////////////////////////////
 
-const rootReducer = arg => arg;
 
+let reducers = {
+    noop: arg => arg
+};
 
 const history = createBrowserHistory();
 
 const store = createStore(
-    connectRouter(history)(rootReducer),
-    applyMiddleware(
-        routerMiddleware(history),
-    ),
+    connectRouter(history)(combineReducers(...reducers)),
+    composeWithDevTools(
+        applyMiddleware(
+            routerMiddleware(history),
+            createSagaMiddleware(),
+        )
+    )
 );
+
+/////////////////////////////////////////////////////////////////////////////
+
+const App = {
+    // 追加Reducer
+    addReducer(namespace, reducer){
+        reducers = {
+            ...reducers,
+            [namespace]:reducer,
+        }
+
+        store.replaceReducer(
+            combineReducers({
+                ...finalReducers
+            }),
+        );
+    },
+
+    // 追加Saga
+    addSaga(saga){
+        sagaMiddleware.run(saga);
+    }
+};
+export default App;
+
+/////////////////////////////////////////////////////////////////////////////
 
 ReactDOM.render(
     <Provider store={store}>

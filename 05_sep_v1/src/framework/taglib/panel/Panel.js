@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import React from 'react';
 
 export default class Panel extends React.Component {
@@ -6,6 +8,16 @@ export default class Panel extends React.Component {
     }
 
     render(){
-        return  <div {...this.props}></div>
+
+        const width = this.props.width || "auto";
+
+        return  <div {...this.props}
+                     style={{
+                         width: width
+                     }}></div>
     }
+}
+
+Panel.propTypes = {
+    width: PropTypes.number,
 }

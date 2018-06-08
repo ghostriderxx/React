@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+
 export default class SmsMng extends React.Component {
     constructor(props){
         super(props);
@@ -7,7 +9,7 @@ export default class SmsMng extends React.Component {
 
     render(){
         return (
-            "SmsMng"
+            "sms"
         )
     }
 }
