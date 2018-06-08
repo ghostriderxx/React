@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router'
 
 export default class SheetContainer extends React.Component {
     constructor(props) {
