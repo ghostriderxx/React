@@ -7,6 +7,10 @@ import {Menu} from "antd"
 
 /////////////////////////////////////////////////////////////////////////////
 
+import "./menubar.css"
+
+/////////////////////////////////////////////////////////////////////////////
+
 export default class MenuBar extends React.Component {
     constructor(props){
         super(props);
@@ -14,9 +18,10 @@ export default class MenuBar extends React.Component {
 
     render(){
         return (
-            <Menu theme="dark"
+            <Menu className={"dw-menubar"}
+                  theme="light"
                   mode="horizontal"
-                  style={{lineHeight: '34px'}}>
+                  selectedKeys={["printTplMng"]}>
                 {
                     this.props.items.map((menuItem) =>
                         <Menu.Item key={menuItem.id}>

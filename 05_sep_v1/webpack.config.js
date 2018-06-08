@@ -15,6 +15,7 @@ module.exports = {
         open: true,
         hot: true,
         inline: true,
+        historyApiFallback: true,
     },
     module: {
         rules: [

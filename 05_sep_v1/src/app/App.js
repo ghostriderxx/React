@@ -6,13 +6,13 @@ import React from 'react';
 //
 import Panel from "../framework/taglib/panel/Panel";
 import MenuBar from "../framework/taglib/menubar/MenuBar";
+import SheetContainer from "../framework/taglib/sheetContainer/SheetContainer";
 
 /////////////////////////////////////////////////////////////////////////////
 
 import menubarItems from "./config/MenuBarConfig"
 
 import Top from "./top/Top";
-
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -26,6 +26,7 @@ export default class App extends React.Component{
             <Panel>
                 <Top/>
                 <MenuBar items={menubarItems}/>
+                <SheetContainer items={menubarItems}/>
             </Panel>
         );
     }
