@@ -17,7 +17,3 @@ export default class Panel extends React.Component {
                      }}></div>
     }
 }
-
-Panel.propTypes = {
-    width: PropTypes.number,
-}

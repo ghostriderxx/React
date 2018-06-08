@@ -27,29 +27,32 @@ import 'antd/dist/antd.css';
 // App
 //
 import App from "./app/App";
-
+import modelCachetMng from "./app/cachetMng/modelCachetMng";
 /////////////////////////////////////////////////////////////////////////////
 
 
 let reducers = {
-    noop: arg => arg
+    [modelCachetMng.namespace]: modelCachetMng.reducer
 };
 
 const history = createBrowserHistory();
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-    connectRouter(history)(combineReducers(...reducers)),
+    connectRouter(history)(combineReducers(reducers)),
     composeWithDevTools(
         applyMiddleware(
             routerMiddleware(history),
-            createSagaMiddleware(),
+            sagaMiddleware,
         )
     )
 );
 
+sagaMiddleware.run(modelCachetMng.effect);
+
 /////////////////////////////////////////////////////////////////////////////
 
-const App = {
+const Frame = {
     // 追加Reducer
     addReducer(namespace, reducer){
         reducers = {
@@ -58,18 +61,15 @@ const App = {
         }
 
         store.replaceReducer(
-            combineReducers({
-                ...finalReducers
-            }),
+            connectRouter(history)(combineReducers(reducers)),
         );
     },
-
     // 追加Saga
     addSaga(saga){
         sagaMiddleware.run(saga);
     }
 };
-export default App;
+export default Frame;
 
 /////////////////////////////////////////////////////////////////////////////
 
