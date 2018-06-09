@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 // FrameWork
 //
 import Res from "../res/Res";
+import LaneSwitcher from "./LaneSwitcher";
 
 @connect(({lane}) => ({lane}))
 export default class LaneContainer extends React.Component {
@@ -42,6 +43,7 @@ export default class LaneContainer extends React.Component {
 
         return (
             <div style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+                <LaneSwitcher/>
                 {
                     lanes.map((lane) => {
 

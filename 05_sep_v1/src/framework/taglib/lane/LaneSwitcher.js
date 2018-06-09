@@ -2,42 +2,31 @@ import React from 'react';
 import {connect} from "react-redux";
 
 @connect(({lane}) => ({lane}))
-export default class FrameLaneSwitcher extends React.Component {
+export default class LaneSwitcher extends React.Component {
 
     componentDidMount() {
     }
 
-    handleChangeActiveLane = (laneId) => {
+    handleChangeActiveLane(laneId){
         this.props.dispatch({
-            type: "frameLane/setLaneActive",
+            type: "lane/setLaneActive",
             payload: laneId
         });
     }
 
-    handleAddLane = () => {
-        this.props.dispatch({
-            type: "frameLane/addLane",
-        });
-    }
-
     render() {
-        const {lanes, currentActiveLaneId } = this.props.frameLane;
+        const {lanes, currentActiveLaneId } = this.props.lane;
 
         return (
             <div style={{backgroundColor:"grey", zIndex:9999, position:"absolute", top:0, right:0}}>
-                <ul>
                 {
-                    lanes.map((lane, index) => {
-                        return <li key={index}><button style={{backgroundColor: (currentActiveLaneId == lane.id ? "red" : "grey") }} onClick={ () => { return this.handleChangeActiveLane(lane.id) } }>
-                                    {lane.id}
-                                </button></li>
-                    })
+                    lanes.map((lane) => <button key={lane.id} style={{backgroundColor: (currentActiveLaneId == lane.id ? "red" : "grey") }}
+                                                onClick={ () => { return this.handleChangeActiveLane(lane.id) } }>
+                                            {lane.id}
+                                        </button>
+                    )
                 }
-                </ul>
-                <button onClick={this.handleAddLane}>addLane</button>
             </div>
         );
     }
 }
-
-FrameLaneSwitcher.propTypes = {};
