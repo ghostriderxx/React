@@ -10,6 +10,12 @@ import Grid from "../../framework/taglib/grid/Grid";
 import Button from "../../framework/taglib/button/Button";
 import {Tab, TabPage} from "../../framework/taglib/tab/Tab";
 
+/////////////////////////////////////////////////////////////////////////////
+// App
+//
+import ResCachetTypeAdd from "./ResCachetTypeAdd"
+
+
 @connect(
     ({cachetMng})=>({cachetMng}),
     (dispatch) => ({dispatch})
@@ -27,7 +33,14 @@ export default class CachetMng extends React.Component {
 
     // 章类别信息 增、删、改
     cachetTypeAdd(){
-        alert("cachetTypeAdd");
+        this.props.dispatch({
+            type: "lane/OPEN_RES_REQUESTED",
+            payload: {
+                component: ResCachetTypeAdd,
+                width: 1024,
+                height: 600,
+            }
+        });
     }
 
     cachetTypeModify(){

@@ -160,11 +160,20 @@ function* setMainLaneWatcher() {
     });
 }
 
+function* openResWatcher() {
+    yield takeLatest(`${namespace}/OPEN_RES_REQUESTED`, function*(action) {
+        yield put({
+            type: `${namespace}/OPEN_RES_SUCCESS`,
+            payload: action.payload,
+        });
+    });
+}
 
 function* laneSaga(){
     yield all([
         addLaneWatcher(),
         setMainLaneWatcher(),
+        openResWatcher(),
     ]);
 };
 

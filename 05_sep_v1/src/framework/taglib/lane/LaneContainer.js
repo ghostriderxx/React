@@ -1,6 +1,11 @@
 import React from 'react';
 import {connect} from "react-redux";
 
+/////////////////////////////////////////////////////////////////////////////
+// FrameWork
+//
+import Res from "../res/Res";
+
 @connect(({lane}) => ({lane}))
 export default class LaneContainer extends React.Component {
 
@@ -16,14 +21,14 @@ export default class LaneContainer extends React.Component {
         });
     }
 
-    handleCloseRES(laneId){
+    handleCloseRES(laneId) {
         this.props.dispatch({
             type: "lane/closeRES",
             payload: laneId,
         });
     }
 
-    handleRemoveLane(laneId){
+    handleRemoveLane(laneId) {
         this.props.dispatch({
             type: "lane/removeLane",
             payload: laneId,
@@ -32,31 +37,46 @@ export default class LaneContainer extends React.Component {
 
     render() {
 
-        const {lanes, currentActiveLaneId, mainLaneId } = this.props.lane;
+        const {lanes, currentActiveLaneId, mainLaneId} = this.props.lane;
 
 
         return (
-            <div style={{position:"absolute", top:0, left:0, width:"100%", height:"100%"}}>
+            <div style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
                 {
                     lanes.map((lane) => {
 
-                        if(lane.id == mainLaneId){
-                            return  <div key={lane.id} style={{position:"absolute",top:0, left:0, width:"100%", height:"100%"}}>
-                                        {
-                                            lane.bcn.map((Beacon)=><Beacon {...this.props}/>)
-                                        }
-                                        {
-                                            lane.res.map((Response, index)=><O.component width={Response.width} height={Response.height} key={index} params={{...Response.params}}
-                                                                                  closeRES={(params)=>{this.handleCloseRES(lane.id); Response.callback(params);  }}></O.component>)
-                                        }
-                                    </div>
-                        }else{
-                            return  <div key={lane.id} style={{backgroundColor:"rgba(0,0,0,.3)", position:"absolute",top:0, left:0, width:"100%", height:"100%", display:(lane.id == currentActiveLaneId ? "block": "none")}}>
-                                        <h1 style={{textAlign:"center",marginTop:300}}>
-                                            {lane.id}
-                                            <h3><button onClick={()=>this.handleRemoveLane(lane.id)}>remove</button></h3>
-                                        </h1>
-                                    </div>
+                        if (lane.id == mainLaneId) {
+                            return <div key={lane.id}
+                                        style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+                                {
+                                    lane.bcn.map((Beacon) => <Beacon {...this.props}/>)
+                                }
+                                {
+                                    lane.res.map(({component: Response, width, height}) => <Res {...this.props}>
+                                            <Response width={width}
+                                                      height={height}
+                                            ></Response>
+                                        </Res>
+                                    )
+                                }
+                            </div>
+                        } else {
+                            return <div key={lane.id} style={{
+                                backgroundColor: "rgba(0,0,0,.3)",
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                display: (lane.id == currentActiveLaneId ? "block" : "none")
+                            }}>
+                                <h1 style={{textAlign: "center", marginTop: 300}}>
+                                    {lane.id}
+                                    <h3>
+                                        <button onClick={() => this.handleRemoveLane(lane.id)}>remove</button>
+                                    </h3>
+                                </h1>
+                            </div>
                         }
 
 
