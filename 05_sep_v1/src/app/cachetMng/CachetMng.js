@@ -25,17 +25,34 @@ export default class CachetMng extends React.Component {
         });
     }
 
-    handleAddZlbxx(){
-        alert("add");
+    // 章类别信息 增、删、改
+    cachetTypeAdd(){
+        alert("cachetTypeAdd");
     }
 
-    handleEditZlbxx(){
-        alert("edit");
+    cachetTypeModify(){
+        alert("cachetTypeModify");
     }
 
-    handleDelZlbxx(){
-        alert("del");
+    cachetTypeDelete(){
+        alert("cachetTypeDelete");
     }
+
+
+    // 章信息 增、删、改
+    cachetAdd(){
+        alert("cachetAdd");
+    }
+
+    cachetModify(){
+        alert("cachetModify");
+    }
+
+    cachetDelete(){
+        alert("cachetDelete");
+    }
+
+
 
     render(){
 
@@ -73,9 +90,9 @@ export default class CachetMng extends React.Component {
                            }]}
                     />
 
-                    <Button onClick={()=>this.handleAddZlbxx()}>新增</Button>
-                    <Button onClick={()=>this.handleEditZlbxx()}>修改</Button>
-                    <Button onClick={()=>this.handleDelZlbxx()}>删除</Button>
+                    <Button onClick={()=>this.cachetTypeAdd()}>新增</Button>
+                    <Button onClick={()=>this.cachetTypeModify()}>修改</Button>
+                    <Button onClick={()=>this.cachetTypeDelete()}>删除</Button>
                 </Panel>
 
                 <Panel>
@@ -130,9 +147,9 @@ export default class CachetMng extends React.Component {
 
 
 
-                            <Button onClick={()=>this.handleAddZlbxx()}>新增</Button>
-                            <Button onClick={()=>this.handleEditZlbxx()}>修改</Button>
-                            <Button onClick={()=>this.handleDelZlbxx()}>删除</Button>
+                            <Button onClick={()=>this.cachetAdd()}>新增</Button>
+                            <Button onClick={()=>this.cachetModify()}>修改</Button>
+                            <Button onClick={()=>this.cachetDelete()}>删除</Button>
                         </TabPage>
                         <TabPage tab="章所在模板" key="cachetLoca">
                             <Grid  ref={(ele)=>{this.dwTempInfor = ele} }
