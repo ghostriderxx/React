@@ -77,7 +77,6 @@ export default class GridWarpper extends React.Component{
 
     componentWillReceiveProps(nextProps){
         // 给GRID填充数据
-        console.log("dispatch-Grid-componentWillReceiveProps:"+this.state.namespace+"/GRID_FILL_DATA_SUCCESS");
         this.props.dispatch({
             type: this.state.namespace+"/GRID_FILL_DATA_SUCCESS",
             payload: nextProps.dataSource
