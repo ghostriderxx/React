@@ -14,6 +14,7 @@ import {Tab, TabPage} from "../../framework/taglib/tab/Tab";
 // App
 //
 import ResCachetTypeAdd from "./ResCachetTypeAdd"
+import ResCachetTypeModify from "./ResCachetTypeModify";
 
 
 @connect(
@@ -37,14 +38,21 @@ export default class CachetMng extends React.Component {
             type: "lane/OPEN_RES_REQUESTED",
             payload: {
                 component: ResCachetTypeAdd,
-                width: 1024,
-                height: 600,
+                width: 600,
+                title: "新增章类别信息",
             }
         });
     }
 
     cachetTypeModify(){
-        alert("cachetTypeModify");
+        this.props.dispatch({
+            type: "lane/OPEN_RES_REQUESTED",
+            payload: {
+                component: ResCachetTypeModify,
+                width: 600,
+                title: "修改章类别信息",
+            }
+        });
     }
 
     cachetTypeDelete(){

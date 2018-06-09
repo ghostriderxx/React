@@ -54,11 +54,14 @@ export default class LaneContainer extends React.Component {
                                     lane.bcn.map((Beacon) => <Beacon {...this.props}/>)
                                 }
                                 {
-                                    lane.res.map(({component: Response, width, height}) => <Res {...this.props}>
-                                            <Response width={width}
-                                                      height={height}
-                                            ></Response>
-                                        </Res>
+                                    lane.res.map(({component: Response, width, height, title}) => (
+                                        <Res {...this.props} title={title} width={width} height={height}>
+                                            <Response closeRES={(params)=>{
+                                                this.props.dispatch({
+                                                    type: "lane/CLOSE_RES_REQUESTED",
+                                                });
+                                            }}></Response>
+                                        </Res>)
                                     )
                                 }
                             </div>

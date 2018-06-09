@@ -19,7 +19,8 @@ export default class Res extends React.Component {
     render(){
         return (
             <Modal
-                title="Basic Modal"
+                title={this.props.title}
+                width={this.props.width}
                 visible={true}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}

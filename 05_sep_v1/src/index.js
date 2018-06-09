@@ -30,13 +30,15 @@ import LaneContainer from "./framework/taglib/lane/LaneContainer";
 //
 import App from "./app/App";
 import modelCachetMng from "./app/cachetMng/modelCachetMng";
+import modelResCachetAdd from "./app/cachetMng/modelResCachetAdd"
 
 /////////////////////////////////////////////////////////////////////////////
 // Start
 //
 let reducers = {
+    [modelLane.namespace]: modelLane.reducer, // Framework级Reducer
     [modelCachetMng.namespace]: modelCachetMng.reducer,
-    [modelLane.namespace]: modelLane.reducer,
+    [modelResCachetAdd.namespace]: modelResCachetAdd.reducer
 };
 
 const history = createBrowserHistory();
@@ -52,8 +54,9 @@ const store = createStore(
     )
 );
 
+sagaMiddleware.run(modelLane.effect); // Framework级Saga
 sagaMiddleware.run(modelCachetMng.effect);
-sagaMiddleware.run(modelLane.effect);
+sagaMiddleware.run(modelResCachetAdd.effect);
 
 /////////////////////////////////////////////////////////////////////////////
 // Dynamic

@@ -169,11 +169,21 @@ function* openResWatcher() {
     });
 }
 
+function* closeResWatcher() {
+    yield takeLatest(`${namespace}/CLOSE_RES_REQUESTED`, function*(action) {
+        yield put({
+            type: `${namespace}/CLOSE_RES_SUCCESS`,
+            payload: action.payload,
+        });
+    });
+}
+
 function* laneSaga(){
     yield all([
         addLaneWatcher(),
         setMainLaneWatcher(),
         openResWatcher(),
+        closeResWatcher(),
     ]);
 };
 
