@@ -16,8 +16,9 @@ module.exports = {
         hot: true,
         inline: true,
         historyApiFallback: true,
+        host: "0.0.0.0",
         proxy: {
-            "/sep": "http://localhost:8580/"
+            "/sep": "http://10.1.91.213:8580/"
         },
     },
     module: {

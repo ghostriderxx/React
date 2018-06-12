@@ -32,7 +32,6 @@ export default class ResCachetTypeAdd extends React.Component {
                 zlbmc,
             }
         });
-        this.props.closeRES();
     }
 
     cancel(){

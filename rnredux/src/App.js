@@ -1,10 +1,16 @@
 import React from 'react';
-import NavStack from "./NavStack"
 
-class App extends React.Component {
-    render() {
-        return <NavStack />;
-    }
-}
+//////////////////////////////////////////////////////////////////////////////
+// Framework
+//
+import StackNavigator from "./framework/taglib/navigator/StackNavigator";
 
-export default App
+
+//////////////////////////////////////////////////////////////////////////////
+// Component
+//
+import RES_REGISTRY from "./config/RES_REGISTRY";
+
+export default function(){
+    return <StackNavigator navItems={RES_REGISTRY} defaultActiveNavItem={'IndexPage'}/>;
+};

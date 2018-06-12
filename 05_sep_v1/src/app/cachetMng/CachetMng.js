@@ -42,6 +42,9 @@ export default class CachetMng extends React.Component {
                 title: "新增章类别信息",
             }
         });
+        // this.props.dispatch({
+        //     type: "cachetMng/FETCH_CACHET_TYPE_LIST_REQUESTED"
+        // });
     }
 
     cachetTypeModify(){

@@ -54,6 +54,11 @@ function* saveCachetTypeInfoAddWatcher() {
         yield call(request, `/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
 
         yield put({type: `${namespace}/SAVE_CACHET_TYPE_INFO_ADD_SUCCESS`});
+
+        // 关闭RES
+        yield put({
+            type: "lane/CLOSE_RES_REQUESTED",
+        });
     });
 }
 
