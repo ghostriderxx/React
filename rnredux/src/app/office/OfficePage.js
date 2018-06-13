@@ -26,7 +26,7 @@ class OfficePage extends React.Component {
     }
 
     gotoZizhi(){
-        this.props.navigation.navigate("Zizhi");
+        this.props.navigation.navigate("Zzcx");
     }
 
     render(){

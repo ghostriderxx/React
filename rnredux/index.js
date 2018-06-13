@@ -10,22 +10,22 @@ import createSagaMiddleware from 'redux-saga'
 
 // Nav
 import { createStackNavigator } from 'react-navigation';
-import {
-    createNavigationPropConstructor,
-    createNavigationReducer,
-    createReactNavigationReduxMiddleware,
-    initializeListeners,
-} from 'react-navigation-redux-helpers';
+// import {
+//     createNavigationPropConstructor,
+//     createNavigationReducer,
+//     createReactNavigationReduxMiddleware,
+//     initializeListeners,
+// } from 'react-navigation-redux-helpers';
 
 
 // Components
 import contactListSaga from "./src/sagas/contactListSaga";
-import zizhiSaga from "./src/sagas/zizhiSaga";
-
 import contactListReducer from './src/reducers/contactListReducer';
-import zizhiReducer from "./src/reducers/zizhiReducer";
+import modelZizhi from "./src/app/office/zizhi/_modelZizhi";
+
 
 import RES_REGISTRY from "./src/config/RES_REGISTRY";
+
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -56,8 +56,7 @@ const sagaMiddleware = createSagaMiddleware();
 //
 let reducers = {
     contactList: contactListReducer,
-    zizhi: zizhiReducer,
-    // nav: navReducer
+    [modelZizhi.namespace]:modelZizhi.reducer,
 };
 
 const store = createStore(
@@ -69,7 +68,7 @@ const store = createStore(
 );
 
 sagaMiddleware.run(contactListSaga);
-sagaMiddleware.run(zizhiSaga);
+sagaMiddleware.run(modelZizhi.effect);
 
 /////////////////////////////////////////////////////////////////////////////
 

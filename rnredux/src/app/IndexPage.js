@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // 这个地方暂时没有办法封装为标签的形式，
 // 受React Navigation插件特性限制；
+// 这个地方的封装待研究完React Navigation才能确定；
 
 export default createBottomTabNavigator(
     genRouteConfigs(MENUBAR_REGISTRY),

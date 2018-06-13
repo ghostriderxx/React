@@ -27,5 +27,11 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "proxy": {
+    "/dwoa": {
+      "target": "http://10.1.91.213:8580/",
+      "changeOrigin": true
+    }
   }
 }
