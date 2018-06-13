@@ -76,12 +76,12 @@ Badge.BadgeItem = BadgeItem;
 //
 function genBadgeItems(badgeItemConfigs) {
 
-    let items = badgeItemConfigs.map((item) => {
+    let items = badgeItemConfigs.map((item, index) => {
 
         const {label, iconId, onPress} = item.props;
 
         return (
-            <TouchableNativeFeedback onPress={onPress}>
+            <TouchableNativeFeedback key={index} onPress={onPress}>
                 <View style={{width:60, display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
                     <Ionicons name={iconId} size={40}/>
                     <Label>{label}</Label>

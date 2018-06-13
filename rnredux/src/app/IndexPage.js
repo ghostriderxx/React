@@ -1,47 +1,51 @@
 import React, {Component} from 'react';
 
-//////////////////////////////////////////////////////////////////////////////
-// Framework
-//
-import BottomTabNavigator from "../framework/taglib/navigator/BottomTabNavigator";
+import {createBottomTabNavigator} from "react-navigation";
+import MENUBAR_REGISTRY from "../config/MENUBAR_REGISTRY";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// Components
-import HomePage from "./home/HomePage"
-import OfficePage from "./office/OfficePage"
-import MyPage from "./my/MyPage"
-import ContactList from "./contactlist/ContactList"
+// 这个地方暂时没有办法封装为标签的形式，
+// 受React Navigation插件特性限制；
 
-export default class IndexPage extends React.Component {
-    constructor(props){
-        super(props);
-    }
+export default createBottomTabNavigator(
+    genRouteConfigs(MENUBAR_REGISTRY),
+    genBottomTabNavigatorConfig(MENUBAR_REGISTRY[0].name)
+);
 
-    render(){
-        const NavItem = BottomTabNavigator.NavItem;
+function genRouteConfigs(navItems) {
 
-        return (
-            <BottomTabNavigator defaultActiveNavItem={"Home"}>
-                <NavItem
-                    component={HomePage}
-                    name={"Home"}
-                    title={"首页"}
-                    iconId={"ios-home"}/>
-                <NavItem
-                    component={ContactList}
-                    name={"ContactList"}
-                    title={"通讯录"}
-                    iconId={"ios-contacts"}/>
-                <NavItem
-                    component={OfficePage}
-                    name={"OfficePage"}
-                    title={"办公"}
-                    iconId={"ios-home"}/>
-                <NavItem
-                    component={MyPage}
-                    name={"MyPage"}
-                    title={"我"}
-                    iconId={"ios-man"}/>
-            </BottomTabNavigator>
-        );
+    let config = navItems.reduce((config, item) => {
+
+        const {name, component, title, iconId} = item;
+
+        return {
+            ...config,
+            [name]: {
+                screen: component,
+                navigationOptions: ({navigation}) => ({
+                    title: title,
+                    tabBarIcon: ({focused, tintColor}) => {
+                        return <Ionicons name={focused ? iconId : `${iconId}-outline`} size={25}/>
+                    }
+                }),
+            }
+        };
+    }, {});
+
+    return config;
+}
+
+function genBottomTabNavigatorConfig(initialRouteName){
+    return {
+        initialRouteName,
+        tabBarOptions: {
+            activeTintColor: '#e91e63',
+            labelStyle: {
+                fontSize: 12,
+            },
+            style: {
+                backgroundColor: '#ffffff',
+            },
+        }
     }
 }

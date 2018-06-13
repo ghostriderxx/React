@@ -10,12 +10,12 @@ import createSagaMiddleware from 'redux-saga'
 
 // Nav
 import { createStackNavigator } from 'react-navigation';
-// import {
-//     createNavigationPropConstructor,       // handles #1 above
-//     createNavigationReducer,               // handles #2 above
-//     createReactNavigationReduxMiddleware,  // handles #4 above
-//     initializeListeners,                   // handles #4 above
-// } from 'react-navigation-redux-helpers';
+import {
+    createNavigationPropConstructor,
+    createNavigationReducer,
+    createReactNavigationReduxMiddleware,
+    initializeListeners,
+} from 'react-navigation-redux-helpers';
 
 
 // Components
@@ -88,9 +88,7 @@ sagaMiddleware.run(zizhiSaga);
 //     }
 // }
 //
-// const AppWithNavigationState = connect((state) => ({
-//     nav: state.nav,
-// }))(App);
+// const AppWithNavigationState = connect(({nav}) => ({nav}))(App);
 
 const Index = () => {
     return (

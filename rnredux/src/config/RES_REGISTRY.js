@@ -6,12 +6,12 @@ import GongsiZizhi from "../app/office/zizhi/GongsiZizhi";
 import Zizhi from "../app/office/zizhi/Zizhi";
 
 const RES_REGISTRY = {
-    IndexPage,
-    ContactDetail,
-    Baogong,
-    Zizhi,
-    GongsiZizhi,
-    GongsiZizhiDetail
+    IndexPage: { screen: IndexPage },
+    ContactDetail: { screen: ContactDetail },
+    Baogong: { screen: Baogong },
+    Zizhi: { screen: Zizhi },
+    GongsiZizhi: { screen: GongsiZizhi },
+    GongsiZizhiDetail: { screen: GongsiZizhiDetail },
 };
 
 export default RES_REGISTRY
