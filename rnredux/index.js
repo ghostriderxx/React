@@ -1,31 +1,103 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+
+// Redux
+import { Provider, connect } from 'react-redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+
+// Saga
 import createSagaMiddleware from 'redux-saga'
 
+// Nav
+import { createStackNavigator } from 'react-navigation';
+// import {
+//     createNavigationPropConstructor,       // handles #1 above
+//     createNavigationReducer,               // handles #2 above
+//     createReactNavigationReduxMiddleware,  // handles #4 above
+//     initializeListeners,                   // handles #4 above
+// } from 'react-navigation-redux-helpers';
+
+
 // Components
-import rootReducer from './src/reducers/index';
-import rootSaga from './src/sagas/index'
+import contactListSaga from "./src/sagas/contactListSaga";
+import zizhiSaga from "./src/sagas/zizhiSaga";
+
+import contactListReducer from './src/reducers/contactListReducer';
+import zizhiReducer from "./src/reducers/zizhiReducer";
+
+import RES_REGISTRY from "./src/config/RES_REGISTRY";
 
 
-import App from './src/App';
+/////////////////////////////////////////////////////////////////////////////
+// Nav
+//
+const AppNavigator = createStackNavigator(RES_REGISTRY, {
+    initialRouteName: 'IndexPage',
+    headerMode: "none",
+});
 
+// const navReducer = createNavigationReducer(AppNavigator);
+//
+// const navMiddleware = createReactNavigationReduxMiddleware(
+//     "root",
+//     state => state.nav,
+// );
+//
+// const navigationPropConstructor = createNavigationPropConstructor("root");
 
-
+/////////////////////////////////////////////////////////////////////////////
+// Saga
+//
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(rootSaga);
+/////////////////////////////////////////////////////////////////////////////
+// Start
+//
+let reducers = {
+    contactList: contactListReducer,
+    zizhi: zizhiReducer,
+    // nav: navReducer
+};
+
+const store = createStore(
+    combineReducers(reducers),
+    applyMiddleware(
+        sagaMiddleware,
+        // navMiddleware,
+    )
+);
+
+sagaMiddleware.run(contactListSaga);
+sagaMiddleware.run(zizhiSaga);
+
+/////////////////////////////////////////////////////////////////////////////
+
+// class App extends React.Component {
+//
+//     componentDidMount() {
+//         initializeListeners("root", this.props.nav);
+//     }
+//
+//     render() {
+//         const navigation = navigationPropConstructor(
+//             this.props.dispatch,
+//             this.props.nav,
+//         );
+//         return <AppNavigator navigation={navigation} />;
+//     }
+// }
+//
+// const AppWithNavigationState = connect((state) => ({
+//     nav: state.nav,
+// }))(App);
 
 const Index = () => {
     return (
         <Provider store={store}>
-            <App/>
+            <AppNavigator/>
         </Provider>
     );
 };
-
 
 AppRegistry.registerComponent('rnredux', () => Index);
