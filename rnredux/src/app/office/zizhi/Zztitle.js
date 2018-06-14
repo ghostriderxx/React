@@ -94,6 +94,11 @@ class Zztitle extends React.Component {
                 type,
                 zzid
             });
+        }else{
+            this.props.navigation.navigate("ZZDetailsZL", {
+                type,
+                zzid
+            });
         }
     }
 

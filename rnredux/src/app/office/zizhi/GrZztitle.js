@@ -20,32 +20,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Panel from "../../../framework/taglib/panel/Panel";
 import ResTitle from "../../../framework/taglib/res/ResTitle";
 
-function genZZItem(key, count, zzlxmc){
-    return (
-        <TouchableNativeFeedback key={key} onPress={() => {
-            this.toZZName(zzlxmc)
-        }}>
-            <View style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                height: 40,
-            }}>
-                <Text style={{fontSize: 16}}>●{zzlxmc}</Text>
-                <Text style={{flex: 1, fontSize: 16, textAlign: "right"}}>{Math.floor(count)}</Text>
-                <Ionicons style={{marginLeft: 10}} name="ios-arrow-forward" color="#ffffff"
-                          size={30}></Ionicons>
-            </View>
-        </TouchableNativeFeedback>
-    );
-}
-
-
 class GrZztitle extends React.Component {
 
     constructor(props){
         super(props);
-        genZZItem = genZZItem.bind(this);
     }
 
     componentDidMount() {
@@ -54,6 +32,26 @@ class GrZztitle extends React.Component {
             type: "grzztitle/FETCH_ZZCOUNT_REQUESTED",
             payload: type,
         });
+    }
+
+    genZZItem(key, count, zzlxmc){
+        return (
+            <TouchableNativeFeedback key={key} onPress={() => {
+                this.toZZName(zzlxmc)
+            }}>
+                <View style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    height: 40,
+                }}>
+                    <Text style={{fontSize: 16}}>●{zzlxmc}</Text>
+                    <Text style={{flex: 1, fontSize: 16, textAlign: "right"}}>{Math.floor(count)}</Text>
+                    <Ionicons style={{marginLeft: 10}} name="ios-arrow-forward" color="#ffffff"
+                              size={30}></Ionicons>
+                </View>
+            </TouchableNativeFeedback>
+        );
     }
 
     toZZName = (zzlxmc) => {
@@ -67,7 +65,7 @@ class GrZztitle extends React.Component {
                 <ResTitle title={"个人资质"}/>
                 {
                     vdss.map((zz, key) => {
-                        return genZZItem(key, zz.count, zz.zzlxmc);
+                        return this.genZZItem(key, zz.count, zz.zzlxmc);
                     })
                 }
             </Panel>
