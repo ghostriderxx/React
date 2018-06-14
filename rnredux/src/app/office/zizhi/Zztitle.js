@@ -20,39 +20,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Panel from "../../../framework/taglib/panel/Panel";
 import ResTitle from "../../../framework/taglib/res/ResTitle";
 
-function genZZItem(zzId, zzTitle, str){
-    return (
-        <TouchableNativeFeedback key={zzId} onPress={() => {
-            this.toZZDetails(zzId)
-        }}>
-            <View style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                height: 40,
-            }}>
-                <Text style={{fontSize: 16}}>●</Text>
-                <View style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    flex: 1,
-                }}>
-                    <Text style={{fontSize: 16}}>{zzTitle}</Text>
-                    <Text style={{fontSize: 16}}>{str}</Text>
-                </View>
-                <Ionicons style={{marginLeft: 10}} name="ios-arrow-forward" color="#ffffff"
-                          size={30}></Ionicons>
-            </View>
-        </TouchableNativeFeedback>
-    );
-}
-
-
 class Zztitle extends React.Component {
 
     constructor(props){
         super(props);
-        genZZItem = genZZItem.bind(this);
     }
 
     componentDidMount() {
@@ -63,10 +34,35 @@ class Zztitle extends React.Component {
         });
     }
 
+    genZZItem(zzId, zzTitle, str){
+        return (
+            <TouchableNativeFeedback key={zzId} onPress={() => {
+                this.toZZDetails(zzId)
+            }}>
+                <View style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    height: 40,
+                }}>
+                    <Text style={{fontSize: 16}}>●</Text>
+                    <View style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        flex: 1,
+                    }}>
+                        <Text style={{fontSize: 16}}>{zzTitle}</Text>
+                        <Text style={{fontSize: 16}}>{str}</Text>
+                    </View>
+                    <Ionicons style={{marginLeft: 10}} name="ios-arrow-forward" color="#ffffff"
+                              size={30}></Ionicons>
+                </View>
+            </TouchableNativeFeedback>
+        );
+    }
+
     toZZDetails = (zzid) => {
         const type = this.props.navigation.getParam('type');
-
-        alert(zzid+"\n"+type);
 
         if(type == 1){
             this.props.navigation.navigate("ZZDetailsGS", {
@@ -110,7 +106,7 @@ class Zztitle extends React.Component {
                 <ResTitle title={title}/>
                 {
                     zzvds.map((zz) => {
-                        return genZZItem(zz.zzid, zz.zztitle, zz.str);
+                        return this.genZZItem(zz.zzid, zz.zztitle, zz.str);
                     })
                 }
             </Panel>

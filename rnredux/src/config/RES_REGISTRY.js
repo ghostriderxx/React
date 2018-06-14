@@ -6,8 +6,7 @@ import ContactDetail from "../app/contactlist/ContactDetail";
 import Zzcx from "../app/office/zizhi/Zzcx";
 import Zztitle from "../app/office/zizhi/Zztitle";
 import GrZztitle from "../app/office/zizhi/GrZztitle";
-import ZZDetailsGr from "../app/office/zizhi/ZZDetailsGr";
-
+import ZZDetailsGS from "../app/office/zizhi/ZZDetailsGS";
 const RES_REGISTRY = {
     IndexPage,
     ContactDetail,
@@ -17,7 +16,7 @@ const RES_REGISTRY = {
     Zzcx,
     Zztitle,
     GrZztitle,
-    ZZDetailsGr,
+    ZZDetailsGS,
 };
 
 export default RES_REGISTRY

@@ -33,13 +33,11 @@ function reducer(state=initialState, action) {
                 ...initialState,
                 loading: true,
             };
+
         case `${namespace}/FETCH_ZZDetails_SUCCESS`:
             return {
                 ...initialState,
-                zzNums: {
-                    ...action.payload
-                },
-                loading: false,
+                ...payload,
             };
 
         default:
@@ -51,11 +49,11 @@ function reducer(state=initialState, action) {
 // Sagas
 //
 function* fetchZZDetails() {
-    yield takeLatest(`${namespace}/FETCH_ZZDetails_REQUESTED`, function* fetchZizhiList(action) {
+    yield takeLatest(`${namespace}/FETCH_ZZDetails_REQUESTED`, function* (action) {
+        //yield put({type: `${namespace}/FETCH_ZZDetails_INPROGRESS`});
 
-        yield put({type: `${namespace}/FETCH_ZZDetails_INPROGRESS`});
-
-        const obj =  yield call(request, `http://10.1.91.213:8580/dwoa/ZizhiServlet/queryZZDetails?type=${action.type}&zzid=${action.zzid}`);
+        const {type, zzid} = action.payload;
+        const obj =  yield call(request, `http://10.1.91.213:8580/dwoa/ZizhiServlet/queryZZDetails?type=${type}&zzid=${zzid}`);
 
         yield put({type: `${namespace}/FETCH_ZZDetails_SUCCESS`, payload: obj});
 
