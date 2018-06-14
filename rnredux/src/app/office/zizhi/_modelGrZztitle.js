@@ -5,21 +5,21 @@ import request from "../../../framework/utils/request";
 /////////////////////////////////////////////////////////////////////////////
 // namespace
 //
-const namespace = "zizhi";
+const namespace = "grzztitle";
 
 /////////////////////////////////////////////////////////////////////////////
 // InitialState
 //
 const initialState = {
-    zizhiList: [],
+    vdss: [],
+    type: null,
     loading: false,
-    errormsg: null
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // Reducers
 //
-function zizhiReducer(state=initialState, action) {
+function reducer(state=initialState, action) {
 
     const {type, payload} = action;
 
@@ -28,18 +28,16 @@ function zizhiReducer(state=initialState, action) {
         /**
          * 异步获取资质列表
          */
-        case `${namespace}/FETCH_ZIZHILIST_INPROGRESS`:
+        case `${namespace}/FETCH_ZZCOUNT_INPROGRESS`:
             return {
-                ...state,
-                zizhiList: [],
+                ...initialState,
                 loading: true,
             };
-        case `${namespace}/FETCH_ZIZHILIST_SUCCESS`:
+        case `${namespace}/FETCH_ZZCOUNT_SUCCESS`:
             return {
-                ...state,
-                zizhiList: action.payload,
+                ...initialState,
+                ...payload,
                 loading: false,
-                errormsg: null,
             };
 
         default:
@@ -50,20 +48,21 @@ function zizhiReducer(state=initialState, action) {
 /////////////////////////////////////////////////////////////////////////////
 // Sagas
 //
-function* fetchZizhiList() {
-    yield takeLatest(`${namespace}/FETCH_ZIZHILIST_REQUESTED`, function* fetchZizhiList(action) {
+function* fetchZzCount() {
+    yield takeLatest(`${namespace}/FETCH_ZZCOUNT_REQUESTED`, function* fetchZizhiList(action) {
 
-        yield put({type: `${namespace}/FETCH_ZIZHILIST_INPROGRESS`});
+        yield put({type: `${namespace}/FETCH_ZZCOUNT_INPROGRESS`});
 
-        const list =  yield call(request, `/dwoa/ZizhiServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+        const obj =  yield call(request, `http://10.1.91.213:8580/dwoa/ZizhiServlet/queryZzCountT2?type=${action.payload}`);
 
-        yield put({type: `${namespace}/FETCH_ZIZHILIST_SUCCESS`, payload: list});
+        yield put({type: `${namespace}/FETCH_ZZCOUNT_SUCCESS`, payload: obj});
+
     });
 }
 
-function* zizhiSaga(){
+function* effect(){
     yield all([
-        fetchZizhiList(),
+        fetchZzCount(),
     ]);
 };
 
@@ -73,7 +72,7 @@ function* zizhiSaga(){
 //
 const exports = {
     namespace,
-    reducer: zizhiReducer,
-    effect: zizhiSaga
+    reducer: reducer,
+    effect: effect
 };
 export default exports;

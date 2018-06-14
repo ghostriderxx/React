@@ -20,12 +20,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Panel from "../../../framework/taglib/panel/Panel";
 import ResTitle from "../../../framework/taglib/res/ResTitle";
 
-
-
-function genZZItem(zzType, zzLabel, zzNum){
+function genZZItem(key, count, zzlxmc){
     return (
-        <TouchableNativeFeedback onPress={() => {
-            this.toZZName(zzType)
+        <TouchableNativeFeedback key={key} onPress={() => {
+            this.toZZName(zzlxmc)
         }}>
             <View style={{
                 display: "flex",
@@ -33,8 +31,8 @@ function genZZItem(zzType, zzLabel, zzNum){
                 alignItems: "center",
                 height: 40,
             }}>
-                <Text style={{fontSize: 16}}>●{zzLabel}</Text>
-                <Text style={{flex: 1, fontSize: 16, textAlign: "right"}}>{zzNum}</Text>
+                <Text style={{fontSize: 16}}>●{zzlxmc}</Text>
+                <Text style={{flex: 1, fontSize: 16, textAlign: "right"}}>{Math.floor(count)}</Text>
                 <Ionicons style={{marginLeft: 10}} name="ios-arrow-forward" color="#ffffff"
                           size={30}></Ionicons>
             </View>
@@ -43,7 +41,7 @@ function genZZItem(zzType, zzLabel, zzNum){
 }
 
 
-class Zzcx extends React.Component {
+class GrZztitle extends React.Component {
 
     constructor(props){
         super(props);
@@ -51,43 +49,33 @@ class Zzcx extends React.Component {
     }
 
     componentDidMount() {
+        const type = this.props.navigation.getParam('type');
         this.props.dispatch({
-            type: "zzcx/FETCH_ZZNUMS_REQUESTED"
+            type: "grzztitle/FETCH_ZZCOUNT_REQUESTED",
+            payload: type,
         });
     }
 
-    toZZName = (type) => {
-        if(type == 2){
-            this.props.navigation.navigate("GrZztitle", {
-                type
-            });
-        }else{
-            this.props.navigation.navigate("Zztitle", {
-                type
-            });
-        }
+    toZZName = (zzlxmc) => {
+        alert(zzlxmc);
     }
 
     render() {
-        const {gszz, grzz, rjcpzs, zzq, gshj, grry, zl} = this.props.zzcx.zzNums;
-
+        const {vdss, type} = this.props.grzztitle;
         return (
             <Panel>
-                <ResTitle title={"资质"}/>
-
-                {genZZItem(1, "公司资质", gszz)}
-                {genZZItem(2, "个人资质", grzz)}
-                {genZZItem(3, "软件产品证书", rjcpzs)}
-                {genZZItem(4, "著作权", zzq)}
-                {genZZItem(5, "公司获奖", gshj)}
-                {genZZItem(6, "个人荣誉", grry)}
-                {genZZItem(7, "专利", zl)}
+                <ResTitle title={"个人资质"}/>
+                {
+                    vdss.map((zz, key) => {
+                        return genZZItem(key, zz.count, zz.zzlxmc);
+                    })
+                }
             </Panel>
         );
     }
 }
 
 export default withNavigation(connect(
-    ({zzcx}) => ({zzcx}),
+    ({grzztitle}) => ({grzztitle}),
     (dispatch) => ({dispatch})
-)(Zzcx));
+)(GrZztitle));

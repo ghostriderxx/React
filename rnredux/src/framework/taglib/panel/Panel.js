@@ -7,7 +7,6 @@ import React from "react";
 import {
    View
 } from 'react-native';
-import Label from "../form/label/Label";
 
 //////////////////////////////////////////////////////////////////////////////
 // Panel
@@ -21,7 +20,7 @@ export default class Panel extends React.Component {
         return <View {...this.props}/>
     }
 }
-Label.propTypes = {
+Panel.propTypes = {
     height: PropTypes.number,
     backgroundColor: PropTypes.string,
 };

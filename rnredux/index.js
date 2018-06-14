@@ -21,8 +21,11 @@ import { createStackNavigator } from 'react-navigation';
 // Components
 import contactListSaga from "./src/sagas/contactListSaga";
 import contactListReducer from './src/reducers/contactListReducer';
-import modelZizhi from "./src/app/office/zizhi/_modelZizhi";
 
+import modelZzcc from "./src/app/office/zizhi/_modelZzcc";
+import modelZztitle from "./src/app/office/zizhi/_modelZztitle";
+import modelGrZztitle from "./src/app/office/zizhi/_modelGrZztitle";
+import modelDetails from "./src/app/office/zizhi/_modelDetails";
 
 import RES_REGISTRY from "./src/config/RES_REGISTRY";
 
@@ -56,7 +59,10 @@ const sagaMiddleware = createSagaMiddleware();
 //
 let reducers = {
     contactList: contactListReducer,
-    [modelZizhi.namespace]:modelZizhi.reducer,
+    [modelZzcc.namespace]:modelZzcc.reducer,
+    [modelZztitle.namespace]:modelZztitle.reducer,
+    [modelGrZztitle.namespace]:modelGrZztitle.reducer,
+    [modelDetails.namespace]:modelDetails.reducer,
 };
 
 const store = createStore(
@@ -68,7 +74,10 @@ const store = createStore(
 );
 
 sagaMiddleware.run(contactListSaga);
-sagaMiddleware.run(modelZizhi.effect);
+sagaMiddleware.run(modelZzcc.effect);
+sagaMiddleware.run(modelZztitle.effect);
+sagaMiddleware.run(modelGrZztitle.effect);
+sagaMiddleware.run(modelDetails.effect);
 
 /////////////////////////////////////////////////////////////////////////////
 
