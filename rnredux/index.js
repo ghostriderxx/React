@@ -19,9 +19,7 @@ import { createStackNavigator } from 'react-navigation';
 
 
 // Components
-import contactListSaga from "./src/sagas/contactListSaga";
-import contactListReducer from './src/reducers/contactListReducer';
-
+// 资质管理
 import modelZzcc from "./src/app/office/zizhi/_modelZzcc";
 import modelZztitle from "./src/app/office/zizhi/_modelZztitle";
 import modelGrZztitle from "./src/app/office/zizhi/_modelGrZztitle";
@@ -58,7 +56,6 @@ const sagaMiddleware = createSagaMiddleware();
 // Start
 //
 let reducers = {
-    contactList: contactListReducer,
     [modelZzcc.namespace]:modelZzcc.reducer,
     [modelZztitle.namespace]:modelZztitle.reducer,
     [modelGrZztitle.namespace]:modelGrZztitle.reducer,
@@ -73,7 +70,6 @@ const store = createStore(
     )
 );
 
-sagaMiddleware.run(contactListSaga);
 sagaMiddleware.run(modelZzcc.effect);
 sagaMiddleware.run(modelZztitle.effect);
 sagaMiddleware.run(modelGrZztitle.effect);

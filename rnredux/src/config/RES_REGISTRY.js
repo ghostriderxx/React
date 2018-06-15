@@ -1,5 +1,10 @@
+// 首页
 import IndexPage from "../app/IndexPage";
+
+// 报工
 import Baogong from "../app/office/baogong/Baogong";
+
+// 通讯录
 import ContactDetail from "../app/contactlist/ContactDetail";
 
 // 资质管理
