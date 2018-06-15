@@ -1,36 +1,54 @@
-// React、Redux、Router
+// React
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { createStore, applyMiddleware } from 'redux';
+// Redux
+import { applyMiddleware, compose, createStore } from 'redux'
 import { Provider } from 'react-redux'
+
+// Saga
 import createSagaMiddleware from 'redux-saga'
 
-import { BrowserRouter as Router} from "react-router-dom";
+// Route
+import { createBrowserHistory } from 'history'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { ConnectedRouter } from 'connected-react-router'
+
+/////////////////////////////////////////////////////////////////////////////////
 
 // rootReducer
 import rootReducer from './reducer/index'
 
-// rootSaga
-import rootSaga from './saga/index'
+// Saga
+import userEditSaga from "./saga/userEdit"
+import userMng from "./saga/userMng"
 
 // rootComponent
 import UserMngApp from "./component/UserMngApp"
 
+const history = createBrowserHistory();
+
+
 const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
-    rootReducer,
-    applyMiddleware(sagaMiddleware)
+    connectRouter(history)(rootReducer),
+    applyMiddleware(
+        sagaMiddleware,
+        routerMiddleware(history)
+    )
 );
 
-sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(userMng);
+sagaMiddleware.run(userEditSaga);
+
+
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <ConnectedRouter history={history}>
             <UserMngApp/>
-        </Router>
+        </ConnectedRouter>
     </Provider>,
     document.getElementById('app')
 );

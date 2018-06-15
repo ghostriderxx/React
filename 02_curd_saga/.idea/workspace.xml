@@ -14,8 +14,8 @@
       <file leaf-file-name="UserMngApp.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-686">
-              <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+            <state relative-caret-position="306">
+              <caret line="60" column="58" lean-forward="true" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
               <folding>
                 <element signature="e#23#48#0" expanded="true" />
                 <element signature="e#297#328#0" expanded="true" />
@@ -24,24 +24,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserAdd.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/component/UserAdd.js">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="91" column="30" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-                <element signature="e#71#99#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="324">
+              <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserEdit.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/component/UserEdit.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1554">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="306">
+              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+              <folding>
+                <element signature="e#9#35#0" expanded="true" />
+                <element signature="e#80#141#0" expanded="true" />
+                <element signature="e#240#286#0" expanded="true" />
+                <element signature="e#573#615#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -66,6 +68,7 @@
       <find>empno</find>
       <find>userEditEmpno</find>
       <find>isUserAddDialogOpen</find>
+      <find>ConnectedRouter</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -79,16 +82,16 @@
         <option value="$PROJECT_DIR$/src/reducer/userEditReducer.js" />
         <option value="$PROJECT_DIR$/src/util/request.js" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
-        <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/.babelrc" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/reducer/index.js" />
-        <option value="$PROJECT_DIR$/src/saga/userEdit.js" />
         <option value="$PROJECT_DIR$/src/saga/userMngSaga.js" />
         <option value="$PROJECT_DIR$/src/saga/index.js" />
-        <option value="$PROJECT_DIR$/src/component/UserMngApp.js" />
         <option value="$PROJECT_DIR$/src/component/UserEdit.js" />
         <option value="$PROJECT_DIR$/src/component/UserAdd.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/saga/userEdit.js" />
+        <option value="$PROJECT_DIR$/src/component/UserMngApp.js" />
       </list>
     </option>
   </component>
@@ -102,8 +105,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="255" />
-    <option name="y" value="1" />
+    <option name="x" value="144" />
+    <option name="y" value="218" />
     <option name="width" value="1539" />
     <option name="height" value="1044" />
   </component>
@@ -294,15 +297,15 @@
       <workItem from="1527819668391" duration="236000" />
       <workItem from="1527819969710" duration="1239000" />
       <workItem from="1527821776087" duration="30000" />
-      <workItem from="1529051602032" duration="1221000" />
+      <workItem from="1529051602032" duration="3339000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72133000" />
+    <option name="totallyTimeSpent" value="74251000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="255" y="1" width="1539" height="1044" extended-state="0" />
+    <frame x="144" y="218" width="1539" height="1044" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="2" />
@@ -313,9 +316,9 @@
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5022625" side_tool="true" weight="0.32876712" />
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.1796276" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.1796276" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49773756" weight="0.3242059" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49773756" visible="true" weight="0.3242059" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20824882" />
@@ -562,16 +565,6 @@
     <entry file="file://$PROJECT_DIR$/node_modules/react-router-redux/index.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/react-router-redux/actions.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/react-router-redux/reducer.js" />
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-          <folding>
-            <element signature="e#22#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -579,13 +572,6 @@
             <caret column="7" selection-start-column="7" selection-end-column="7" />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="38" column="3" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -619,40 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/request.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="44" selection-start-line="44" selection-end-line="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saga/userEdit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saga/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saga/userMng.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="82" column="28" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-redux/lib/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -680,13 +632,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
+    <entry file="file://$PROJECT_DIR$/src/saga/userMng.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-686">
-          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+        <state relative-caret-position="552">
+          <caret line="82" column="28" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/request.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/UserAdd.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1236">
+          <caret line="101" column="25" lean-forward="true" selection-start-line="101" selection-start-column="25" selection-end-line="101" selection-end-column="25" />
           <folding>
-            <element signature="e#23#48#0" expanded="true" />
-            <element signature="e#297#328#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#71#99#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -698,13 +664,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/UserAdd.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="91" column="30" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
+        <state relative-caret-position="324">
+          <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saga/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#71#99#0" expanded="true" />
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/UserMngApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="60" column="58" lean-forward="true" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
+          <folding>
+            <element signature="e#23#48#0" expanded="true" />
+            <element signature="e#297#328#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saga/userEdit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+          <folding>
+            <element signature="e#9#35#0" expanded="true" />
+            <element signature="e#80#141#0" expanded="true" />
+            <element signature="e#240#286#0" expanded="true" />
+            <element signature="e#573#615#0" expanded="true" />
           </folding>
         </state>
       </provider>

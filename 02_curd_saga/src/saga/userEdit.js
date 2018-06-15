@@ -1,4 +1,5 @@
 import {all, call, put, takeLatest} from "redux-saga/es/effects";
+import { push } from 'connected-react-router'
 import request from "../util/request";
 
 function* saveUserWorker(action) {

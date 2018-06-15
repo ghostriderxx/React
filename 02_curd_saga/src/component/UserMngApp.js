@@ -1,7 +1,8 @@
 // React, Redux、Router
 import React from "react"
 import { connect } from "react-redux"
-import { withRouter, Route } from 'react-router'
+import { Route } from 'react-router'
+import { push } from 'connected-react-router'
 
 // antd
 import 'antd/dist/antd.css';
@@ -20,7 +21,6 @@ import {
 import UserAdd from "./UserAdd"
 import UserEdit from "./UserEdit"
 
-@withRouter
 @connect(({userMng, location}) => ({userMng, location}))
 @Form.create()
 export default class UserMngApp extends React.Component {
@@ -54,11 +54,11 @@ export default class UserMngApp extends React.Component {
     }
 
     openUserAddDialog() {
-        this.props.history.push("/userAdd");
+        this.props.dispatch( push("/userAdd") )
     }
 
     openUserEditDialog(empno) {
-        this.props.history.push("/userEdit",  { empno: empno });
+        this.props.dispatch( push("/userEdit",  { empno: empno }) );
     }
 
     render() {
