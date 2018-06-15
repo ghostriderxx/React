@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import userMng from './userMngReducer'
-import userEdit from "./userEditReducer"
+import userMng from './userMng'
+import userEdit from "./userEdit"
 
 const rootReducer = combineReducers({
     userMng,

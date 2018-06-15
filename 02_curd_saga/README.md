@@ -1,10 +1,9 @@
-npm init
+UserMngApp
+===
 
+### 安装
+    npm install
 
-npm install --save redux
-npm install --save react-redux
+### 启动
+    npm start
 
-
-npm install --save-dev css-loader
-
-https://webpack.js.org/loaders/
