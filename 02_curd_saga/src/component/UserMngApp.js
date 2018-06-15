@@ -20,7 +20,10 @@ import {
 import UserAdd from "./UserAdd"
 import UserEdit from "./UserEdit"
 
-class UserMngApp extends React.Component {
+@withRouter
+@connect(({userMng, location}) => ({userMng, location}))
+@Form.create()
+export default class UserMngApp extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -146,10 +149,3 @@ class UserMngApp extends React.Component {
         </div>;
     }
 }
-
-export default withRouter(
-    connect(
-        ({userMng, location}) => ({userMng, location}),
-        (dispatch) => ({dispatch})
-    )(Form.create()(UserMngApp))
-);

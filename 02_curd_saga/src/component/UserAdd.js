@@ -13,9 +13,9 @@ import {
     Modal,
 } from 'antd';
 
-const FormItem = Form.Item;
-
-class UserAdd extends React.Component {
+@Form.create()
+@connect(({userMng}) => ({userMng}))
+export default class UserAdd extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -63,7 +63,7 @@ class UserAdd extends React.Component {
                 onCancel={() => this.props.onCancel()}
             >
                 <Form>
-                    <FormItem label={"姓名"}
+                    <Form.Item label={"姓名"}
                               {...formItemLayout}>
                         {
                             getFieldDecorator('name', {
@@ -74,9 +74,9 @@ class UserAdd extends React.Component {
                                 <Input placeholder="姓名..."/>
                             )
                         }
-                    </FormItem>
+                    </Form.Item>
 
-                    <FormItem label={"年龄"}
+                    <Form.Item label={"年龄"}
                               {...formItemLayout}>
                         {
                             getFieldDecorator('age', {
@@ -87,9 +87,9 @@ class UserAdd extends React.Component {
                                 <Input type={"number"} placeholder="年龄..."/>
                             )
                         }
-                    </FormItem>
+                    </Form.Item>
 
-                    <FormItem label={"住址"}
+                    <Form.Item label={"住址"}
                               {...formItemLayout}>
                         {
                             getFieldDecorator('address', {
@@ -100,14 +100,9 @@ class UserAdd extends React.Component {
                                 <Input placeholder="住址..."/>
                             )
                         }
-                    </FormItem>
+                    </Form.Item>
                 </Form>
             </Modal>
         );
     }
 }
-
-export default connect(
-    ({userMng}) => ({userMng}),
-    (dispatch) => ({dispatch})
-)(Form.create()(UserAdd));

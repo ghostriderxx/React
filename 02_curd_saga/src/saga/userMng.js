@@ -56,20 +56,6 @@ function* deleteUserWorker(action) {
     }
 }
 
-function* saveUserWorker(action) {
-    try {
-        yield put({type: "SAVE_USER_INPROGRESS"});
-
-        yield call(request, "/userMng/saveUser", {
-            ...action.payload
-        });
-
-        yield put({type: "SAVE_USER_SUCCESS"});
-    } catch (e) {
-        yield put({type: "SAVE_USER_FAILED", payload: e.message});
-    }
-}
-
 /**
  * Watcher Saga
  */
@@ -89,16 +75,11 @@ function* deleteUserWatcher() {
     yield takeLatest("DELETE_USER_REQUESTED", deleteUserWorker);
 }
 
-function* saveUserWatcher() {
-    yield takeLatest("SAVE_USER_REQUESTED", saveUserWorker);
-}
-
 export default function* userMngSaga(){
     yield all([
         fetchUserListWatcher(),
         fetchUserWatcher(),
         addUserWatcher(),
         deleteUserWatcher(),
-        saveUserWatcher(),
     ]);
 };

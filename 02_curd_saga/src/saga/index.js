@@ -1,9 +1,11 @@
 import { all, call } from 'redux-saga/effects'
 
-import userMngSaga from "./userMngSaga"
+import userMng from "./userMng"
+import userEdit from "./userEdit"
 
 export default function* rootSaga(){
     yield all([
-        userMngSaga(),
+        userEdit(),
+        userMng(),
     ]);
 };

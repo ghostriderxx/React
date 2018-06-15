@@ -16,7 +16,28 @@ import {
 
 const FormItem = Form.Item;
 
-class UserAdd extends React.Component {
+
+
+@connect(({userEdit}) => ({userEdit}))
+@Form.create({
+    mapPropsToFields(props) {
+        return {
+            empno: Form.createFormField({
+                value: props.location.state.empno, // 从Route中获取参数
+            }),
+            name: Form.createFormField({
+                value: props.userEdit.user.name,
+            }),
+            age: Form.createFormField({
+                value: props.userEdit.user.age,
+            }),
+            address: Form.createFormField({
+                value: props.userEdit.user.address,
+            }),
+        };
+    },
+})
+export default class UserAdd extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -115,25 +136,3 @@ class UserAdd extends React.Component {
         );
     }
 }
-
-export default connect(
-    ({userEdit}) => ({userEdit}),
-    (dispatch) => ({dispatch})
-)(Form.create({
-    mapPropsToFields(props) {
-        return {
-            empno: Form.createFormField({
-                value: props.location.state.empno, // 从Route中获取参数
-            }),
-            name: Form.createFormField({
-                value: props.userEdit.user.name,
-            }),
-            age: Form.createFormField({
-                value: props.userEdit.user.age,
-            }),
-            address: Form.createFormField({
-                value: props.userEdit.user.address,
-            }),
-        };
-    },
-})(UserAdd));
