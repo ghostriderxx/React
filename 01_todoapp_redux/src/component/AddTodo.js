@@ -6,7 +6,8 @@ import {connect} from "react-redux";
 let todoId = 0;
 const genTodoId = () => todoId++
 
-class AddTodo extends React.Component {
+@connect(null, (dispatch) => ({dispatch}))
+export default class AddTodo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,7 +46,3 @@ class AddTodo extends React.Component {
         );
     }
 }
-export default connect(
-    null,
-    (dispatch) => ({dispatch})
-)(AddTodo)

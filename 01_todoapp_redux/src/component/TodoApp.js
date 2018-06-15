@@ -9,7 +9,7 @@ import VisibleTodos from "./VisibleTodos";
 // CSS
 import "./TodoApp.css"
 
-class TodoApp extends React.Component {
+export default class TodoApp extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -24,4 +24,3 @@ class TodoApp extends React.Component {
         );
     }
 }
-export default TodoApp;

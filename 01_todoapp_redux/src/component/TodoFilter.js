@@ -2,7 +2,11 @@
 import React from "react"
 import {connect} from "react-redux";
 
-class TodoFilter extends React.Component {
+@connect(
+    ({todoapp}) => ({todoapp}),
+    (dispatch) => ({dispatch})
+)
+export default class TodoFilter extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -45,7 +49,3 @@ class TodoFilter extends React.Component {
         );
     }
 }
-export default connect(
-    ({todoapp}) => ({todoapp}),
-    (dispatch) => ({dispatch})
-)(TodoFilter)
