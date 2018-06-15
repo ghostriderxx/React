@@ -10,7 +10,7 @@ module.exports = {
     },
     devtool: "source-map",
     devServer: {
-        publicPath: "/dist/",
+        publicPath: "/",
         port: 9000,
         open: true,
         hot: true,
