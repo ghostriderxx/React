@@ -26,9 +26,8 @@ const app = reaper();
 export default app;
 
 app.model(require('./framework/taglib/lane/_modelLane').default);
-
 app.model(require('./app/cachetMng/_modelCachetMng').default);
-
+app.model(require('./app/cachetMng/_modelResCachetAdd').default);
 
 app.router(({app, history}) => {
     return (

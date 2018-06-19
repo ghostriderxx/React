@@ -26,7 +26,7 @@ export default class ResCachetTypeAdd extends React.Component {
     saveCachetTypeInfoAdd(){
         const {zlbbh, zlbmc} = this.props.form.getFieldsValue();
         this.props.dispatch({
-            type: "resAachetAdd/SAVE_CACHET_TYPE_INFO_ADD_REQUESTED",
+            type: "resAachetAdd/saveCachetTypeInfoAdd",
             payload: {
                 zlbbh,
                 zlbmc,
