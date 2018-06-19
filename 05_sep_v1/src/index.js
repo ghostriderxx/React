@@ -15,17 +15,17 @@ import {Route} from "react-router-dom"
 //
 import 'antd/dist/antd.css';
 import LaneContainer from "./framework/taglib/lane/LaneContainer";
-
-/////////////////////////////////////////////////////////////////////////////
-// App
-//
 import App from "./app/App";
 
 const app = reaper();
 
-export default app;
-
+// 框架级模型
 app.model(require('./framework/taglib/lane/_modelLane').default);
+
+export default {
+    addModel: (model)=>{ app.model(model) },
+};
+
 app.model(require('./app/cachetMng/_modelCachetMng').default);
 app.model(require('./app/cachetMng/_modelResCachetAdd').default);
 
@@ -36,6 +36,4 @@ app.router(({app, history}) => {
         </ConnectedRouter>
     );
 });
-
-// 5. Start
 app.start('#app');

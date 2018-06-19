@@ -11,7 +11,7 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // FrameWork
 //
-import FrameApp from "../../../index"
+import Frame from "../../../index"
 import uuid from "../../util/UUID"
 import _modelGridFactory from "./_modelGridFactory"
 
@@ -52,7 +52,7 @@ export default class GridWarpper extends React.Component{
         }
 
         // 给Grid分配Store空间
-        FrameApp.model(_modelGridFactory(namespace));
+        Frame.addModel(_modelGridFactory(namespace));
 
         // 给Table分配实例
         this.Instance = connect(
