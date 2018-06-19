@@ -28,14 +28,14 @@ export default class CachetMng extends React.Component {
 
     componentDidMount(){
         this.props.dispatch({
-            type: "cachetMng/FETCH_CACHET_TYPE_LIST_REQUESTED"
+            type: "cachetMng/fetchCachetTypeList"
         });
     }
 
     // 章类别信息 增、删、改
     cachetTypeAdd(){
         this.props.dispatch({
-            type: "lane/OPEN_RES_REQUESTED",
+            type: "lane/openRes",
             payload: {
                 component: ResCachetTypeAdd,
                 width: 600,
@@ -49,7 +49,7 @@ export default class CachetMng extends React.Component {
 
     cachetTypeModify(){
         this.props.dispatch({
-            type: "lane/OPEN_RES_REQUESTED",
+            type: "lane/openRes",
             payload: {
                 component: ResCachetTypeModify,
                 width: 600,
@@ -94,12 +94,12 @@ export default class CachetMng extends React.Component {
                                return {
                                    onClick: () => { // 点击行
                                        this.props.dispatch({
-                                           type: "cachetMng/FETCH_CACHET_LIST_REQUESTED",
+                                           type: "cachetMng/fetchCachetList",
                                            payload: record.zlbbh
                                        });
 
                                        this.props.dispatch({
-                                           type: "cachetMng/FETCH_CACHET_LOCA_REQUESTED",
+                                           type: "cachetMng/fetchCachetLoca",
                                            payload: record.zlbbh
                                        });
                                    },
@@ -136,7 +136,7 @@ export default class CachetMng extends React.Component {
                                                return {
                                                    onClick: () => { // 点击行
                                                        this.props.dispatch({
-                                                           type: "cachetMng/SET_CACHET_IMAGE_URL_REQUESTED",
+                                                           type: "cachetMng/setCachetImageUrl",
                                                            payload: record.zbh,
                                                        });
                                                    },

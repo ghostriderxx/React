@@ -13,9 +13,7 @@ import {
 //
 import FrameApp from "../../../index"
 import uuid from "../../util/UUID"
-import GridReducerFactory from "./GridReducerFactory"
-import GridSagaFactory from "./GridSagaFactory"
-
+import _modelGridFactory from "./_modelGridFactory"
 
 class Grid extends React.Component{
     constructor(props) {
@@ -54,7 +52,7 @@ export default class GridWarpper extends React.Component{
         }
 
         // 给Grid分配Store空间
-        FrameApp.addReducer(namespace, GridReducerFactory(namespace));
+        FrameApp.model(_modelGridFactory(namespace));
 
         // 给Table分配实例
         this.Instance = connect(
@@ -63,14 +61,11 @@ export default class GridWarpper extends React.Component{
             null,
             {withRef:true}
         )(Grid)
-
-        // 给Grid分配Saga函数
-        FrameApp.addSaga(GridSagaFactory(namespace));
     }
 
     componentWillMount(){
         this.props.dispatch({
-            type: this.state.namespace+"/GRID_FILL_DATA_SUCCESS",
+            type: this.state.namespace+"/gridFillDataSuccess",
             payload: this.props.dataSource
         });
     }
@@ -78,14 +73,14 @@ export default class GridWarpper extends React.Component{
     componentWillReceiveProps(nextProps){
         // 给GRID填充数据
         this.props.dispatch({
-            type: this.state.namespace+"/GRID_FILL_DATA_SUCCESS",
+            type: this.state.namespace+"/gridFillDataSuccess",
             payload: nextProps.dataSource
         });
     }
 
     sort(sortby){
         this.props.dispatch({
-            type: this.state.namespace+"/GRID_SORT_REQUESTED",
+            type: this.state.namespace+"/gridSort",
             payload:{
                 sortby
             }

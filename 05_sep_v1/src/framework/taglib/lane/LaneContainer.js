@@ -17,7 +17,7 @@ export default class LaneContainer extends React.Component {
     componentWillMount() {
         const mainBeacon = this.props.mainBeacon;
         this.props.dispatch({
-            type: "lane/SET_MAIN_LANE_REQUESTED",
+            type: "lane/setMainLane",
             payload: mainBeacon,
         });
     }
@@ -51,14 +51,14 @@ export default class LaneContainer extends React.Component {
                             return <div key={lane.id}
                                         style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
                                 {
-                                    lane.bcn.map((Beacon) => <Beacon {...this.props}/>)
+                                    lane.bcn.map((Beacon ,key) => <Beacon key={key} {...this.props}/>)
                                 }
                                 {
-                                    lane.res.map(({component: Response, width, height, title}) => (
-                                        <Res {...this.props} title={title} width={width} height={height}>
+                                    lane.res.map(({component: Response, width, height, title}, key) => (
+                                        <Res key={key} {...this.props} title={title} width={width} height={height}>
                                             <Response closeRES={(params)=>{
                                                 this.props.dispatch({
-                                                    type: "lane/CLOSE_RES_REQUESTED",
+                                                    type: "lane/closeRes",
                                                 });
                                             }}></Response>
                                         </Res>)

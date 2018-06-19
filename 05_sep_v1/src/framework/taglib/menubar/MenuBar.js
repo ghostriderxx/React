@@ -13,8 +13,8 @@ import "./menubar.css"
 
 /////////////////////////////////////////////////////////////////////////////
 
-@connect(({router})=>({
-    router
+@connect(({routing})=>({
+    routing
 }))
 export default class MenuBar extends React.Component {
     constructor(props){
@@ -24,7 +24,7 @@ export default class MenuBar extends React.Component {
     render(){
 
         // 当前路由状态
-        const currentRoutePath = this.props.router.location.pathname;
+        const currentRoutePath = this.props.routing.location.pathname;
 
         const menuItems = this.props.items;
 
