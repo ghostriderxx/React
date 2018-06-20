@@ -81,8 +81,8 @@ export default class UserMng extends React.Component {
     }
 
     // 修改
-    openUserEditDialog(id) {
-        this.props.dispatch( push("/userEdit",  { empno: id }) );
+    edit(id) {
+        this.props.dispatch( push("/userEdit", { id }) );
     }
 
     render() {
@@ -113,9 +113,7 @@ export default class UserMng extends React.Component {
                         </Col>
                     </Row>
                 </Form>
-                <Table loading={loading}
-                       rowKey="id"
-                       dataSource={userList}
+                <Table loading={loading} rowKey="id" dataSource={userList}
                        columns={[{
                            title: '姓名',
                            dataIndex: 'name',
@@ -135,7 +133,7 @@ export default class UserMng extends React.Component {
 
                                    <Divider type="vertical"/>
 
-                                   <a onClick={() => this.openUserEditDialog(record.id)}>
+                                   <a onClick={() => this.edit(record.id)}>
                                         <Icon type="edit"/>
                                    </a>
                                </span>

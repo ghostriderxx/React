@@ -22,14 +22,6 @@ export default function userMngReducer(state = initialState, action) {
                 loading: false,
                 errmsg: null,
             };
-        case "FETCH_USERLIST_FAILED":
-            return {
-                ...state,
-                userList:[],
-                loading: false,
-                errmsg: action.payload,
-            };
-
 
         /**
          * clearUserList

@@ -1,5 +1,6 @@
 import React from "react"
 import {connect} from "react-redux"
+import {goBack} from "react-router-redux";
 
 // antd
 import {
@@ -12,18 +13,10 @@ import {
     Modal,
 } from 'antd';
 
-
-const FormItem = Form.Item;
-
-
-
-@connect(({userEdit}) => ({userEdit}))
+@connect(({userEdit, router}) => ({userEdit, router}))
 @Form.create({
     mapPropsToFields(props) {
         return {
-            empno: Form.createFormField({
-                value: props.location.state.empno, // 从Route中获取参数
-            }),
             name: Form.createFormField({
                 value: props.userEdit.user.name,
             }),
@@ -42,27 +35,28 @@ export default class UserAdd extends React.Component {
     }
 
     componentDidMount(){
+        const id = this.props.router.location.state.id;
         this.props.dispatch({
             type: "FETCH_USER_REQUESTED",
-            payload: {
-                empno: this.props.location.state.empno
+            payload: id,
+        });
+    }
+
+    onOk() {
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                const id = this.props.router.location.state.id;
+                const {name, age, address} = values;
+                this.props.dispatch({
+                    type: "SAVE_USER_REQUESTED",
+                    payload: {id, name, age, address,}
+                });
             }
         });
     }
 
-    saveUser() {
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                let {empno, name, age, address} = values;
-
-                this.props.dispatch({
-                    type: "SAVE_USER_REQUESTED",
-                    payload: {empno, name, age, address,}
-                });
-
-                this.props.onOk();
-            }
-        });
+    onCancel() {
+        this.props.dispatch(goBack());
     }
 
     render() {
@@ -86,48 +80,34 @@ export default class UserAdd extends React.Component {
                 visible={true}
                 okText={"确定"}
                 cancelText={"取消"}
-                onOk={() => {
-                    this.saveUser();
-                }}
-                onCancel={() => this.props.onCancel()}
+                onOk={() => this.onOk()}
+                onCancel={() => this.onCancel()}
             >
                 <Spin spinning={loading}>
                     <Form>
-                        <FormItem label={"EMPNO"}
-                                  {...formItemLayout}>
-                            {
-                                getFieldDecorator('empno', {})(
-                                    <Input placeholder="EMPNO..." disabled={true}/>
-                                )
-                            }
-                        </FormItem>
-
-                        <FormItem label={"姓名"}
-                                  {...formItemLayout}>
+                        <Form.Item label={"姓名"} {...formItemLayout}>
                             {
                                 getFieldDecorator('name', {})(
                                     <Input placeholder="姓名..."/>
                                 )
                             }
-                        </FormItem>
+                        </Form.Item>
 
-                        <FormItem label={"年龄"}
-                                  {...formItemLayout}>
+                        <Form.Item label={"年龄"} {...formItemLayout}>
                             {
                                 getFieldDecorator('age', {})(
                                     <Input placeholder="年龄..."/>
                                 )
                             }
-                        </FormItem>
+                        </Form.Item>
 
-                        <FormItem label={"住址"}
-                                  {...formItemLayout}>
+                        <Form.Item label={"住址"} {...formItemLayout}>
                             {
                                 getFieldDecorator('address', {})(
                                     <Input placeholder="住址..."/>
                                 )
                             }
-                        </FormItem>
+                        </Form.Item>
                     </Form>
                 </Spin>
             </Modal>

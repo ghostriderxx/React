@@ -1,6 +1,5 @@
 const initialState = {
     loading: false,
-    errmsg: null,
 };
 
 export default function userAddReducer(state = initialState, action) {
@@ -16,12 +15,6 @@ export default function userAddReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 errmsg: null,
-            };
-        case 'ADD_USER_FAILED':
-            return {
-                ...state,
-                loading: false,
-                errmsg: action.payload,
             };
         default:
             return state;

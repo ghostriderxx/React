@@ -2,42 +2,27 @@ import { call, put, takeEvery, takeLatest, all } from 'redux-saga/effects'
 
 import request from "../util/request"
 
-/**
- * Worker Saga
- */
+// Worker
 function* fetchUserListWorker(action) {
-    try {
-        yield put({type: "FETCH_USERLIST_INPROGRESS"});
-        const userList = yield call(request, "/api/users");
-        yield put({type: "FETCH_USERLIST_SUCCESS", payload: userList});
-    } catch (e) {
-        yield put({type: "FETCH_USERLIST_FAILED", payload: e.message});
-    }
+    yield put({type: "FETCH_USERLIST_INPROGRESS"});
+    const userList = yield call(request, "/api/users");
+    yield put({type: "FETCH_USERLIST_SUCCESS", payload: userList});
 }
-
 function* deleteUserWorker(action) {
-    try {
-        // 完成删除
-        const id = action.payload;
-        yield put({type: "DELETE_USER_INPROGRESS"});
-        yield call(request, `/api/users/${id}`, {method:"DELETE"});
-        yield put({type: "DELETE_USER_SUCCESS"});
+    // 完成删除
+    const id = action.payload;
+    yield put({type: "DELETE_USER_INPROGRESS"});
+    yield call(request, `/api/users/${id}`, {method:"DELETE"});
+    yield put({type: "DELETE_USER_SUCCESS"});
 
-        // 重新查询
-        yield put({type: "FETCH_USERLIST_REQUESTED"});
-    } catch (e) {
-        yield put({type: "DELETE_USER_FAILED", payload: e.message});
-    }
+    // 重新查询
+    yield put({type: "FETCH_USERLIST_REQUESTED"});
 }
 
-/**
- * Watcher Saga
- */
+// Watcher
 function* fetchUserListWatcher() {
     yield takeLatest("FETCH_USERLIST_REQUESTED", fetchUserListWorker);
 }
-
-
 function* deleteUserWatcher() {
     yield takeLatest("DELETE_USER_REQUESTED", deleteUserWorker);
 }
