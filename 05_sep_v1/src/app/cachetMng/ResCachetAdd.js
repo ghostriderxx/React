@@ -4,10 +4,9 @@ import {connect} from "react-redux";
 /////////////////////////////////////////////////////////////////////////////
 // FrameWork
 //
-import Hlayout from "../../framework/taglib/hlayout/Hlayout";
-import Panel from "../../framework/taglib/panel/Panel";
-import Grid from "../../framework/taglib/grid/Grid";
-import Button from "../../framework/taglib/button/Button";
+import {
+    Panel,
+} from "../../framework/taglib";
 
 export default class ResCachetAdd extends React.Component {
     constructor(props) {

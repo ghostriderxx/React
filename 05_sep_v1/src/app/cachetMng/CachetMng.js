@@ -4,11 +4,14 @@ import {connect} from "react-redux";
 /////////////////////////////////////////////////////////////////////////////
 // FrameWork
 //
-import Hlayout from "../../framework/taglib/hlayout/Hlayout";
-import Panel from "../../framework/taglib/panel/Panel";
-import Grid from "../../framework/taglib/grid/Grid";
-import Button from "../../framework/taglib/button/Button";
-import {Tab, TabPage} from "../../framework/taglib/tab/Tab";
+import {
+    Button,
+    Grid,
+    Hlayout,
+    Panel,
+    Tab,
+    TabPage,
+} from "../../framework/taglib";
 
 /////////////////////////////////////////////////////////////////////////////
 // App
@@ -17,10 +20,7 @@ import ResCachetTypeAdd from "./ResCachetTypeAdd"
 import ResCachetTypeModify from "./ResCachetTypeModify";
 
 
-@connect(
-    ({cachetMng})=>({cachetMng}),
-    (dispatch) => ({dispatch})
-)
+@connect(({cachetMng})=>({cachetMng}))
 export default class CachetMng extends React.Component {
     constructor(props){
         super(props);
@@ -87,7 +87,7 @@ export default class CachetMng extends React.Component {
                 {/* 章类别信息 */}
                 <Panel width={370}>
                     <Grid  ref={(ele)=>{this.dwCachetTypeInfo = ele} }
-                           dataSource={cachetTypeList}
+                           dataSource={this.props.cachetMng.cachetTypeList}
                            loading={loading}
                            rowKey="empno"
                            onRow={(record) => {

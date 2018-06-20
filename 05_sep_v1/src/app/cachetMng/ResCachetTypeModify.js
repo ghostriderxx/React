@@ -4,10 +4,6 @@ import {connect} from "react-redux";
 /////////////////////////////////////////////////////////////////////////////
 // FrameWork
 //
-import Hlayout from "../../framework/taglib/hlayout/Hlayout";
-import Panel from "../../framework/taglib/panel/Panel";
-import Grid from "../../framework/taglib/grid/Grid";
-import Button from "../../framework/taglib/button/Button";
 import { Form, Input} from 'antd'; // 新型Form还没研究明白，怎么封装还没谱...
 
 @Form.create()

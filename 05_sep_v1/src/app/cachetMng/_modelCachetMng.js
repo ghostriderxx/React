@@ -14,11 +14,6 @@ export default {
         loading: false,
     },
 
-    subscriptions: {
-        setup({dispatch, history}) {
-        },
-    },
-
     effects: {
         * setCachetImageUrl({payload}, {call, put}) {
             const cacheImageUrl = `/sep/CachetServlet/fetchCachetImage?zbh=${payload}&_=${Math.random()}`;

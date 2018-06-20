@@ -4,13 +4,15 @@ import React from 'react';
 /////////////////////////////////////////////////////////////////////////////
 // FrameWork
 //
-import Panel from "../framework/taglib/panel/Panel";
-import MenuBar from "../framework/taglib/menubar/MenuBar";
-import SheetContainer from "../framework/taglib/sheetContainer/SheetContainer";
-import Frame from "../index"
+import {
+    MenuBar,
+    Panel,
+    SheetContainer,
+} from "../framework/taglib";
 
 /////////////////////////////////////////////////////////////////////////////
-
+// App
+//
 import menubarItems from "./config/MenuBarConfig"
 
 import Top from "./top/Top";
