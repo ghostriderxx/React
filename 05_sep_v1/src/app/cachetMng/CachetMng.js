@@ -8,7 +8,6 @@ import React from 'react';
 import {
     connect
 } from "../../framework/core";
-
 import {
     Button,
     Grid,
@@ -17,7 +16,6 @@ import {
     Tab,
     TabPage,
 } from "../../framework/taglib";
-
 import {
     request
 } from "../../framework/util";
