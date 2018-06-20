@@ -1,12 +1,8 @@
-import React from 'react';
-import {connect} from "react-redux";
-
 /////////////////////////////////////////////////////////////////////////////
-// FrameWork
+// Dependency
 //
-import {
-    Panel,
-} from "../../framework/taglib";
+// ## React
+import React from 'react';
 
 export default class ResCachetModify extends React.Component {
     constructor(props) {

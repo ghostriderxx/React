@@ -1,16 +1,57 @@
-import React from 'react';
-import {connect} from "react-redux";
-
 /////////////////////////////////////////////////////////////////////////////
-// FrameWork
+// Dependency
 //
+// ## React
+import React from 'react';
+
+// ## FrameWork
+import {
+    connect
+} from "../../framework/core";
+
 import {
     Button,
 } from "../../framework/taglib";
 import { Form, Input} from 'antd'; // 新型Form还没研究明白，怎么封装还没谱...
 
+import {
+    request
+} from "../../framework/util";
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Model
+//
+const modelResCachetTypeAdd = {
+    namespace: 'resCachetTypeAdd',
+
+    state: {
+    },
+
+    effects: {
+        * saveCachetTypeInfoAdd({payload}, {call, put}) {
+            const {zlbbh, zlbmc} = payload;
+
+            yield call(request, `/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+
+            // 关闭RES
+            yield put({
+                type: "lane/closeRes",
+            });
+        },
+    },
+
+    reducers: {
+    },
+};
+export {modelResCachetTypeAdd};
+
+
+/////////////////////////////////////////////////////////////////////////////
+// UI
+//
 @Form.create()
-@connect(({resAachetAdd})=>({resAachetAdd}))
+@connect(({resCachetTypeAdd})=>({resCachetTypeAdd}))
 export default class ResCachetTypeAdd extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +63,7 @@ export default class ResCachetTypeAdd extends React.Component {
     saveCachetTypeInfoAdd(){
         const {zlbbh, zlbmc} = this.props.form.getFieldsValue();
         this.props.dispatch({
-            type: "resAachetAdd/saveCachetTypeInfoAdd",
+            type: "resCachetTypeAdd/saveCachetTypeInfoAdd",
             payload: {
                 zlbbh,
                 zlbmc,

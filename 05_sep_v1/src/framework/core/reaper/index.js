@@ -7,7 +7,7 @@ import {
 } from 'react-router-redux';
 import document from 'global/document';
 import { Provider } from 'react-redux';
-import * as core from '../reaper-core';
+import * as core from '../reaper-core/index';
 import { isFunction } from '../reaper-core/utils';
 
 export default function (opts = {}) {

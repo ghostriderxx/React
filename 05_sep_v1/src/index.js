@@ -1,23 +1,31 @@
-//////////////////////////////////////////////////////////////////////////////
-// React
+/////////////////////////////////////////////////////////////////////////////
+// Dependency
+//
+// ## React
 import React from 'react';
 
-//////////////////////////////////////////////////////////////////////////////
-// Reaper
-import reaper from './framework/reaper';
+// ## Framework
+import {
+    reaper
+} from './framework/core';
+
+import {
+    LaneContainer
+} from "./framework/taglib";
+
+
 import {
     ConnectedRouter,
 } from "react-router-redux";
 import {Route} from "react-router-dom"
-
-/////////////////////////////////////////////////////////////////////////////
-// Framework
-//
 import 'antd/dist/antd.css';
-import {
-    LaneContainer
-} from "./framework/taglib";
 import App from "./app/App";
+
+// ## APP
+import {modelCachetMng} from "./app/cachetMng/CachetMng"
+import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
+
+
 
 const app = reaper();
 
@@ -29,8 +37,8 @@ export default {
 };
 
 // 业务级模型
-app.model(require('./app/cachetMng/_modelCachetMng').default);
-app.model(require('./app/cachetMng/_modelResCachetAdd').default);
+app.model(modelCachetMng);
+app.model(modelResCachetTypeAdd);
 
 // 框架启动页
 app.router(({app, history}) => {
