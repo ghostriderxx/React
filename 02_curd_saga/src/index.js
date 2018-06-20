@@ -1,15 +1,18 @@
-// React
+/////////////////////////////////////////////////////////////////////////////
+// Dependency
+//
+// ## React
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Redux
+// ## Redux
 import { applyMiddleware, createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
-// Saga
+// ## Saga
 import createSagaMiddleware from 'redux-saga'
 
-// Route
+// ## Route
 import {
     ConnectedRouter,
     routerReducer,
@@ -18,44 +21,47 @@ import {
 import { createBrowserHistory } from 'history'
 import { Route } from "react-router";
 
-// Devtools
+// ## Devtools
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+// ## AntDesign
 import 'antd/dist/antd.css';
-/////////////////////////////////////////////////////////////////////////////////
 
-// Reducer
-import userAdd from './reducer/userAdd'
-import userMng from './reducer/userMng'
-import userEdit from "./reducer/userEdit"
+// ## App's Reducer
+import userAddReducer from './reducer/userAdd'
+import userEditReducer from "./reducer/userEdit"
+import userMngReducer from './reducer/userMng'
 
-// Saga
+// ## App's Saga
+import userAddSaga from "./saga/userAdd"
 import userEditSaga from "./saga/userEdit"
 import userMngSaga from "./saga/userMng"
-import userAddSaga from "./saga/userAdd"
 
-// rootComponent
+// ## App:'s Component
 import UserMng from "./component/UserMng"
 
-
+/////////////////////////////////////////////////////////////////////////////
+// Starter
+//
 const history = createBrowserHistory();
 
 const sagaMiddleware = createSagaMiddleware();
 
-let store = createStore(
-    combineReducers({
-        userAdd,
-        userMng,
-        userEdit,
-        router: routerReducer
-    }),
-    composeWithDevTools(
-        applyMiddleware(
-            routerMiddleware(history),
-            sagaMiddleware,
-        )
+const rootReducer = combineReducers({
+    userAdd: userAddReducer,
+    userEdit: userEditReducer,
+    userMng: userMngReducer,
+    router: routerReducer,
+});
+
+const storeEnhancer = composeWithDevTools(
+    applyMiddleware(
+        routerMiddleware(history),
+        sagaMiddleware,
     )
 );
+
+const store = createStore(rootReducer, storeEnhancer);
 
 sagaMiddleware.run(userMngSaga);
 sagaMiddleware.run(userEditSaga);

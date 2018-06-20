@@ -1,3 +1,6 @@
+/////////////////////////////////////////////////////////////////////////////
+// Dependency
+//
 import React from "react"
 import {connect} from "react-redux"
 import {goBack} from "react-router-redux";
@@ -13,6 +16,9 @@ import {
     Modal,
 } from 'antd';
 
+/////////////////////////////////////////////////////////////////////////////
+// UI
+//
 @connect(({userEdit, router}) => ({userEdit, router}))
 @Form.create({
     mapPropsToFields(props) {

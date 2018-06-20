@@ -8,13 +8,11 @@ export default function userAddReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: true,
-                errmsg: null,
             };
         case 'ADD_USER_SUCCESS':
             return {
                 ...state,
                 loading: false,
-                errmsg: null,
             };
         default:
             return state;

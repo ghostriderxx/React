@@ -20,7 +20,6 @@ export default function userMngReducer(state = initialState, action) {
                 ...state,
                 userList: action.payload,
                 loading: false,
-                errmsg: null,
             };
 
         /**
@@ -31,7 +30,6 @@ export default function userMngReducer(state = initialState, action) {
                 ...state,
                 userList: [],
                 loading: false,
-                errmsg: null,
             };
 
         /**

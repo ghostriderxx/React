@@ -1,12 +1,12 @@
 import {all, call, put, takeLatest} from "redux-saga/es/effects";
 import request from "../util/request";
+import uuid from "../util/uuid"
 import {goBack} from "react-router-redux";
 
 // Worker
 function* addUserWorker(action) {
     // 为新用户分配id
-    const users = yield call(request, "/api/users");
-    const id = users.length+1;
+    const id = uuid();
 
     // 新增用户
     yield put({type: "ADD_USER_INPROGRESS"});

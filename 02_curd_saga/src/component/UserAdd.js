@@ -43,7 +43,7 @@ export default class UserAdd extends React.Component {
     render() {
         const loading = this.props.userAdd.loading;
 
-        const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
+        const {getFieldDecorator} = this.props.form;
 
         const formItemLayout = {
             labelCol: {
@@ -55,18 +55,14 @@ export default class UserAdd extends React.Component {
         };
 
         return (
-            <Modal
-                title="新增用户"
-                visible={true}
-                confirmLoading={loading}
-                okText={"确定"}
-                cancelText={"取消"}
-                onOk={() => this.onOK()}
-                onCancel={() => this.onCancel()}
+            <Modal title="新增用户" visible={true}
+                   confirmLoading={loading}
+                   okText={"确定"} cancelText={"取消"}
+                   onOk={() => this.onOK()}
+                   onCancel={() => this.onCancel()}
             >
                 <Form>
-                    <Form.Item label={"姓名"}
-                               {...formItemLayout}>
+                    <Form.Item label={"姓名"} {...formItemLayout}>
                         {
                             getFieldDecorator('name', {
                                 rules: [{
@@ -77,9 +73,7 @@ export default class UserAdd extends React.Component {
                             )
                         }
                     </Form.Item>
-
-                    <Form.Item label={"年龄"}
-                               {...formItemLayout}>
+                    <Form.Item label={"年龄"} {...formItemLayout}>
                         {
                             getFieldDecorator('age', {
                                 rules: [{
@@ -90,9 +84,7 @@ export default class UserAdd extends React.Component {
                             )
                         }
                     </Form.Item>
-
-                    <Form.Item label={"住址"}
-                               {...formItemLayout}>
+                    <Form.Item label={"住址"} {...formItemLayout}>
                         {
                             getFieldDecorator('address', {
                                 rules: [{
