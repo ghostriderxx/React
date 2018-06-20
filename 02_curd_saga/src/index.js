@@ -16,6 +16,7 @@ import {
     routerMiddleware,
 } from "react-router-redux";
 import { createBrowserHistory } from 'history'
+import { Route } from "react-router";
 
 // Devtools
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -61,7 +62,7 @@ sagaMiddleware.run(userAddSaga);
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <UserMng/>
+            <Route component={UserMng}/>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('app')

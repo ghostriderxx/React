@@ -145,14 +145,9 @@ export default class UserMng extends React.Component {
 
 
 
-                <Route path="/userAdd" component={My}/>
+                <Route path="/userAdd" component={UserAdd}/>
                 <Route path="/userEdit" component={UserEdit}/>
             </div>
         );
     }
-}
-
-
-function My(){
-    return "HelloWorld"
 }
