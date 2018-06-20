@@ -22,6 +22,7 @@ import 'antd/dist/antd.css';
 import App from "./app/App";
 
 // ## APP
+import {modelApp} from "./app/App"
 import {modelCachetMng} from "./app/cachetMng/CachetMng"
 import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
 
@@ -37,6 +38,7 @@ export default {
 };
 
 // 业务级模型
+app.model(modelApp);
 app.model(modelCachetMng);
 app.model(modelResCachetTypeAdd);
 

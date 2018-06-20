@@ -13,6 +13,12 @@ import "./top.css"
 /////////////////////////////////////////////////////////////////////////////
 
 export default class Top extends React.Component {
+    constructor(props){
+        super(props)
+    }
+
+    componentDidMount() {
+    }
 
     render() {
         return (
