@@ -1,4 +1,4 @@
-UserMngApp
+UserMng
 ===
 
 ### 安装

@@ -10,11 +10,15 @@ module.exports = {
     },
     devtool: "source-map",
     devServer: {
-        publicPath: "/dist/",
+        publicPath: "/",
         port: 9000,
         open: true,
         hot: true,
         inline: true,
+        historyApiFallback: true,
+        proxy: {
+            "/api": "http://localhost:3000/" // Proxy to json-server
+        },
     },
     module: {
         rules: [

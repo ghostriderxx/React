@@ -196,16 +196,12 @@ export default class CachetMng extends React.Component {
 
 
     render(){
-
-        const {loading} = this.props.cachetMng;
-
         return (
             <Hlayout>
                 {/* 章类别信息 */}
                 <Panel width={370}>
                     <Grid  ref={(ele)=>{this.dwCachetTypeInfo = ele} }
                            dataSource={this.props.cachetMng.cachetTypeList}
-                           loading={loading}
                            rowKey="empno"
                            onRow={(record) => {
                                return {
@@ -247,7 +243,6 @@ export default class CachetMng extends React.Component {
                                 <Panel>
                                     <Grid  ref={(ele)=>{this.dwCachetInfo = ele} }
                                            dataSource={this.props.cachetMng.cachetList}
-                                           loading={loading}
                                            rowKey="mbid"
                                            onRow={(record) => {
                                                return {
@@ -295,7 +290,6 @@ export default class CachetMng extends React.Component {
                         <TabPage tab="章所在模板" key="cachetLoca">
                             <Grid  ref={(ele)=>{this.dwTempInfor = ele} }
                                    dataSource={this.props.cachetMng.cachetLoca}
-                                   loading={loading}
                                    rowKey="mbid"
                                    columns={[{
                                        title: '格式名称',

@@ -1,13 +1,14 @@
 const initialState = {
     userList: [],
     loading: false,
+    errmsg: null,
 };
 
 export default function userMngReducer(state = initialState, action) {
     switch (action.type) {
 
         /**
-         * FetchUserList
+         * fetchUserList
          */
         case "FETCH_USERLIST_INPROGRESS":
             return {
@@ -19,11 +20,26 @@ export default function userMngReducer(state = initialState, action) {
                 ...state,
                 userList: action.payload,
                 loading: false,
+                errmsg: null,
             };
+        case "FETCH_USERLIST_FAILED":
+            return {
+                ...state,
+                userList:[],
+                loading: false,
+                errmsg: action.payload,
+            };
+
+
+        /**
+         * clearUserList
+         */
         case 'CLEAR_USERLIST':
             return {
                 ...state,
                 userList: [],
+                loading: false,
+                errmsg: null,
             };
 
         /**
@@ -42,7 +58,7 @@ export default function userMngReducer(state = initialState, action) {
 
 
         /**
-         * DelteUser
+         * deleteUser
          */
         case "DELETE_USER_INPROGRESS":
             return {

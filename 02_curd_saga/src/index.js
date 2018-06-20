@@ -3,51 +3,65 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Redux
-import { applyMiddleware, compose, createStore } from 'redux'
+import { applyMiddleware, createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
 // Saga
 import createSagaMiddleware from 'redux-saga'
 
 // Route
+import {
+    ConnectedRouter,
+    routerReducer,
+    routerMiddleware,
+} from "react-router-redux";
 import { createBrowserHistory } from 'history'
-import { connectRouter, routerMiddleware } from 'connected-react-router'
-import { ConnectedRouter } from 'connected-react-router'
 
+// Devtools
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import 'antd/dist/antd.css';
 /////////////////////////////////////////////////////////////////////////////////
 
-// rootReducer
-import rootReducer from './reducer/index'
+// Reducer
+import userMng from './reducer/userMng'
+import userEdit from "./reducer/userEdit"
 
 // Saga
 import userEditSaga from "./saga/userEdit"
-import userMng from "./saga/userMng"
+import userMngSaga from "./saga/userMng"
+import userAddSaga from "./saga/userAdd"
 
 // rootComponent
-import UserMngApp from "./component/UserMngApp"
+import UserMng from "./component/UserMng"
+
 
 const history = createBrowserHistory();
-
 
 const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
-    connectRouter(history)(rootReducer),
-    applyMiddleware(
-        sagaMiddleware,
-        routerMiddleware(history)
+    combineReducers({
+        userMng,
+        userEdit,
+        router: routerReducer
+    }),
+    composeWithDevTools(
+        applyMiddleware(
+            routerMiddleware(history),
+            sagaMiddleware,
+        )
     )
 );
 
-sagaMiddleware.run(userMng);
+sagaMiddleware.run(userMngSaga);
 sagaMiddleware.run(userEditSaga);
-
-
+sagaMiddleware.run(userAddSaga);
 
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <UserMngApp/>
+            <UserMng/>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('app')

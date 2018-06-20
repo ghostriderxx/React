@@ -1,20 +1,22 @@
+/////////////////////////////////////////////////////////////////////////////
+// Dependency
+//
+// ## React, Redux、Router
 import React from "react"
 import {connect} from "react-redux"
 
-// antd
-import 'antd/dist/antd.css';
+// ## antd
 import {
     Form,
     Input,
-    Button,
-    Table,
-    Row,
-    Col,
     Modal,
 } from 'antd';
 
+/////////////////////////////////////////////////////////////////////////////
+// UI
+//
 @Form.create()
-@connect(({userMng}) => ({userMng}))
+@connect(null)
 export default class UserAdd extends React.Component {
     constructor(props) {
         super(props);
@@ -37,7 +39,7 @@ export default class UserAdd extends React.Component {
 
     render() {
 
-        const {loading} = this.props.userMng;
+        const loading = true;
 
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
 

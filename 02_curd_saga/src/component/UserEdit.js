@@ -2,7 +2,6 @@ import React from "react"
 import {connect} from "react-redux"
 
 // antd
-import 'antd/dist/antd.css';
 import {
     Form,
     Input,
