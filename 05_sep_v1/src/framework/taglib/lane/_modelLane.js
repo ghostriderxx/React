@@ -13,11 +13,6 @@ export default {
         loading: false,
     },
 
-    subscriptions: {
-        setup({dispatch, history}) {
-        },
-    },
-
     effects: {
         * addLane({payload}, {call, put}) {
             yield put({

@@ -7,11 +7,6 @@ export default {
     state: {
     },
 
-    subscriptions: {
-        setup({dispatch, history}) {
-        },
-    },
-
     effects: {
         * saveCachetTypeInfoAdd({payload}, {call, put}) {
             const {zlbbh, zlbmc} = payload;

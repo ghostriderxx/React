@@ -3,7 +3,9 @@ const webpack = require('webpack');
 
 module.exports = {
     mode: "development",
-    entry: ["babel-polyfill", './src/index.js'],
+    entry: [
+        './src/index.js'
+    ],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'

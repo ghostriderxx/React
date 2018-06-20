@@ -80,7 +80,7 @@ export default class CachetMng extends React.Component {
 
     render(){
 
-        const {cachetTypeList, cachetList, cachetImageUrl, cachetLoca, loading} = this.props.cachetMng;
+        const {loading} = this.props.cachetMng;
 
         return (
             <Hlayout>
@@ -129,7 +129,7 @@ export default class CachetMng extends React.Component {
 
                                 <Panel>
                                     <Grid  ref={(ele)=>{this.dwCachetInfo = ele} }
-                                           dataSource={cachetList}
+                                           dataSource={this.props.cachetMng.cachetList}
                                            loading={loading}
                                            rowKey="mbid"
                                            onRow={(record) => {
@@ -165,7 +165,7 @@ export default class CachetMng extends React.Component {
                                 </Panel>
 
                                 <Panel>
-                                    <img src={cachetImageUrl} style={{width: 100, height:100}}/>
+                                    <img src={this.props.cachetMng.cachetImageUrl} style={{width: 100, height:100}}/>
                                 </Panel>
                             </Hlayout>
 
@@ -177,7 +177,7 @@ export default class CachetMng extends React.Component {
                         </TabPage>
                         <TabPage tab="章所在模板" key="cachetLoca">
                             <Grid  ref={(ele)=>{this.dwTempInfor = ele} }
-                                   dataSource={cachetLoca}
+                                   dataSource={this.props.cachetMng.cachetLoca}
                                    loading={loading}
                                    rowKey="mbid"
                                    columns={[{
