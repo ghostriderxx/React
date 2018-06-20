@@ -86,8 +86,6 @@ export default class UserMng extends React.Component {
     }
 
     render() {
-        const FormItem = Form.Item;
-
         const {userList, loading} = this.props.userMng;
 
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
@@ -96,18 +94,17 @@ export default class UserMng extends React.Component {
             <div>
                 <Form layout="inline">
                     <Row type="flex" justify="space-between">
-                        <Col span={12}>
-                            <FormItem label={"姓名"}>
+                        <Col span={20}>
+                            <Form.Item label={"姓名"}>
                                 {
                                     getFieldDecorator('userQueryKey', {})(
-                                        <Input placeholder="姓名、姓名拼音、身份证号..."/>
+                                        <Input placeholder="姓名..."/>
                                     )
                                 }
-                            </FormItem>
+                            </Form.Item>
                             <Button type="primary" icon="search" onClick={() => this.query()}>查询</Button>
                             <Button icon="rollback" onClick={() => this.clear()}>清空</Button>
                         </Col>
-
                         <Col span={4} style={{textAlign: 'right'}}>
                             <Button type="primary" icon="plus-circle-o" onClick={() => this.add()}>新增</Button>
                         </Col>

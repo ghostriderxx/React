@@ -5,7 +5,8 @@ import request from "../util/request"
 // Worker
 function* fetchUserListWorker(action) {
     yield put({type: "FETCH_USERLIST_INPROGRESS"});
-    const userList = yield call(request, "/api/users");
+    const userQueryKey = action.payload;
+    const userList = yield call(request, userQueryKey ? `/api/users?name_like=${userQueryKey}` : `/api/users`);
     yield put({type: "FETCH_USERLIST_SUCCESS", payload: userList});
 }
 function* deleteUserWorker(action) {

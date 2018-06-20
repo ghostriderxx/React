@@ -3,33 +3,33 @@ module.exports = () => {
         users: [
             {
                 "id": 1,
-                "name": "张三",
+                "name": "Mike",
                 "age": 29,
-                "address": "市北区9882户"
+                "address": "Chongchuan District"
             },
             {
                 "id": 2,
-                "name": "李四",
+                "name": "Lili",
                 "age": 16,
-                "address": "市南区2234户"
+                "address": "Zhongnan Century City"
             },
             {
                 "id": 3,
-                "name": "王五",
+                "name": "Malcolm",
                 "age": 29,
-                "address": "河蟹区9882户"
+                "address": "Taoyuan Road"
             },
             {
                 "id": 4,
-                "name": "赵六",
+                "name": "Joan",
                 "age": 38,
-                "address": "银河区2374户"
+                "address": "Nantong"
             },
             {
                 "id": 5,
-                "name": "楚七",
+                "name": "Linda",
                 "age": 29,
-                "address": "河蟹区9882户"
+                "address": "Zhongnan Century City"
             }
         ]
     };
