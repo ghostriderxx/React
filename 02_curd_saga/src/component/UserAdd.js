@@ -4,6 +4,7 @@
 // ## React, Redux、Router
 import React from "react"
 import {connect} from "react-redux"
+import {goBack} from "react-router-redux";
 
 // ## antd
 import {
@@ -16,13 +17,13 @@ import {
 // UI
 //
 @Form.create()
-@connect(null)
+@connect(({userAdd}) => ({userAdd}))
 export default class UserAdd extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    addUser() {
+    onOK() {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let {name, age, address} = values;
@@ -31,24 +32,25 @@ export default class UserAdd extends React.Component {
                     type: "ADD_USER_REQUESTED",
                     payload: {name, age, address,}
                 });
-
-                this.props.onOk();
             }
         });
     }
 
-    render() {
+    onCancel() {
+        this.props.dispatch(goBack());
+    }
 
-        const loading = true;
+    render() {
+        const loading = this.props.userAdd.loading;
 
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
 
         const formItemLayout = {
             labelCol: {
-                sm: { span: 4 },
+                sm: {span: 4},
             },
             wrapperCol: {
-                sm: { span: 20 },
+                sm: {span: 20},
             },
         };
 
@@ -59,14 +61,12 @@ export default class UserAdd extends React.Component {
                 confirmLoading={loading}
                 okText={"确定"}
                 cancelText={"取消"}
-                onOk={() => {
-                    this.addUser();
-                }}
-                onCancel={() => this.props.onCancel()}
+                onOk={() => this.onOK()}
+                onCancel={() => this.onCancel()}
             >
                 <Form>
                     <Form.Item label={"姓名"}
-                              {...formItemLayout}>
+                               {...formItemLayout}>
                         {
                             getFieldDecorator('name', {
                                 rules: [{
@@ -79,7 +79,7 @@ export default class UserAdd extends React.Component {
                     </Form.Item>
 
                     <Form.Item label={"年龄"}
-                              {...formItemLayout}>
+                               {...formItemLayout}>
                         {
                             getFieldDecorator('age', {
                                 rules: [{
@@ -92,7 +92,7 @@ export default class UserAdd extends React.Component {
                     </Form.Item>
 
                     <Form.Item label={"住址"}
-                              {...formItemLayout}>
+                               {...formItemLayout}>
                         {
                             getFieldDecorator('address', {
                                 rules: [{

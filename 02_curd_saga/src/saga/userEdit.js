@@ -32,7 +32,7 @@ function* saveUserWatcher() {
 
 
 
-export default function* userEdit(){
+export default function* userEditSaga(){
     yield all([
         fetchUserWatcher(),
         saveUserWatcher(),

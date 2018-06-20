@@ -25,6 +25,7 @@ import 'antd/dist/antd.css';
 /////////////////////////////////////////////////////////////////////////////////
 
 // Reducer
+import userAdd from './reducer/userAdd'
 import userMng from './reducer/userMng'
 import userEdit from "./reducer/userEdit"
 
@@ -43,6 +44,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
     combineReducers({
+        userAdd,
         userMng,
         userEdit,
         router: routerReducer
