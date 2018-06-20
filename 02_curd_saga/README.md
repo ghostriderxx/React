@@ -5,5 +5,6 @@ UserMng
     npm install
 
 ### 启动
-    npm start
+    npm jsonserver  // 启动JSON-SERVER
+    npm start       // 启动webpack-dev-server
 
