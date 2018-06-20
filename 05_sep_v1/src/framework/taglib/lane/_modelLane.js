@@ -1,6 +1,4 @@
-import { call, put, takeEvery, takeLatest, all } from 'redux-saga/effects'
-
-import uuid from "../../util/UUID"
+import {uuid} from "../../util"
 
 export default {
 

@@ -22,12 +22,11 @@ class Grid extends React.Component{
 
     render(){
         const data = this.props.grid.data;
-        const localLoading = this.props.grid.loading;
         return (
             <div style={{
                 padding:10,
             }}>
-                <Table {...this.props} dataSource={data} loading={this.props.loading || localLoading}></Table>
+                <Table {...this.props} dataSource={data} loading={this.props.loading}></Table>
             </div>
         );
     }
@@ -56,7 +55,7 @@ export default class GridWarpper extends React.Component{
 
         // 给Table分配实例
         this.Instance = connect(
-            (store)=>({grid: store[namespace]}),
+            (store)=>({grid: store[namespace], loading: store.loading}),
             (dispatch) => ({dispatch}),
             null,
             {withRef:true}

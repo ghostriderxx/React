@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## Framework
 import {
-    reaper
+    reaper,
+    reaperLoading
 } from './framework/core';
 
 import {
@@ -28,7 +29,7 @@ import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
 
 
 
-const app = reaper();
+const app = reaper(/*reaperLoading()*/);
 
 // 框架级模型
 app.model(require('./framework/taglib/lane/_modelLane').default);
