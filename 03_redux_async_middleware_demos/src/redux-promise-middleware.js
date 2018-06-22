@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware} from "redux"
-import thunk from "redux-thunk"
+import promiseMiddleware from 'redux-promise-middleware'
 import {delay} from "./utils"
 
 ///////////////////////////////////////////////////////////////////
@@ -7,26 +7,25 @@ import {delay} from "./utils"
 //
 const initialState = {
     count: 0,
-    loading: false,
     error: null,
 };
 
 function reducer(state = initialState, action){
     switch(action.type){
-        case "INC_INPROGRESS":
+        case "INC_PENDING":
             return {
                 ...state,
                 loading: true,
                 error: null,
             };
-        case "INC_SUCCESS":
+        case "INC_FULFILLED":
             return {
                 ...state,
                 count: state.count + 1,
                 loading: false,
                 error: null,
             };
-        case "INC_ERROR":
+        case "INC_REJECTED":
             return {
                 ...state,
                 loading: false,
@@ -40,7 +39,7 @@ function reducer(state = initialState, action){
 ///////////////////////////////////////////////////////////////////
 // Redux init
 //
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(reducer, applyMiddleware(promiseMiddleware()));
 
 store.subscribe(()=>{
     console.log(store.getState());
@@ -50,23 +49,15 @@ store.subscribe(()=>{
 // ActionCreators
 //
 function inc(){
-    return (dispatch, getState) => {
-
-        dispatch({type: "INC_INPROGRESS"});
-
-        delay(2000).then(()=>{
-
-            dispatch({type: "INC_SUCCESS"});
-
-        }).catch((error)=>{
-
-            dispatch({type: "INC_ERROR", payload:error.message});
-
-        });
-    };
+    return {
+        type: "INC",
+        payload: delay(2000),
+    }
 }
 
 ///////////////////////////////////////////////////////////////////
 // dispatch action
 //
-store.dispatch(inc());
+store.dispatch(inc()).then(()=>{
+    store.dispatch(inc());
+});

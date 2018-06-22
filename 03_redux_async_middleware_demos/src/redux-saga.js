@@ -1,5 +1,8 @@
 import {createStore, applyMiddleware} from "redux"
-import thunk from "redux-thunk"
+
+import createSagaMiddleware from 'redux-saga'
+import { put, takeEvery, takeLatest } from 'redux-saga/effects'
+
 import {delay} from "./utils"
 
 ///////////////////////////////////////////////////////////////////
@@ -38,35 +41,34 @@ function reducer(state = initialState, action){
 }
 
 ///////////////////////////////////////////////////////////////////
+// Saga
+//
+function* incWorker(action) {
+    try{
+        yield put({type: "INC_INPROGRESS"});
+        yield delay(2000);
+        yield put({type: "INC_SUCCESS"});
+    } catch (e) {
+        yield put({type: "INC_ERROR", payload: e.message});
+    }
+}
+
+function* incWatcher() {
+    yield takeEvery("INC_REQUESTED", incWorker);
+}
+
+///////////////////////////////////////////////////////////////////
 // Redux init
 //
-const store = createStore(reducer, applyMiddleware(thunk));
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(incWatcher);
 
 store.subscribe(()=>{
     console.log(store.getState());
 });
 
 ///////////////////////////////////////////////////////////////////
-// ActionCreators
-//
-function inc(){
-    return (dispatch, getState) => {
-
-        dispatch({type: "INC_INPROGRESS"});
-
-        delay(2000).then(()=>{
-
-            dispatch({type: "INC_SUCCESS"});
-
-        }).catch((error)=>{
-
-            dispatch({type: "INC_ERROR", payload:error.message});
-
-        });
-    };
-}
-
-///////////////////////////////////////////////////////////////////
 // dispatch action
 //
-store.dispatch(inc());
+store.dispatch({type: "INC_REQUESTED"});
