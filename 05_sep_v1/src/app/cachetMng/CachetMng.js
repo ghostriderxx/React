@@ -17,12 +17,8 @@ import {
     TabPage,
 } from "../../framework/taglib";
 import {
-    request
+    request,
 } from "../../framework/util";
-
-// ## APP
-import ResCachetTypeAdd from "./ResCachetTypeAdd"
-import ResCachetTypeModify from "./ResCachetTypeModify";
 
 /////////////////////////////////////////////////////////////////////////////
 // Model
@@ -154,7 +150,7 @@ export default class CachetMng extends React.Component {
         this.props.dispatch({
             type: "lane/openRes",
             payload: {
-                component: ResCachetTypeAdd,
+                componentPath: "app/cachetMng/ResCachetTypeAdd.js",
                 width: 600,
                 title: "新增章类别信息",
             }
@@ -168,7 +164,7 @@ export default class CachetMng extends React.Component {
         this.props.dispatch({
             type: "lane/openRes",
             payload: {
-                component: ResCachetTypeModify,
+                componentPath: "app/cachetMng/ResCachetTypeModify.js",
                 width: 600,
                 title: "修改章类别信息",
             }

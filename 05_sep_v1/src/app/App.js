@@ -17,9 +17,6 @@ import {
 
 // ## App
 import Top from "./top/Top";
-import PrintTplMng from "./printTplMng/PrintTplMng";
-import SmsMng from "./smsMng/SmsMng";
-import CachetMng from "./cachetMng/CachetMng";
 
 /////////////////////////////////////////////////////////////////////////////
 // Model
@@ -32,18 +29,18 @@ const modelApp = {
         menubarConfig: [{
             id: "printTplMng",
             text: "打印管理",
-            path: "/printTplMng",
-            component: PrintTplMng
+            routePath: "/printTplMng",
+            componentPath: "app/printTplMng/PrintTplMng.js"
         },{
             id: "smsMng",
             text: "短信模板管理",
-            path: "/smsMng",
-            component: SmsMng
+            routePath: "/smsMng",
+            componentPath: "app/smsMng/SmsMng.js"
         },{
             id: "cacheMng",
             text: "章管理",
-            path: "/cacheMng",
-            component: CachetMng
+            routePath: "/cacheMng",
+            componentPath: "app/cachetMng/CachetMng.js"
         },],
     },
 

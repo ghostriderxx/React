@@ -12,7 +12,7 @@ import {
 // FrameWork
 //
 import Frame from "../../../index"
-import uuid from "../../util/UUID"
+import uuid from "../../util/uuid"
 import _modelGridFactory from "./_modelGridFactory"
 
 class Grid extends React.Component{

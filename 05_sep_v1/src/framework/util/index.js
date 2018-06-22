@@ -1,4 +1,4 @@
 import request from "./request"
-import uuid from "./UUID"
+import uuid from "./uuid"
 
 export {request, uuid}

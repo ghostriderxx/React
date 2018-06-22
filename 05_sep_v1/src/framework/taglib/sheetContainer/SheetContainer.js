@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Route } from 'react-router'
+import Frame from "../../../index"
 
 export default class SheetContainer extends React.Component {
     constructor(props) {
@@ -13,8 +14,8 @@ export default class SheetContainer extends React.Component {
                 {
                     this.props.items.map((item) =>
                         <Route key={item.id}
-                               path={item.path}
-                               component={item.component}/>
+                               path={item.routePath}
+                               component={Frame.getComponent(null, item.componentPath)}/>
                     )
                 }
             </div>

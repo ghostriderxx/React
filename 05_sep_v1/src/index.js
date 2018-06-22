@@ -7,6 +7,7 @@ import React from 'react';
 // ## Framework
 import {
     reaper,
+    dynamic,
     reaperLoading
 } from './framework/core';
 
@@ -35,6 +36,13 @@ const app = reaper(reaperLoading());
 app.model(require('./framework/taglib/lane/_modelLane').default);
 
 export default {
+    getComponent: (biz, zjm) => {
+        console.log("getComponent:", biz, zjm);
+        return dynamic({
+            app,
+            component: () => import(`./${zjm}`)
+        });
+    },
     addModel: (model)=>{ app.model(model) },
 };
 

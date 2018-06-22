@@ -1,5 +1,5 @@
 import {uuid} from "../../util"
-
+import Frame from "../../../index"
 export default {
 
     namespace: 'lane',
@@ -56,9 +56,14 @@ export default {
         },
 
         * openRes({payload}, {call, put}) {
+            const {componentPath, ...rest} = payload;
+
             yield put({
                 type: `openResSuccess`,
-                payload,
+                payload: {
+                    component: Frame.getComponent(null, componentPath),
+                    ...rest
+                },
             });
         },
 

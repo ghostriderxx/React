@@ -29,7 +29,7 @@ export default class MenuBar extends React.Component {
         const menuItems = this.props.items;
 
         const matchedMenuItem = menuItems.filter((item) => {
-            return item.path == currentRoutePath
+            return item.routePath == currentRoutePath
         });
 
         const currentSelectedMenuItemKey = matchedMenuItem.length ? matchedMenuItem[0].id : "";
@@ -42,7 +42,7 @@ export default class MenuBar extends React.Component {
                 {
                     menuItems.map((item) =>
                         <Menu.Item key={item.id}>
-                            <Link to={item.path}>{item.text}</Link>
+                            <Link to={item.routePath}>{item.text}</Link>
                         </Menu.Item>
                     )
                 }
