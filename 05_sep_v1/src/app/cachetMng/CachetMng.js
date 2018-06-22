@@ -24,9 +24,7 @@ import {
 // Model
 //
 const modelCachetMng = {
-
     namespace: 'cachetMng',
-
     state: {
         cachetTypeList: [],
         cachetLoca:[],
@@ -34,7 +32,6 @@ const modelCachetMng = {
         cachetImageUrl: "",
         loading: false,
     },
-
     effects: {
         * setCachetImageUrl({payload}, {call, put}) {
             const cacheImageUrl = `/sep/CachetServlet/fetchCachetImage?zbh=${payload}&_=${Math.random()}`;
@@ -44,7 +41,6 @@ const modelCachetMng = {
                 payload: cacheImageUrl,
             });
         },
-
         * fetchCachetLoca({payload}, {call, put}) {
 
             const list = yield call(request, `/sep/CachetServlet/fetchCachetLoca?zlbbh=${payload}`);
@@ -54,16 +50,12 @@ const modelCachetMng = {
                 payload: list
             });
         },
-
         * fetchCachetList({payload}, {call, put}) {
-
             const list = yield call(request, `/sep/CachetServlet/fetchCachetList?zlbbh=${payload}`);
-
             yield put({
                 type: `fetchCachetListSuccess`,
                 payload: list
             });
-
             if(list.length){ // 做图片预览数据联动
                 const zbh = list[0].zbh;
                 yield put({
@@ -72,16 +64,9 @@ const modelCachetMng = {
                 });
             }
         },
-
         * fetchCachetTypeList({payload}, {call, put}) {
-
             const list = yield call(request, "/sep/CachetServlet/fetchCachetTypeList");
-
             yield put({type: `fetchCachetTypeListSuccess`, payload: list});
-
-
-            // 做联动查询；章类别信息 ==> 章信息列表
-            //                    ==> 章类别所在模板信息
             if(list.length){
                 const zlbbh = list[0].zlbbh;
                 yield put({
@@ -103,21 +88,18 @@ const modelCachetMng = {
                 cachetTypeList: payload,
             };
         },
-
         fetchCachetListSuccess(state, {payload}) {
             return {
                 ...state,
                 cachetList: payload,
             };
         },
-
         fetchCachetLocaSuccess(state, {payload}) {
             return {
                 ...state,
                 cachetLoca: payload,
             };
         },
-
         setCachetImageUrlSuccess(state, {payload}) {
             return {
                 ...state,
@@ -125,7 +107,6 @@ const modelCachetMng = {
             };
         },
     },
-
 };
 export {modelCachetMng};
 
@@ -138,7 +119,6 @@ export default class CachetMng extends React.Component {
     constructor(props){
         super(props);
     }
-
     componentDidMount(){
         this.props.dispatch({
             type: "cachetMng/fetchCachetTypeList"
@@ -159,7 +139,6 @@ export default class CachetMng extends React.Component {
         //     type: "cachetMng/FETCH_CACHET_TYPE_LIST_REQUESTED"
         // });
     }
-
     cachetTypeModify(){
         this.props.dispatch({
             type: "lane/openRes",
@@ -170,11 +149,9 @@ export default class CachetMng extends React.Component {
             }
         });
     }
-
     cachetTypeDelete(){
         alert("cachetTypeDelete");
     }
-
 
     // 章信息 增、删、改
     cachetAdd(){
@@ -188,8 +165,6 @@ export default class CachetMng extends React.Component {
     cachetDelete(){
         alert("cachetDelete");
     }
-
-
 
     render(){
         return (
@@ -222,7 +197,6 @@ export default class CachetMng extends React.Component {
                                dataIndex: 'zlbmc',
                            }]}
                     />
-
                     <Button onClick={()=>this.cachetTypeAdd()}>新增</Button>
                     <Button onClick={()=>this.cachetTypeModify()}>修改</Button>
                     <Button onClick={()=>this.cachetTypeDelete()}>删除</Button>
@@ -232,10 +206,7 @@ export default class CachetMng extends React.Component {
                     {/* 章信息 */}
                     <Tab defaultActiveKey="cachetInfo">
                         <TabPage tab="章信息" key="cachetInfo">
-
-
                             <Hlayout>
-
                                 <Panel>
                                     <Grid  ref={(ele)=>{this.dwCachetInfo = ele} }
                                            dataSource={this.props.cachetMng.cachetList}
@@ -271,14 +242,10 @@ export default class CachetMng extends React.Component {
                                            }]}
                                     />
                                 </Panel>
-
                                 <Panel>
                                     <img src={this.props.cachetMng.cachetImageUrl} style={{width: 100, height:100}}/>
                                 </Panel>
                             </Hlayout>
-
-
-
                             <Button onClick={()=>this.cachetAdd()}>新增</Button>
                             <Button onClick={()=>this.cachetModify()}>修改</Button>
                             <Button onClick={()=>this.cachetDelete()}>删除</Button>

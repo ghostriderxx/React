@@ -37,7 +37,6 @@ app.model(require('./framework/taglib/lane/_modelLane').default);
 
 export default {
     getComponent: (biz, zjm) => {
-        console.log("getComponent:", biz, zjm);
         return dynamic({
             app,
             component: () => import(`./${zjm}`)
