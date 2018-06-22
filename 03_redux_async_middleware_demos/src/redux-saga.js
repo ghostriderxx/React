@@ -58,10 +58,12 @@ function* incWatcher() {
 }
 
 ///////////////////////////////////////////////////////////////////
-// Redux init
+// Init Redux
 //
 const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+
 sagaMiddleware.run(incWatcher);
 
 store.subscribe(()=>{
@@ -69,6 +71,6 @@ store.subscribe(()=>{
 });
 
 ///////////////////////////////////////////////////////////////////
-// dispatch action
+// Dispatch Action
 //
 store.dispatch({type: "INC_REQUESTED"});

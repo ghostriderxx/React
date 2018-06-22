@@ -4,9 +4,9 @@
   "description": "Redux异步中间件示例",
   "main": "index.js",
   "scripts": {
-    "thunk": "npx babel-node ./src/redux-thunk.js",
-    "promise": "npx babel-node ./src/redux-promise.js",
-    "promise-middleware": "npx babel-node ./src/redux-promise-middleware.js",
+    "redux-saga": "npx babel-node ./src/redux-thunk.js",
+    "redux-promise-middleware": "npx babel-node ./src/redux-promise-middleware.js",
+    "redux-promise": "npx babel-node ./src/redux-promise.js",
     "redux-saga": "npx babel-node ./src/redux-saga.js"
   },
   "author": "WEBJ2EE",

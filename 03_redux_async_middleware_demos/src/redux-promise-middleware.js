@@ -37,15 +37,6 @@ function reducer(state = initialState, action){
 }
 
 ///////////////////////////////////////////////////////////////////
-// Redux init
-//
-const store = createStore(reducer, applyMiddleware(promiseMiddleware()));
-
-store.subscribe(()=>{
-    console.log(store.getState());
-});
-
-///////////////////////////////////////////////////////////////////
 // ActionCreators
 //
 function inc(){
@@ -56,7 +47,15 @@ function inc(){
 }
 
 ///////////////////////////////////////////////////////////////////
-// dispatch action
+// Init Redux
+//
+const store = createStore(reducer, applyMiddleware(promiseMiddleware()));
+store.subscribe(()=>{
+    console.log(store.getState());
+});
+
+///////////////////////////////////////////////////////////////////
+// Dispatch Action
 //
 store.dispatch(inc()).then(()=>{
     store.dispatch(inc());

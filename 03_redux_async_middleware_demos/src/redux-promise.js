@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware} from "redux"
-import promiseMiddleware from 'redux-promise';
+import promise from 'redux-promise';
 import {delay} from "./utils"
 
 ///////////////////////////////////////////////////////////////////
@@ -30,16 +30,7 @@ function reducer(state = initialState, action){
 }
 
 ///////////////////////////////////////////////////////////////////
-// Redux init
-//
-const store = createStore(reducer, applyMiddleware(promiseMiddleware));
-
-store.subscribe(()=>{
-    console.log(store.getState());
-});
-
-///////////////////////////////////////////////////////////////////
-// ActionCreators
+// ActionCreator
 //
 function inc(){
     return {
@@ -49,7 +40,15 @@ function inc(){
 }
 
 ///////////////////////////////////////////////////////////////////
-// dispatch action
+// Init Redux
+//
+const store = createStore(reducer, applyMiddleware(promise));
+store.subscribe(()=>{
+    console.log(store.getState());
+});
+
+///////////////////////////////////////////////////////////////////
+// Dispatch Action
 //
 store.dispatch(inc()).then(()=>{
     store.dispatch(inc());
