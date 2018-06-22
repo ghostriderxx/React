@@ -1,0 +1,20 @@
+{
+  "name": "03_redux_async_middleware_demos",
+  "version": "1.0.0",
+  "description": "Redux异步中间件示例",
+  "main": "index.js",
+  "scripts": {
+    "thunk": "npx babel-node ./src/redux-thunk.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
