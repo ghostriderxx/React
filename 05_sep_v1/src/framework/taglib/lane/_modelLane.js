@@ -32,7 +32,7 @@ export default {
 
             // 1. Add Lane
             yield put({
-                type: `addLane`,
+                type: `addLaneSuccess`,
                 payload: mainLaneId,
             });
 

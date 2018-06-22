@@ -29,7 +29,7 @@ import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
 
 
 
-const app = reaper(/*reaperLoading()*/);
+const app = reaper(reaperLoading());
 
 // 框架级模型
 app.model(require('./framework/taglib/lane/_modelLane').default);

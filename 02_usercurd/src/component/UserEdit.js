@@ -35,7 +35,7 @@ import {
         };
     },
 })
-export default class UserAdd extends React.Component {
+export default class UserEdit extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -67,9 +67,7 @@ export default class UserAdd extends React.Component {
 
     render() {
         const {loading} = this.props.userEdit;
-
-        const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
-
+        const {getFieldDecorator} = this.props.form;
         const formItemLayout = {
             labelCol: {
                 sm: { span: 4 },
@@ -78,9 +76,7 @@ export default class UserAdd extends React.Component {
                 sm: { span: 20 },
             },
         };
-
         return (
-
             <Modal
                 title="修改用户信息"
                 visible={true}
@@ -117,7 +113,6 @@ export default class UserAdd extends React.Component {
                     </Form>
                 </Spin>
             </Modal>
-
         );
     }
 }

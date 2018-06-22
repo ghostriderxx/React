@@ -55,7 +55,7 @@ export default class GridWarpper extends React.Component{
 
         // 给Table分配实例
         this.Instance = connect(
-            (store)=>({grid: store[namespace], loading: store.loading}),
+            (store)=>({grid: store[namespace], loading: store.loading.global}),
             (dispatch) => ({dispatch}),
             null,
             {withRef:true}
