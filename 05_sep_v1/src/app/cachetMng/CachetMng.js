@@ -32,6 +32,17 @@ const modelCachetMng = {
         cachetImageUrl: "",
         loading: false,
     },
+    subscriptions: {
+        setup({ history, dispatch }) {
+            return history.listen(({ pathname }) => {
+                if (pathname === '/cacheMng') {
+                    dispatch({
+                        type: "fetchCachetTypeList"
+                    });
+                }
+            });
+        },
+    },
     effects: {
         * setCachetImageUrl({payload}, {call, put}) {
             const cacheImageUrl = `/sep/CachetServlet/fetchCachetImage?zbh=${payload}&_=${Math.random()}`;
@@ -90,6 +101,11 @@ const modelCachetMng = {
                     componentPath: "app/cachetMng/ResCachetTypeAdd.js",
                     width: 600,
                     title: "新增章类别信息",
+                    actionAfterClose: (params, dispatch)=>{
+                        dispatch({
+                            type: "fetchCachetTypeList"
+                        });
+                    }
                 }
             });
         },
@@ -200,7 +216,30 @@ const modelCachetMng = {
 
             yield call(request, `/sep/CachetServlet/deleteCachetInfo?zbh=${zbh}`);
 
+
+            const currentRowNumber1 = yield yield put({
+                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
+            });
+
+            const zlbbh = yield yield put({ // 用消息手段操作Grid;
+                type: "dwCachetTypeInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: currentRowNumber1,
+                    columnName: "zlbbh",
+                }
+            });
+
+
             // 重新查询
+            // 重新查询数据；
+            yield put({
+                type: `fetchCachetLoca`,
+                payload:zlbbh
+            });
+            yield put({
+                type: `fetchCachetList`,
+                payload:zlbbh
+            });
         },
 
         // 修改章信息
@@ -267,13 +306,6 @@ export {modelCachetMng};
 export default class CachetMng extends React.Component {
     constructor(props){
         super(props);
-    }
-
-    // 页面初始化
-    componentDidMount(){
-        this.props.dispatch({
-            type: "cachetMng/fetchCachetTypeList"
-        });
     }
 
     // 章类别信息 增、删、改

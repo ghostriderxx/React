@@ -77,7 +77,7 @@ export default class ResCachetTypeAdd extends React.Component {
     }
 
     cancel(){
-        this.props.closeRES();
+        this.props.closeRES("helloworld");
     }
 
     render(){
