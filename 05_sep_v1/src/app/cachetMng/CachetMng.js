@@ -80,7 +80,6 @@ const modelCachetMng = {
             }
         },
     },
-
     reducers: {
         fetchCachetTypeListSuccess(state, {payload}) {
             return {
