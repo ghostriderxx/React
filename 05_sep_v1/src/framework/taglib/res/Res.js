@@ -22,8 +22,7 @@ export default class Res extends React.Component {
                 title={this.props.title}
                 width={this.props.width}
                 visible={true}
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
+                footer={null}
                 {...this.props}
             >
             </Modal>

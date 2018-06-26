@@ -79,6 +79,56 @@ const modelCachetMng = {
                 });
             }
         },
+
+        // 删除章类别信息
+        * cachetTypeDelete({payload}, {call, put, select}) {
+            const currentRowNumber = yield yield put({
+                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
+            });
+
+            const zlbbh = yield yield put({ // 用消息手段操作Grid;
+                type: "dwCachetTypeInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: currentRowNumber,
+                    columnName: "zlbbh",
+                }
+            });
+
+            yield call(request, `/sep/CachetServlet/deleteCachetTypeInfo?zlbbh=${zlbbh}`);
+
+            yield put({
+                type: "fetchCachetTypeList"
+            });
+
+
+        },
+
+        //修改章类别信息
+        * cachetTypeModify({payload}, {call, put, select}) {
+            const currentRowNumber = yield yield put({
+                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
+            });
+
+            const zlbbh = yield yield put({ // 用消息手段操作Grid;
+                type: "dwCachetTypeInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: currentRowNumber,
+                    columnName: "zlbbh",
+                }
+            });
+
+            yield put({
+                type: "lane/openRes",
+                payload: {
+                    componentPath: "app/cachetMng/ResCachetTypeModify.js",
+                    width: 600,
+                    title: "修改章类别信息",
+                    params:{
+                        zlbbh,
+                    }
+                }
+            });
+        },
     },
     reducers: {
         fetchCachetTypeListSuccess(state, {payload}) {
@@ -134,22 +184,16 @@ export default class CachetMng extends React.Component {
                 title: "新增章类别信息",
             }
         });
-        // this.props.dispatch({
-        //     type: "cachetMng/FETCH_CACHET_TYPE_LIST_REQUESTED"
-        // });
     }
     cachetTypeModify(){
         this.props.dispatch({
-            type: "lane/openRes",
-            payload: {
-                componentPath: "app/cachetMng/ResCachetTypeModify.js",
-                width: 600,
-                title: "修改章类别信息",
-            }
+            type: "cachetMng/cachetTypeModify"
         });
     }
     cachetTypeDelete(){
-        alert("cachetTypeDelete");
+        this.props.dispatch({
+            type: "cachetMng/cachetTypeDelete",
+        });
     }
 
     // 章信息 增、删、改
@@ -170,23 +214,19 @@ export default class CachetMng extends React.Component {
             <Hlayout>
                 {/* 章类别信息 */}
                 <Panel width={370}>
-                    <Grid  ref={(ele)=>{this.dwCachetTypeInfo = ele} }
+                    <Grid  name={"dwCachetTypeInfo"}
                            dataSource={this.props.cachetMng.cachetTypeList}
                            rowKey="empno"
-                           onRow={(record) => {
-                               return {
-                                   onClick: () => { // 点击行
-                                       this.props.dispatch({
-                                           type: "cachetMng/fetchCachetList",
-                                           payload: record.zlbbh
-                                       });
+                           onRowClick={(record) => { // 点击行
+                               this.props.dispatch({
+                                   type: "cachetMng/fetchCachetList",
+                                   payload: record.zlbbh
+                               });
 
-                                       this.props.dispatch({
-                                           type: "cachetMng/fetchCachetLoca",
-                                           payload: record.zlbbh
-                                       });
-                                   },
-                               };
+                               this.props.dispatch({
+                                   type: "cachetMng/fetchCachetLoca",
+                                   payload: record.zlbbh
+                               });
                            }}
                            columns={[{
                                title: '章类别编号',
@@ -207,18 +247,14 @@ export default class CachetMng extends React.Component {
                         <TabPage tab="章信息" key="cachetInfo">
                             <Hlayout>
                                 <Panel>
-                                    <Grid  ref={(ele)=>{this.dwCachetInfo = ele} }
+                                    <Grid  name={"dwCachetInfo"}
                                            dataSource={this.props.cachetMng.cachetList}
                                            rowKey="mbid"
-                                           onRow={(record) => {
-                                               return {
-                                                   onClick: () => { // 点击行
-                                                       this.props.dispatch({
-                                                           type: "cachetMng/setCachetImageUrl",
-                                                           payload: record.zbh,
-                                                       });
-                                                   },
-                                               };
+                                           onRowClick={(record) => {
+                                               this.props.dispatch({
+                                                   type: "cachetMng/setCachetImageUrl",
+                                                   payload: record.zbh,
+                                               });
                                            }}
                                            columns={[{
                                                title: '章编号',
@@ -250,7 +286,7 @@ export default class CachetMng extends React.Component {
                             <Button onClick={()=>this.cachetDelete()}>删除</Button>
                         </TabPage>
                         <TabPage tab="章所在模板" key="cachetLoca">
-                            <Grid  ref={(ele)=>{this.dwTempInfor = ele} }
+                            <Grid  name={"dwTempInfor"}
                                    dataSource={this.props.cachetMng.cachetLoca}
                                    rowKey="mbid"
                                    columns={[{

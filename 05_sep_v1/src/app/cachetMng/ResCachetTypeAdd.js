@@ -61,12 +61,17 @@ export default class ResCachetTypeAdd extends React.Component {
     }
 
     saveCachetTypeInfoAdd(){
-        const {zlbbh, zlbmc} = this.props.form.getFieldsValue();
-        this.props.dispatch({
-            type: "resCachetTypeAdd/saveCachetTypeInfoAdd",
-            payload: {
-                zlbbh,
-                zlbmc,
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                const {zlbbh, zlbmc} = values;
+
+                this.props.dispatch({
+                    type: "resCachetTypeAdd/saveCachetTypeInfoAdd",
+                    payload: {
+                        zlbbh,
+                        zlbmc,
+                    }
+                });
             }
         });
     }
@@ -93,7 +98,7 @@ export default class ResCachetTypeAdd extends React.Component {
                         {...formItemLayout}
                     >
                         {getFieldDecorator('zlbbh', {
-                            rules: [{ required: true, message: 'Please input your username!' }],
+                            rules: [{ required: true, message: '请填写章类别编号!' }],
                         })(
                             <Input type="text" placeholder="章类别编号" />
                         )}
@@ -102,17 +107,17 @@ export default class ResCachetTypeAdd extends React.Component {
                         label="章类别名称"
                         {...formItemLayout}>
                         {getFieldDecorator('zlbmc', {
-                            rules: [{ required: true, message: 'Please input your Password!' }],
+                            rules: [{ required: true, message: '请填写章类别名称!' }],
                         })(
                             <Input type="text" placeholder="章类别名称" />
                         )}
                     </Form.Item>
                 </Form>
 
-
-                <Button onClick={()=>this.saveCachetTypeInfoAdd()}>保存</Button>
-                <Button onClick={()=>this.cancel()}>取消</Button>
-
+                <div style={{textAlign:"right"}}>
+                    <Button onClick={()=>this.saveCachetTypeInfoAdd()}>保存</Button>
+                    <Button onClick={()=>this.cancel()}>取消</Button>
+                </div>
             </div>
         );
     }

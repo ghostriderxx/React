@@ -1,8 +1,5 @@
-/////////////////////////////////////////////////////////////////////////////
-// Dependency
-//
-// ## React
-import React from 'react';
+
+
 
 export default class ResCachetAdd extends React.Component {
     constructor(props) {
