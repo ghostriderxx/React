@@ -26,6 +26,8 @@ import App from "./app/App";
 // ## APP
 import {modelApp} from "./app/App"
 import {modelCachetMng} from "./app/cachetMng/CachetMng"
+import {modelResCachetAdd} from "./app/cachetMng/ResCachetAdd"
+import {modelResCachetModify} from "./app/cachetMng/ResCachetModify"
 import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
 import {modelResCachetTypeModify} from "./app/cachetMng/ResCachetTypeModify"
 
@@ -34,9 +36,6 @@ const app = reaper(reaperLoading());
 
 // 框架级模型
 app.model(require('./framework/taglib/lane/_modelLane').default);
-
-
-
 
 const cached = {}; // 避免模型的多次注入，为什么会多次注入。。。我还不太明白。。参考的是dynamic.js
 export default {
@@ -57,6 +56,8 @@ export default {
 // 业务级模型
 app.model(modelApp);
 app.model(modelCachetMng);
+app.model(modelResCachetAdd);
+app.model(modelResCachetModify);
 app.model(modelResCachetTypeAdd);
 app.model(modelResCachetTypeModify);
 

@@ -80,6 +80,20 @@ const modelCachetMng = {
             }
         },
 
+        //////////////////////////////////////////////////////////////////////////////
+
+        // 新增章类别信息
+        * cachetTypeAdd({payload}, {call, put, select}) {
+            yield put({
+                type: "lane/openRes",
+                payload: {
+                    componentPath: "app/cachetMng/ResCachetTypeAdd.js",
+                    width: 600,
+                    title: "新增章类别信息",
+                }
+            });
+        },
+
         // 删除章类别信息
         * cachetTypeDelete({payload}, {call, put, select}) {
             const currentRowNumber = yield yield put({
@@ -129,6 +143,92 @@ const modelCachetMng = {
                 }
             });
         },
+
+        //////////////////////////////////////////////////////////////////////////////
+
+        // 新增章信息
+        * cachetAdd({payload}, {call, put, select}) {
+
+            const currentRowNumber = yield yield put({
+                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
+            });
+
+            const zlbbh = yield yield put({ // 用消息手段操作Grid;
+                type: "dwCachetTypeInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: currentRowNumber,
+                    columnName: "zlbbh",
+                }
+            });
+
+            yield put({
+                type: "lane/openRes",
+                payload: {
+                    componentPath: "app/cachetMng/ResCachetAdd.js",
+                    width: 600,
+                    title: "新增章信息",
+                    params: {
+                        zlbbh
+                    }
+                }
+            });
+
+            // 重新查询数据；
+            yield put({
+                type: `fetchCachetLoca`,
+                payload:zlbbh
+            });
+            yield put({
+                type: `fetchCachetList`,
+                payload:zlbbh
+            });
+        },
+
+        // 删除章信息
+        * cachetDelete({payload}, {call, put, select}) {
+            const currentRowNumber = yield yield put({
+                type: "dwCachetInfo/gridGetCurrentRowNumber"
+            });
+
+            const zbh = yield yield put({ // 用消息手段操作Grid;
+                type: "dwCachetInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: currentRowNumber,
+                    columnName: "zbh",
+                }
+            });
+
+            yield call(request, `/sep/CachetServlet/deleteCachetInfo?zbh=${zbh}`);
+
+            // 重新查询
+        },
+
+        // 修改章信息
+        * cachetModify({payload}, {call, put, select}) {
+            const currentRowNumber = yield yield put({
+                type: "dwCachetInfo/gridGetCurrentRowNumber"
+            });
+
+            const zbh = yield yield put({ // 用消息手段操作Grid;
+                type: "dwCachetInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: currentRowNumber,
+                    columnName: "zbh",
+                }
+            });
+
+            yield put({
+                type: "lane/openRes",
+                payload: {
+                    componentPath: "app/cachetMng/ResCachetModify.js",
+                    width: 600,
+                    title: "修改章信息",
+                    params:{
+                        zbh,
+                    }
+                }
+            });
+        },
     },
     reducers: {
         fetchCachetTypeListSuccess(state, {payload}) {
@@ -168,6 +268,8 @@ export default class CachetMng extends React.Component {
     constructor(props){
         super(props);
     }
+
+    // 页面初始化
     componentDidMount(){
         this.props.dispatch({
             type: "cachetMng/fetchCachetTypeList"
@@ -177,12 +279,7 @@ export default class CachetMng extends React.Component {
     // 章类别信息 增、删、改
     cachetTypeAdd(){
         this.props.dispatch({
-            type: "lane/openRes",
-            payload: {
-                componentPath: "app/cachetMng/ResCachetTypeAdd.js",
-                width: 600,
-                title: "新增章类别信息",
-            }
+            type: "cachetMng/cachetTypeAdd"
         });
     }
     cachetTypeModify(){
@@ -198,15 +295,21 @@ export default class CachetMng extends React.Component {
 
     // 章信息 增、删、改
     cachetAdd(){
-        alert("cachetAdd");
+        this.props.dispatch({
+            type: "cachetMng/cachetAdd",
+        });
     }
 
     cachetModify(){
-        alert("cachetModify");
+        this.props.dispatch({
+            type: "cachetMng/cachetModify",
+        });
     }
 
     cachetDelete(){
-        alert("cachetDelete");
+        this.props.dispatch({
+            type: "cachetMng/cachetDelete",
+        });
     }
 
     render(){
