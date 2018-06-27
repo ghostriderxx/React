@@ -67,11 +67,24 @@ export default {
             });
         },
 
-        * closeRes({payload}, {call, put}) {
+        * closeRes({payload}, {call, put, select}) {
+            const actionAfterClose =  yield select(({lane}) => {
+                const {lanes, currentActiveLaneId} = lane;
+                const currentActiveLane = lanes.filter(lane => {
+                    return lane.id == currentActiveLaneId;
+                })[0];
+                const res = currentActiveLane.res;
+
+                return res[res.length-1].actionAfterClose;
+            });
+
             yield put({
                 type: `closeResSuccess`,
-                payload,
             });
+
+            if(actionAfterClose){
+                yield call(actionAfterClose, payload, {call, put, select});
+            }
         },
     },
 
