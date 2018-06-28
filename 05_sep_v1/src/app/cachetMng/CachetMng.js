@@ -77,7 +77,9 @@ const modelCachetMng = {
         },
         * fetchCachetTypeList({payload}, {call, put}) {
             const list = yield call(request, "/sep/CachetServlet/fetchCachetTypeList");
+
             yield put({type: `fetchCachetTypeListSuccess`, payload: list});
+
             if(list.length){
                 const zlbbh = list[0].zlbbh;
                 yield put({

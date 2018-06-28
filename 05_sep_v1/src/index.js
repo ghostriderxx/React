@@ -22,6 +22,7 @@ import {
 import {Route} from "react-router-dom"
 import 'antd/dist/antd.css';
 import App from "./app/App";
+import { message } from 'antd';
 
 // ## APP
 import {modelApp} from "./app/App"
@@ -32,7 +33,18 @@ import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
 import {modelResCachetTypeModify} from "./app/cachetMng/ResCachetTypeModify"
 
 
-const app = reaper(reaperLoading());
+const app = reaper({
+    ...reaperLoading(),
+    onError(e) {
+        if(e.errortype == 1){ // BusinessExcetpion
+            alert(e.message);
+        }else if(e.errortype == 2){ // AppException
+            message.error(e.message, /* duration */10);
+        }else{ // Ohter(NetworkError .... 等)
+            message.error(e.message, /* duration */10);
+        }
+    },
+});
 
 // 框架级模型
 app.model(require('./framework/taglib/lane/_modelLane').default);
