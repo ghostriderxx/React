@@ -58,33 +58,39 @@ export default {
         * openRes({payload}, {call, put}) {
             const {componentPath, ...rest} = payload;
 
+            let __framework__resolve = null;
+            let __framework__promise = new Promise((resolve)=>{
+                __framework__resolve = resolve;
+            });
+
             yield put({
                 type: `openResSuccess`,
                 payload: {
                     component: Frame.getComponent(null, componentPath),
+                    __framework__resolve,
                     ...rest
                 },
             });
+
+            return __framework__promise;
         },
 
         * closeRes({payload}, {call, put, select}) {
-            const actionAfterClose =  yield select(({lane}) => {
+            const __framework__resolve =  yield select(({lane}) => {
                 const {lanes, currentActiveLaneId} = lane;
                 const currentActiveLane = lanes.filter(lane => {
                     return lane.id == currentActiveLaneId;
                 })[0];
                 const res = currentActiveLane.res;
 
-                return res[res.length-1].actionAfterClose;
+                return res[res.length-1].__framework__resolve;
             });
 
             yield put({
                 type: `closeResSuccess`,
             });
 
-            if(actionAfterClose){
-                yield call(actionAfterClose, payload, {call, put, select});
-            }
+            __framework__resolve(payload);
         },
     },
 
