@@ -26,9 +26,9 @@ import {
 const modelCachetMng = {
     namespace: 'cachetMng',
     state: {
-        cachetTypeList: [],
-        cachetLoca:[],
-        cachetList: [],
+        cachettypeds: [],
+        cachetds: [],
+        tempds:[],
         cachetImageUrl: "",
         loading: false,
     },
@@ -37,13 +37,89 @@ const modelCachetMng = {
             return history.listen(({ pathname }) => {
                 if (pathname === '/cacheMng') {
                     dispatch({
-                        type: "fetchCachetTypeList"
+                        type: "queryCachetTypeList"
                     });
                 }
             });
         },
     },
+    reducers: {
+        queryCachetTypeListSuccess(state, {payload}) {
+            return {
+                ...state,
+                cachettypeds: payload,
+            };
+        },
+        queryCachetListSuccess(state, {payload}) {
+            return {
+                ...state,
+                cachetds: payload,
+            };
+        },
+        queryCachetLocaSuccess(state, {payload}) {
+            return {
+                ...state,
+                tempds: payload,
+            };
+        },
+        setCachetImageUrlSuccess(state, {payload}) {
+            return {
+                ...state,
+                cachetImageUrl: payload,
+            };
+        },
+    },
     effects: {
+        // 查询章类别信息
+        * queryCachetTypeList({payload}, {call, put}) {
+            const vdo = yield call(request, "/sep/CachetServlet/queryCachetTypeList");
+            const {cachettypeds} = vdo;
+
+            yield put({type: `queryCachetTypeListSuccess`, payload: cachettypeds});
+
+            if(cachettypeds.length){
+                const zlbbh = cachettypeds[0].zlbbh;
+                yield put({
+                    type: `queryCachetList`,
+                    payload:zlbbh
+                });
+                yield put({
+                    type: `fetchCachetLoca`,
+                    payload:zlbbh
+                });
+            }
+        },
+        // 根据章类别编号查询章信息
+        * queryCachetList({payload}, {call, put}) {
+            const vdo = yield call(request, `/sep/CachetServlet/queryCachetList?zlbbh=${payload}`);
+            const {cachetds} = vdo;
+
+            yield put({
+                type: `queryCachetListSuccess`,
+                payload: cachetds
+            });
+
+            if(cachetds.length){ // 做图片预览数据联动
+                const zbh = cachetds[0].zbh;
+                yield put({
+                    type: `setCachetImageUrl`,
+                    payload:zbh
+                });
+            }
+        },
+
+        // 根据章类别编号查询所在模版信息
+        * queryCachetLoca({payload}, {call, put}) {
+
+            const vdo = yield call(request, `/sep/CachetServlet/queryCachetLoca?zlbbh=${payload}`);
+            const {tempds} = vdo;
+
+            yield put({
+                type: `queryCachetLocaSuccess`,
+                payload: tempds
+            });
+        },
+
         * setCachetImageUrl({payload}, {call, put}) {
             const cacheImageUrl = `/sep/CachetServlet/fetchCachetImage?zbh=${payload}&_=${Math.random()}`;
 
@@ -52,49 +128,10 @@ const modelCachetMng = {
                 payload: cacheImageUrl,
             });
         },
-        * fetchCachetLoca({payload}, {call, put}) {
 
-            const list = yield call(request, `/sep/CachetServlet/fetchCachetLoca?zlbbh=${payload}`);
 
-            yield put({
-                type: `fetchCachetLocaSuccess`,
-                payload: list
-            });
-        },
-        * fetchCachetList({payload}, {call, put}) {
-            const list = yield call(request, `/sep/CachetServlet/fetchCachetList?zlbbh=${payload}`);
-            yield put({
-                type: `fetchCachetListSuccess`,
-                payload: list
-            });
-            if(list.length){ // 做图片预览数据联动
-                const zbh = list[0].zbh;
-                yield put({
-                    type: `setCachetImageUrl`,
-                    payload:zbh
-                });
-            }
-        },
-        * fetchCachetTypeList({payload}, {call, put}) {
-            const list = yield call(request, "/sep/CachetServlet/fetchCachetTypeList");
-
-            yield put({type: `fetchCachetTypeListSuccess`, payload: list});
-
-            if(list.length){
-                const zlbbh = list[0].zlbbh;
-                yield put({
-                    type: `fetchCachetLoca`,
-                    payload:zlbbh
-                });
-                yield put({
-                    type: `fetchCachetList`,
-                    payload:zlbbh
-                });
-            }
-        },
 
         //////////////////////////////////////////////////////////////////////////////
-
         // 新增章类别信息
         * cachetTypeAdd({payload}, {call, put, select}) {
             yield put({
@@ -105,7 +142,7 @@ const modelCachetMng = {
                     title: "新增章类别信息",
                     actionAfterClose: (params, dispatch)=>{
                         dispatch({
-                            type: "fetchCachetTypeList"
+                            type: "queryCachetTypeList"
                         });
                     }
                 }
@@ -129,10 +166,8 @@ const modelCachetMng = {
             yield call(request, `/sep/CachetServlet/deleteCachetTypeInfo?zlbbh=${zlbbh}`);
 
             yield put({
-                type: "fetchCachetTypeList"
+                type: "queryCachetTypeList"
             });
-
-
         },
 
         //修改章类别信息
@@ -193,11 +228,11 @@ const modelCachetMng = {
 
             // 重新查询数据；
             yield put({
-                type: `fetchCachetLoca`,
+                type: `queryCachetList`,
                 payload:zlbbh
             });
             yield put({
-                type: `fetchCachetList`,
+                type: `queryCachetLoca`,
                 payload:zlbbh
             });
         },
@@ -235,11 +270,11 @@ const modelCachetMng = {
             // 重新查询
             // 重新查询数据；
             yield put({
-                type: `fetchCachetLoca`,
+                type: `queryCachetList`,
                 payload:zlbbh
             });
             yield put({
-                type: `fetchCachetList`,
+                type: `queryCachetLoca`,
                 payload:zlbbh
             });
         },
@@ -269,32 +304,6 @@ const modelCachetMng = {
                     }
                 }
             });
-        },
-    },
-    reducers: {
-        fetchCachetTypeListSuccess(state, {payload}) {
-            return {
-                ...state,
-                cachetTypeList: payload,
-            };
-        },
-        fetchCachetListSuccess(state, {payload}) {
-            return {
-                ...state,
-                cachetList: payload,
-            };
-        },
-        fetchCachetLocaSuccess(state, {payload}) {
-            return {
-                ...state,
-                cachetLoca: payload,
-            };
-        },
-        setCachetImageUrlSuccess(state, {payload}) {
-            return {
-                ...state,
-                cachetImageUrl: payload,
-            };
         },
     },
 };
@@ -347,21 +356,23 @@ export default class CachetMng extends React.Component {
     }
 
     render(){
+        const {cachettypeds, cachetds, tempds} = this.props.cachetMng;
+
         return (
             <Hlayout>
                 {/* 章类别信息 */}
                 <Panel width={370}>
                     <Grid  name={"dwCachetTypeInfo"}
-                           dataSource={this.props.cachetMng.cachetTypeList}
+                           dataSource={cachettypeds}
                            rowKey="empno"
                            onRowClick={(record) => { // 点击行
                                this.props.dispatch({
-                                   type: "cachetMng/fetchCachetList",
+                                   type: "cachetMng/queryCachetList",
                                    payload: record.zlbbh
                                });
 
                                this.props.dispatch({
-                                   type: "cachetMng/fetchCachetLoca",
+                                   type: "cachetMng/queryCachetLoca",
                                    payload: record.zlbbh
                                });
                            }}
@@ -385,7 +396,7 @@ export default class CachetMng extends React.Component {
                             <Hlayout>
                                 <Panel>
                                     <Grid  name={"dwCachetInfo"}
-                                           dataSource={this.props.cachetMng.cachetList}
+                                           dataSource={cachetds}
                                            rowKey="mbid"
                                            onRowClick={(record) => {
                                                this.props.dispatch({
@@ -424,7 +435,7 @@ export default class CachetMng extends React.Component {
                         </TabPage>
                         <TabPage tab="章所在模板" key="cachetLoca">
                             <Grid  name={"dwTempInfor"}
-                                   dataSource={this.props.cachetMng.cachetLoca}
+                                   dataSource={tempds}
                                    rowKey="mbid"
                                    columns={[{
                                        title: '格式名称',
