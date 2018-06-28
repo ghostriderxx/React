@@ -18,7 +18,6 @@ function checkFrameworkException(data){
         error.errortype = 2;
         throw error;
     }
-
     return data;
 }
 
@@ -27,5 +26,5 @@ export default function request(url, options) {
         .then(checkHttpStatus)
         .then(response => response.json())
         .then(checkFrameworkException)
-        .then(data => data)
+        .then(({payload}) => payload)
 }

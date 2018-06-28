@@ -18,6 +18,7 @@ import {
 } from "../../framework/taglib";
 import {
     request,
+    MsgBox,
 } from "../../framework/util";
 
 /////////////////////////////////////////////////////////////////////////////
@@ -30,7 +31,6 @@ const modelCachetMng = {
         cachetds: [],
         tempds:[],
         cachetImageUrl: "",
-        loading: false,
     },
     subscriptions: {
         setup({ history, dispatch }) {
@@ -62,7 +62,7 @@ const modelCachetMng = {
                 tempds: payload,
             };
         },
-        setCachetImageUrlSuccess(state, {payload}) {
+        viewCachetImageSuccess(state, {payload}) {
             return {
                 ...state,
                 cachetImageUrl: payload,
@@ -80,15 +80,25 @@ const modelCachetMng = {
             if(cachettypeds.length){
                 const zlbbh = cachettypeds[0].zlbbh;
                 yield put({
-                    type: `queryCachetList`,
-                    payload:zlbbh
-                });
-                yield put({
-                    type: `fetchCachetLoca`,
+                    type: `cachetTypeGridClick`,
                     payload:zlbbh
                 });
             }
         },
+
+        // 点击章类别信息
+        *cachetTypeGridClick({payload}, {call, put}) {
+            const zlbbh = payload;
+            yield put({
+                type: `queryCachetList`,
+                payload:zlbbh
+            });
+            yield put({
+                type: `queryCachetLoca`,
+                payload:zlbbh
+            });
+        },
+
         // 根据章类别编号查询章信息
         * queryCachetList({payload}, {call, put}) {
             const vdo = yield call(request, `/sep/CachetServlet/queryCachetList?zlbbh=${payload}`);
@@ -99,11 +109,11 @@ const modelCachetMng = {
                 payload: cachetds
             });
 
-            if(cachetds.length){ // 做图片预览数据联动
+            if(cachetds.length){
                 const zbh = cachetds[0].zbh;
                 yield put({
-                    type: `setCachetImageUrl`,
-                    payload:zbh
+                    type: `viewCachetImage`,
+                    payload: zbh
                 });
             }
         },
@@ -120,18 +130,59 @@ const modelCachetMng = {
             });
         },
 
-        * setCachetImageUrl({payload}, {call, put}) {
-            const cacheImageUrl = `/sep/CachetServlet/fetchCachetImage?zbh=${payload}&_=${Math.random()}`;
+        // 显示章图片
+        * viewCachetImage({payload}, {call, put}) {
+            const cacheImageUrl = `/sep/CachetServlet/viewCachetImage?zbh=${payload}&_=${Math.random()}`;
 
             yield put({
-                type: `setCachetImageUrlSuccess`,
+                type: `viewCachetImageSuccess`,
                 payload: cacheImageUrl,
             });
         },
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 删除章类别信息
+        * cachetTypeDelete({payload}, {call, put, select}) {
+            const rowNu = yield yield put({
+                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
+            });
+            if(rowNu == 0){
+                alert("请先选中一行！");
+                return;
+            }
 
 
-        //////////////////////////////////////////////////////////////////////////////
+            // 获取即将删除的zlbbh、zlbmc
+            const zlbbh = yield yield put({
+                type: "dwCachetTypeInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: rowNu,
+                    columnName: "zlbbh",
+                }
+            });
+            const zlbmc = yield yield put({
+                type: "dwCachetTypeInfo/gridGetCellValue",
+                payload: {
+                    rowNumber: rowNu,
+                    columnName: "zlbmc",
+                }
+            });
+            if(!confirm("您确认要删除【"+zlbmc+"】吗？")){
+                return;
+            }
+
+            // 删除
+            yield call(request, `/sep/CachetServlet/deleteCachetTypeInfo?zlbbh=${zlbbh}`);
+
+            // 重新查询章类别
+            yield put({
+                type: "queryCachetTypeList"
+            });
+
+            MsgBox.show("删除成功!");
+        },
+
         // 新增章类别信息
         * cachetTypeAdd({payload}, {call, put, select}) {
             yield put({
@@ -149,28 +200,9 @@ const modelCachetMng = {
             });
         },
 
-        // 删除章类别信息
-        * cachetTypeDelete({payload}, {call, put, select}) {
-            const currentRowNumber = yield yield put({
-                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
-            });
 
-            const zlbbh = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetTypeInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: currentRowNumber,
-                    columnName: "zlbbh",
-                }
-            });
 
-            yield call(request, `/sep/CachetServlet/deleteCachetTypeInfo?zlbbh=${zlbbh}`);
-
-            yield put({
-                type: "queryCachetTypeList"
-            });
-        },
-
-        //修改章类别信息
+        // 修改章类别信息
         * cachetTypeModify({payload}, {call, put, select}) {
             const currentRowNumber = yield yield put({
                 type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
@@ -197,7 +229,7 @@ const modelCachetMng = {
             });
         },
 
-        //////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 新增章信息
         * cachetAdd({payload}, {call, put, select}) {
@@ -356,7 +388,7 @@ export default class CachetMng extends React.Component {
     }
 
     render(){
-        const {cachettypeds, cachetds, tempds} = this.props.cachetMng;
+        const {cachettypeds, cachetds, tempds, cachetImageUrl} = this.props.cachetMng;
 
         return (
             <Hlayout>
@@ -367,12 +399,7 @@ export default class CachetMng extends React.Component {
                            rowKey="empno"
                            onRowClick={(record) => { // 点击行
                                this.props.dispatch({
-                                   type: "cachetMng/queryCachetList",
-                                   payload: record.zlbbh
-                               });
-
-                               this.props.dispatch({
-                                   type: "cachetMng/queryCachetLoca",
+                                   type: "cachetMng/cachetTypeGridClick",
                                    payload: record.zlbbh
                                });
                            }}
@@ -400,7 +427,7 @@ export default class CachetMng extends React.Component {
                                            rowKey="mbid"
                                            onRowClick={(record) => {
                                                this.props.dispatch({
-                                                   type: "cachetMng/setCachetImageUrl",
+                                                   type: "cachetMng/viewCachetImage",
                                                    payload: record.zbh,
                                                });
                                            }}
@@ -426,7 +453,7 @@ export default class CachetMng extends React.Component {
                                     />
                                 </Panel>
                                 <Panel>
-                                    <img src={this.props.cachetMng.cachetImageUrl} style={{width: 100, height:100}}/>
+                                    <img src={cachetImageUrl} style={{width: 100, height:100}}/>
                                 </Panel>
                             </Hlayout>
                             <Button onClick={()=>this.cachetAdd()}>新增</Button>
