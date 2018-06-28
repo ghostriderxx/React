@@ -41,6 +41,24 @@ function _modelGridFactory(namespace){
                 });
             },
 
+            * gridFillData({payload}, {call, put, select}) {
+                yield put({
+                    type: `gridFillDataSuccess`,
+                    payload
+                });
+                // if(payload.length > 0){
+                //     yield put({
+                //         type: `setCurrentRowNumber`,
+                //         payload: 1,
+                //     });
+                // }else{
+                //     yield put({
+                //         type: `setCurrentRowNumber`,
+                //         payload: 0,
+                //     });
+                // }
+            },
+
             * gridGetCurrentRowNumber({payload}, {call, put, select}) {
                 return yield select(state => state[namespace].currentRowNumber);
             },
@@ -141,7 +159,7 @@ export default class GridWarpper extends React.Component{
 
     componentWillMount(){
         this.props.dispatch({
-            type: this.state.namespace+"/gridFillDataSuccess",
+            type: this.state.namespace+"/gridFillData",
             payload: this.props.dataSource
         });
     }
@@ -149,7 +167,7 @@ export default class GridWarpper extends React.Component{
     componentWillReceiveProps(nextProps){
         // 给GRID填充数据
         this.props.dispatch({
-            type: this.state.namespace+"/gridFillDataSuccess",
+            type: this.state.namespace+"/gridFillData",
             payload: nextProps.dataSource
         });
     }

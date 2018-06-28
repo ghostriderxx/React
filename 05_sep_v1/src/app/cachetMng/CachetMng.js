@@ -278,6 +278,10 @@ const modelCachetMng = {
             const currentRowNumber1 = yield yield put({
                 type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
             });
+            if(currentRowNumber1 == 0){
+                alert("请先选中一行！");
+                return;
+            }
             const zlbbh = yield yield put({ // 用消息手段操作Grid;
                 type: "dwCachetTypeInfo/gridGetCellValue",
                 payload: {
@@ -304,7 +308,7 @@ const modelCachetMng = {
                 alert("请先选择章类别信息！");
                 return false;
             }
-
+            alert(rowNu);
             const zlbbh = yield yield put({ // 用消息手段操作Grid;
                 type: "dwCachetTypeInfo/gridGetCellValue",
                 payload: {
@@ -370,6 +374,10 @@ const modelCachetMng = {
             const currentRowNumber1 = yield yield put({
                 type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
             });
+            if(currentRowNumber1 == 0){
+                alert("请先选中一行！");
+                return;
+            }
             const zlbbh = yield yield put({ // 用消息手段操作Grid;
                 type: "dwCachetTypeInfo/gridGetCellValue",
                 payload: {
