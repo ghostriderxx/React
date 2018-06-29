@@ -1,0 +1,52 @@
+.todoapp {
+    width: 300px;
+}
+
+/**
+ * AddTodo
+ */
+.todoapp-addtodo {
+    display: flex;
+    flexDirection: row;
+}
+.todoapp-addtodo-text {
+    flex: 1;
+    font: normal 14px/1 "微软雅黑";
+}
+.todoapp-addtodo-btnadd {
+    width: 80px;
+    font: normal 14px/1 "微软雅黑";
+}
+
+/**
+ * VisibleTodos
+ */
+.todoapp-visibletodos-todo {
+    display: inline-flex;
+    flexDirection: row;
+    align-items: center;
+    font: normal 14px/1 "微软雅黑";
+}
+.todoapp-visibletodos-todo.complete{
+    text-decoration: line-through;
+}
+
+/**
+ * TodoFilter
+ */
+.todoapp-todofilter {
+    display: flex;
+    flexDirection: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todoapp-todofilter-label,
+.todoapp-todofilter-btn{
+    min-width: 40px;
+    font: normal 14px/1 "微软雅黑";
+}
+.todoapp-todofilter-btn.active{
+    color: red;
+    font-weight: bold;
+}
