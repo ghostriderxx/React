@@ -4,7 +4,8 @@ const webpack = require('webpack');
 module.exports = {
     mode: "development",
     entry:{
-        redux_form_utils_demo:'./src/redux-form-utils-demo.js'
+        redux_form_utils_demo:'./src/redux-form-utils-demo.js',
+        redux_form_demo:'./src/redux-form-demo.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
