@@ -6,102 +6,162 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // ## Redux
-import { createStore, combineReducers } from 'redux';
-import { Provider, connect } from 'react-redux';
+import {createStore, combineReducers} from 'redux';
+import {Provider, connect} from 'react-redux';
 
 // ## Redux-Form-Utils
-import { createForm, bindRedux } from './lib/redux-form-utils';
-
-
-
-
-
-
-
-
-
-const formConfig = {
-    form: 'myForm',
-    fields: ['name', 'address', 'gender']
-};
-
-const { state: formState, reducer: formReducer } = bindRedux(formConfig);
-
+import {createForm, bindRedux} from './lib/redux-form-utils';
 
 ///////////////////////////////////////////////////////////////////////////////
-// Reducer
+// UserInfoForm
 //
-const initialState = {
-    foo: 1,
-    bar: 2,
-    ...formState
+// ## formConfig
+const userInfoForm = {
+    form: 'userinfo',
+    fields: ['name', 'age', 'gender'],
 };
 
-function reducer(state = initialState, action) {
-    switch (action.type) {
-        case 'SOME_ACTION_NON_EXISTENT': {
-            return {
-                foo: 2,
-                ...state,
-            };
-        }
+// ## reducer
+const {state: userInfoFormState, reducer: userInfoFormReducer} = bindRedux(userInfoForm);
 
+const userInfoInitialState = {
+    ...userInfoFormState
+};
+function userInfoReducer(state = userInfoInitialState, action) {
+    switch (action.type) {
         default:
-            return formReducer(state, action);
+            return userInfoFormReducer(state, action);
+    }
+}
+
+// ## form container
+@connect(({userInfo}) => ({form: userInfo.form}))
+@createForm(userInfoForm)
+class UserInfoForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const {clear, clearAll} = this.props;
+        const {name, age, gender} = this.props.fields;
+
+        return (
+            <fieldset>
+                <legend>个人信息</legend>
+                <div>
+                    姓名：<input type="text" {...name} placeholder="请输入姓名"/>
+                    <br/><br/>
+
+                    年龄：<input type="number" {...age} placeholder="请输入年龄"/>
+                    <br/><br/>
+
+                    性别：
+                    <select {...gender}>
+                        <option>请选择...</option>
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                    </select>
+                    <br/><br/>
+
+                    <div>
+                        <button onClick={() => clear("name")}>清空[姓名]</button>
+                        <button onClick={() => clear("age")}>清空[年龄]</button>
+                        <button onClick={() => clear("gender")}>清空[性别]</button>
+                        <button onClick={() => clearAll()}>清空全部</button>
+                    </div>
+                </div>
+            </fieldset>
+        );
     }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Reducer
+// BookInfoForm
 //
+// ## formConfig
+const bookInfoForm = {
+    form: 'bookinfo',
+    fields: ['bookName', 'pageNums', 'isbn'],
+};
 
+// ## reducer
+const {state: bookInfoFormState, reducer: bookInfoFormReducer} = bindRedux(bookInfoForm);
 
-///////////////////////////////////////////////////////////////////////////////
-// UI
-//
+const bookInfoInitialState = {
+    ...bookInfoFormState // form: { formField1: {value: ""}, formField2: {value: ""}, .... };
+};
+function bookInfoReducer(state = bookInfoInitialState, action) {
+    switch (action.type) {
+        default:
+            return bookInfoFormReducer(state, action);
+    }
+}
 
-@createForm(formConfig)
-class Form extends React.Component {
+// ## form container
+@connect(({bookInfo}) => ({form: bookInfo.form}))
+@createForm(bookInfoForm)
+class BookInfoForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
-        const { clear, clearAll } = this.props;
-        const { name, address, gender } = this.props.fields;
+        const {clear, clearAll} = this.props;
+        const {bookName, pageNums, isbn} = this.props.fields;
 
         return (
-            <div>
-                <input type="text" {...name} placeholder="enter your name" />
-                <input type="text" {...address} placeholder="enter your address" />
-                <select {...gender}>
-                    <option>select your gender</option>
-                    <option value="male">male</option>
-                    <option value="female">female</option>
-                </select>
+            <fieldset>
+                <legend>图书信息</legend>
                 <div>
-                    <button onClick={clear.bind(null, 'name')}>clear name</button>
-                    <button onClick={clear.bind(null, 'address')}>clear address</button>
-                    <button onClick={clear.bind(null, 'gender')}>clear gender</button>
-                    <button onClick={clearAll}>clear all</button>
+                    书名：<input type="text" {...bookName} placeholder="请输入书名"/>
+                    <br/><br/>
+
+                    页数：<input type="number" {...pageNums} placeholder="请输入页数"/>
+                    <br/><br/>
+
+                    书号：<input type="text" {...isbn} placeholder="请输入书号"/>
+                    <br/><br/>
+
+                    <div>
+                        <button onClick={() => clear("bookName")}>清空[书名]</button>
+                        <button onClick={() => clear("pageNums")}>清空[页数]</button>
+                        <button onClick={() => clear("isbn")}>清空[书号]</button>
+                        <button onClick={() => clearAll()}>清空全部</button>
+                    </div>
                 </div>
+            </fieldset>
+        );
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// App
+//
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div>
+                <UserInfoForm/>
+                <BookInfoForm/>
             </div>
         );
     }
 }
 
-@connect((state) => ({form: state}))
-class App extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
-    render(){
-        return <Form {...this.props.form} dispatch={this.props.dispatch} />
-    }
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////
-// UI
+// Start
 //
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    userInfo: userInfoReducer,
+    bookInfo: bookInfoReducer,
+});
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
     <Provider store={store}>
