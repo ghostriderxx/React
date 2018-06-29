@@ -1,1 +1,1 @@
-npx babel-node demo1.js
+    npm run start
