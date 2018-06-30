@@ -1,22 +1,20 @@
 import fetch from 'cross-fetch';
+import NetworkException from "../exception/NetworkException";
+import BusinessException from "../exception/BusinessException";
+import AppException from "../exception/AppException";
 
 function checkHttpStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    throw new Error(`${response.status} ${response.statusText} ${response.url}`);
+    throw new NetworkException(`${response.status} ${response.statusText} ${response.url}`);
 }
 
 function checkFrameworkException(data){
     if(data && data.__framework__error__ && data.__framework__error__type == 1){
-        const error = new Error(data.__framework__error__message);
-        error.errortype = 1;
-        throw error;
+        throw new BusinessException(data.__framework__error__message);
     }else if(data && data.__framework__error__ && data.__framework__error__type == 2){
-
-        const error = new Error(data.__framework__error__message);
-        error.errortype = 2;
-        throw error;
+        throw new AppException(data.__framework__error__message);
     }
     return data;
 }

@@ -15,6 +15,8 @@ import {
     LaneContainer
 } from "./framework/taglib";
 
+import BusinessException from "./framework/exception/BusinessException";
+import AppException from "./framework/exception/AppException";
 
 import {
     ConnectedRouter,
@@ -33,12 +35,13 @@ import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
 import {modelResCachetTypeModify} from "./app/cachetMng/ResCachetTypeModify"
 
 
+
 const app = reaper({
     ...reaperLoading(),
     onError(e) {
-        if(e.errortype == 1){ // BusinessExcetpion
+        if(e instanceof BusinessException){ // BusinessExcetpion
             alert(e.message);
-        }else if(e.errortype == 2){ // AppException
+        }else if(e instanceof AppException){ // AppException
             message.error(e.message, /* duration */10);
         }else{ // Ohter(NetworkError .... 等)
             message.error(e.message, /* duration */10);
