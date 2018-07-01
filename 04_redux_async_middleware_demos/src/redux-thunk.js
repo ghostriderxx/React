@@ -11,8 +11,13 @@ const initialState = {
     error: null,
 };
 
-function reducer(state = initialState, action){
-    switch(action.type){
+function reducer(state = initialState, action) {
+
+    console.log("--");
+    console.log(`prevState:`, state);
+    console.log(`   action: ${action.type}`);
+
+    switch (action.type) {
         case "INC_INPROGRESS":
             return {
                 ...state,
@@ -40,18 +45,18 @@ function reducer(state = initialState, action){
 ///////////////////////////////////////////////////////////////////
 // ActionCreator
 //
-function inc(){
+function asyncInc() {
     return (dispatch, getState) => {
 
-        dispatch({type: "INC_INPROGRESS"});
+        dispatch({type: "INC_INPROGRESS"}); // 常用于让UI显示一个loading动画...
 
-        delay(2000).then(()=>{
+        return delay(3000).then(() => {
 
-            dispatch({type: "INC_SUCCESS"});
+            dispatch({type: "INC_SUCCESS"}); // 异步成功
 
-        }).catch((error)=>{
+        }).catch((error) => {
 
-            dispatch({type: "INC_ERROR", payload:error.message});
+            dispatch({type: "INC_ERROR", payload: error.message}); // 异步失败
 
         });
     };
@@ -61,11 +66,14 @@ function inc(){
 // Init Redux
 //
 const store = createStore(reducer, applyMiddleware(thunk));
-store.subscribe(()=>{
-    console.log(store.getState());
+
+store.subscribe(() => {
+    console.log(` newState:`, store.getState());
 });
 
 ///////////////////////////////////////////////////////////////////
 // Dispatch Action
 //
-store.dispatch(inc());
+store.dispatch(asyncInc()).then(() => {
+    return store.dispatch(asyncInc())
+});

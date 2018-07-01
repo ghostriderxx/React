@@ -4,10 +4,10 @@
   "description": "Redux异步中间件示例",
   "main": "index.js",
   "scripts": {
-    "redux-saga": "npx babel-node ./src/redux-thunk.js",
+    "redux-thunk": "npx babel-node ./src/redux-thunk.js",
+    "redux-saga": "npx babel-node ./src/redux-saga.js",
     "redux-promise-middleware": "npx babel-node ./src/redux-promise-middleware.js",
-    "redux-promise": "npx babel-node ./src/redux-promise.js",
-    "redux-saga": "npx babel-node ./src/redux-saga.js"
+    "redux-promise": "npx babel-node ./src/redux-promise.js"
   },
   "author": "WEBJ2EE",
   "license": "ISC",
