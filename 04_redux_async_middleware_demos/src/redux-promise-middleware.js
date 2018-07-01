@@ -7,10 +7,15 @@ import {delay} from "./utils"
 //
 const initialState = {
     count: 0,
+    loading: false,
     error: null,
 };
 
 function reducer(state = initialState, action){
+    console.log("--");
+    console.log(`prevState:`, state);
+    console.log(`   action: ${action.type}`);
+
     switch(action.type){
         case "INC_PENDING":
             return {
@@ -39,10 +44,10 @@ function reducer(state = initialState, action){
 ///////////////////////////////////////////////////////////////////
 // ActionCreators
 //
-function inc(){
+function asyncInc(){
     return {
         type: "INC",
-        payload: delay(2000),
+        payload: delay(3000),
     }
 }
 
@@ -51,12 +56,12 @@ function inc(){
 //
 const store = createStore(reducer, applyMiddleware(promiseMiddleware()));
 store.subscribe(()=>{
-    console.log(store.getState());
+    console.log(` newState:`, store.getState());
 });
 
 ///////////////////////////////////////////////////////////////////
 // Dispatch Action
 //
-store.dispatch(inc()).then(()=>{
-    store.dispatch(inc());
+store.dispatch(asyncInc()).then(()=>{
+    store.dispatch(asyncInc());
 });
