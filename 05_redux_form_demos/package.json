@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start-react-demo": "webpack-dev-server --open-page react-demo.html",
+    "start-redux-form-demo": "webpack-dev-server --open-page redux-form-demo.html",
+    "start-redux-form-utils-demo": "webpack-dev-server --open-page redux-form-utils-demo.html",
     "build": "webpack"
   },
   "author": "",
