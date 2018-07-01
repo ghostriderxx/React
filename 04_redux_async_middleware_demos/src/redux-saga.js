@@ -15,6 +15,10 @@ const initialState = {
 };
 
 function reducer(state = initialState, action){
+    console.log("--");
+    console.log(`prevState:`, state);
+    console.log(`   action: ${action.type}`);
+
     switch(action.type){
         case "INC_INPROGRESS":
             return {
@@ -46,7 +50,7 @@ function reducer(state = initialState, action){
 function* incWorker(action) {
     try{
         yield put({type: "INC_INPROGRESS"});
-        yield delay(2000);
+        yield delay(3000);
         yield put({type: "INC_SUCCESS"});
     } catch (e) {
         yield put({type: "INC_ERROR", payload: e.message});
@@ -67,7 +71,7 @@ const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(incWatcher);
 
 store.subscribe(()=>{
-    console.log(store.getState());
+    console.log(` newState:`, store.getState());
 });
 
 ///////////////////////////////////////////////////////////////////
