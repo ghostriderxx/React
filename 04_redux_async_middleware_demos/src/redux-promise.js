@@ -11,6 +11,10 @@ const initialState = {
 };
 
 function reducer(state = initialState, action){
+    console.log("--");
+    console.log(`prevState:`, state);
+    console.log(`   action: ${action.type}`);
+
     switch(action.type){
         case "INC":
             if(action.error){
@@ -32,10 +36,10 @@ function reducer(state = initialState, action){
 ///////////////////////////////////////////////////////////////////
 // ActionCreator
 //
-function inc(){
+function asyncInc(){
     return {
         type: "INC",
-        payload: delay(2000),
+        payload: delay(3000),
     }
 }
 
@@ -44,12 +48,12 @@ function inc(){
 //
 const store = createStore(reducer, applyMiddleware(promise));
 store.subscribe(()=>{
-    console.log(store.getState());
+    console.log(` newState:`, store.getState());
 });
 
 ///////////////////////////////////////////////////////////////////
 // Dispatch Action
 //
-store.dispatch(inc()).then(()=>{
-    store.dispatch(inc());
+store.dispatch(asyncInc()).then(()=>{
+    store.dispatch(asyncInc());
 });
