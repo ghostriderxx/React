@@ -53,11 +53,11 @@ class UserInfoForm extends React.Component {
                     <br/><br/>
 
                     <div>
-                        <button onClick={() => resetSection("name")}>清空[姓名]</button>
-                        <button onClick={() => resetSection("age")}>清空[年龄]</button>
-                        <button onClick={() => resetSection("gender")}>清空[性别]</button>
-                        <button onClick={() => reset()}>清空全部</button>
-                        <button type="submit">提交</button>
+                        <button type={"button"} onClick={() => resetSection("name")}>清空[姓名]</button>
+                        <button type={"button"} onClick={() => resetSection("age")}>清空[年龄]</button>
+                        <button type={"button"} onClick={() => resetSection("gender")}>清空[性别]</button>
+                        <button type={"button"} onClick={() => reset()}>清空全部</button>
+                        <button type={"submit"}>提交</button>
                     </div>
                 </form>
             </fieldset>
@@ -100,11 +100,11 @@ class BookInfoForm extends React.Component {
 
 
                     <div>
-                        <button onClick={() => resetSection("bookName")}>清空[书名]</button>
-                        <button onClick={() => resetSection("pageNums")}>清空[页数]</button>
-                        <button onClick={() => resetSection("isbn")}>清空[书号]</button>
-                        <button onClick={() => reset()}>清空全部</button>
-                        <button type="submit">提交</button>
+                        <button type={"button"} onClick={() => resetSection("bookName")}>清空[书名]</button>
+                        <button type={"button"} onClick={() => resetSection("pageNums")}>清空[页数]</button>
+                        <button type={"button"} onClick={() => resetSection("isbn")}>清空[书号]</button>
+                        <button type={"button"} onClick={() => reset()}>清空全部</button>
+                        <button type={"submit"} >提交</button>
                     </div>
                 </form>
             </fieldset>

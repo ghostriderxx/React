@@ -142,11 +142,11 @@ class BookInfoForm extends React.Component {
                     <br/><br/>
 
                     <div>
-                        <button onClick={() => clear("bookName")}>清空[书名]</button>
-                        <button onClick={() => clear("pageNums")}>清空[页数]</button>
-                        <button onClick={() => clear("isbn")}>清空[书号]</button>
-                        <button onClick={() => clearAll()}>清空全部</button>
-                        <button type="submit">提交</button>
+                        <button type={"button"} onClick={() => clear("bookName")}>清空[书名]</button>
+                        <button type={"button"} onClick={() => clear("pageNums")}>清空[页数]</button>
+                        <button type={"button"} onClick={() => clear("isbn")}>清空[书号]</button>
+                        <button type={"button"} onClick={() => clearAll()}>清空全部</button>
+                        <button type={"submit"} >提交</button>
                     </div>
                 </form>
             </fieldset>

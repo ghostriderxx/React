@@ -6,7 +6,8 @@ module.exports = {
     entry: {
         react_demo: './src/react-demo.js',
         redux_form_utils_demo: './src/redux-form-utils-demo.js',
-        redux_form_demo: './src/redux-form-demo.js'
+        redux_form_demo: './src/redux-form-demo.js',
+        rc_form_demo: './src/rc-form-demo.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
