@@ -6,11 +6,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // ## Redux
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider, connect} from 'react-redux';
 
 // ## Redux-Form-Utils
 import {createForm, bindRedux} from './lib/redux-form-utils';
+
+// ## Devtools
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 ///////////////////////////////////////////////////////////////////////////////
 // UserInfoForm
@@ -161,7 +164,7 @@ const rootReducer = combineReducers({
     bookInfo: bookInfoReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
 
 ReactDOM.render(
     <Provider store={store}>
