@@ -13,7 +13,7 @@ import {Provider, connect} from 'react-redux';
 import {createForm, bindRedux} from './lib/redux-form-utils';
 
 // ## Devtools
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 ///////////////////////////////////////////////////////////////////////////////
 // UserInfoForm
@@ -30,6 +30,7 @@ const {state: userInfoFormState, reducer: userInfoFormReducer} = bindRedux(userI
 const userInfoInitialState = {
     ...userInfoFormState
 };
+
 function userInfoReducer(state = userInfoInitialState, action) {
     switch (action.type) {
         default:
@@ -45,6 +46,12 @@ class UserInfoForm extends React.Component {
         super(props);
     }
 
+    onSubmit(event) {
+        event.preventDefault(); // 阻止默认事件
+
+        console.log(this.props.form);
+    }
+
     render() {
         const {clear, clearAll} = this.props;
         const {name, age, gender} = this.props.fields;
@@ -52,7 +59,7 @@ class UserInfoForm extends React.Component {
         return (
             <fieldset>
                 <legend>个人信息</legend>
-                <div>
+                <form onSubmit={(event) => this.onSubmit(event)}>
                     姓名：<input type="text" {...name} placeholder="请输入姓名"/>
                     <br/><br/>
 
@@ -68,12 +75,13 @@ class UserInfoForm extends React.Component {
                     <br/><br/>
 
                     <div>
-                        <button onClick={() => clear("name")}>清空[姓名]</button>
-                        <button onClick={() => clear("age")}>清空[年龄]</button>
-                        <button onClick={() => clear("gender")}>清空[性别]</button>
-                        <button onClick={() => clearAll()}>清空全部</button>
+                        <button type={"button"} onClick={() => clear("name")}>清空[姓名]</button>
+                        <button type={"button"} onClick={() => clear("age")}>清空[年龄]</button>
+                        <button type={"button"} onClick={() => clear("gender")}>清空[性别]</button>
+                        <button type={"button"} onClick={() => clearAll()}>清空全部</button>
+                        <button type={"submit"}>提交</button>
                     </div>
-                </div>
+                </form>
             </fieldset>
         );
     }
@@ -94,6 +102,7 @@ const {state: bookInfoFormState, reducer: bookInfoFormReducer} = bindRedux(bookI
 const bookInfoInitialState = {
     ...bookInfoFormState // form: { formField1: {value: ""}, formField2: {value: ""}, .... };
 };
+
 function bookInfoReducer(state = bookInfoInitialState, action) {
     switch (action.type) {
         default:
@@ -109,6 +118,12 @@ class BookInfoForm extends React.Component {
         super(props);
     }
 
+    onSubmit(event) {
+        event.preventDefault(); // 阻止默认事件
+
+        console.log(this.props.form);
+    }
+
     render() {
         const {clear, clearAll} = this.props;
         const {bookName, pageNums, isbn} = this.props.fields;
@@ -116,7 +131,7 @@ class BookInfoForm extends React.Component {
         return (
             <fieldset>
                 <legend>图书信息</legend>
-                <div>
+                <form onSubmit={(event) => this.onSubmit(event)}>
                     书名：<input type="text" {...bookName} placeholder="请输入书名"/>
                     <br/><br/>
 
@@ -131,8 +146,9 @@ class BookInfoForm extends React.Component {
                         <button onClick={() => clear("pageNums")}>清空[页数]</button>
                         <button onClick={() => clear("isbn")}>清空[书号]</button>
                         <button onClick={() => clearAll()}>清空全部</button>
+                        <button type="submit">提交</button>
                     </div>
-                </div>
+                </form>
             </fieldset>
         );
     }
@@ -164,7 +180,11 @@ const rootReducer = combineReducers({
     bookInfo: bookInfoReducer,
 });
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
+const storeEnhancer = composeWithDevTools(
+    applyMiddleware()
+);
+
+const store = createStore(rootReducer, storeEnhancer);
 
 ReactDOM.render(
     <Provider store={store}>
