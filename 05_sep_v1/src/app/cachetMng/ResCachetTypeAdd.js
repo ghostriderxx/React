@@ -10,6 +10,7 @@ import {
 } from "../../framework/core";
 
 import {
+    Buttons,
     Button,
     Form,
     StringInput,
@@ -92,10 +93,10 @@ export default class ResCachetTypeAdd extends React.Component {
                     <StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"章类别名称!"}/>
                 </Form>
 
-                <div style={{textAlign:"right"}}>
+                <Buttons align={"right"}>
                     <Button onClick={()=>this.saveCachetTypeInfoAdd()}>保存</Button>
                     <Button onClick={()=>this.cancel()}>取消</Button>
-                </div>
+                </Buttons>
             </Panel>
         );
     }

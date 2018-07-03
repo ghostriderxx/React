@@ -13,6 +13,7 @@ import {
 } from "../../framework/util";
 import {
     Panel,
+    Buttons,
     Button,
     Form,
     StringInput,
@@ -107,10 +108,11 @@ export default class ResCachetTypeModify extends React.Component {
                     <StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
                     <StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"请填写章类别名称!"}/>
                 </Form>
-                <div style={{textAlign:"right"}}>
+
+                <Buttons align={"right"}>
                     <Button onClick={()=>this.saveCachetTypeInfoModify()}>保存</Button>
                     <Button onClick={()=>this.cancel()}>取消</Button>
-                </div>
+                </Buttons>
             </Panel>
         );
     }

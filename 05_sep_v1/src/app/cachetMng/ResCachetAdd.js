@@ -9,6 +9,7 @@ import {
     connect
 } from "../../framework/core";
 import {
+    Buttons,
     Button,
     Form,
     StringInput,
@@ -107,10 +108,10 @@ export default class ResCachetAdd extends React.Component {
                     <NumberInput name={"zkd"} labelValue={"章宽度"} required={true} requiredMessage={"请填写章宽度!"}/>
                 </Form>
 
-                <div style={{textAlign:"right"}}>
+                <Buttons align={"right"}>
                     <Button onClick={()=>this.saveCachetInfoAdd()}>保存</Button>
                     <Button onClick={()=>this.cancel()}>取消</Button>
-                </div>
+                </Buttons>
             </Panel>
         )
     }

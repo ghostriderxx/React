@@ -12,6 +12,7 @@ import {
     request,
 } from "../../framework/util";
 import {
+    Buttons,
     Button,
     Form,
     StringInput,
@@ -131,10 +132,10 @@ export default class ResCachetModify extends React.Component {
                     <NumberInput name={"zkd"} labelValue={"章宽度"} required={true} requiredMessage={"请填写章宽度!"}/>
                 </Form>
 
-                <div style={{textAlign:"right"}}>
+                <Buttons align={"right"}>
                     <Button onClick={()=>this.saveCachetInfoModify()}>保存</Button>
                     <Button onClick={()=>this.cancel()}>取消</Button>
-                </div>
+                </Buttons>
             </Panel>
         )
     }
