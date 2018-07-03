@@ -308,7 +308,6 @@ const modelCachetMng = {
                 alert("请先选择章类别信息！");
                 return false;
             }
-            alert(rowNu);
             const zlbbh = yield yield put({ // 用消息手段操作Grid;
                 type: "dwCachetTypeInfo/gridGetCellValue",
                 payload: {

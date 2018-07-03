@@ -19,6 +19,7 @@
     "history": "^4.7.2",
     "invariant": "^2.2.4",
     "is-plain-object": "^2.0.4",
+    "rc-form": "^2.2.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
