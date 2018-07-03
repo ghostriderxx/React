@@ -11,13 +11,14 @@ import {
 
 import {
     Button,
+    Form,
+    StringInput
 } from "../../framework/taglib";
-import { Form, Input} from 'antd'; // 新型Form还没研究明白，怎么封装还没谱...
 
 import {
-    request
+    request,
+    MsgBox
 } from "../../framework/util";
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Model
@@ -50,7 +51,7 @@ export {modelResCachetTypeAdd};
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@Form.create()
+// @Form.create()
 @connect(({resCachetTypeAdd})=>({resCachetTypeAdd}))
 export default class ResCachetTypeAdd extends React.Component {
     constructor(props) {
@@ -61,7 +62,7 @@ export default class ResCachetTypeAdd extends React.Component {
     }
 
     saveCachetTypeInfoAdd(){
-        this.props.form.validateFields((err, values) => {
+        this.formCachetType.checkFormValues((err, values) => {
             if (!err) {
                 const {zlbbh, zlbmc} = values;
 
@@ -81,37 +82,11 @@ export default class ResCachetTypeAdd extends React.Component {
     }
 
     render(){
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        const formItemLayout = {
-            labelCol: {
-                span: 4
-            },
-            wrapperCol: {
-                span: 20
-            },
-        };
         return (
             <div>
-                <Form>
-                    <Form.Item
-                        label="章类别编号"
-                        {...formItemLayout}
-                    >
-                        {getFieldDecorator('zlbbh', {
-                            rules: [{ required: true, message: '请填写章类别编号!' }],
-                        })(
-                            <Input type="text" placeholder="章类别编号" />
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="章类别名称"
-                        {...formItemLayout}>
-                        {getFieldDecorator('zlbmc', {
-                            rules: [{ required: true, message: '请填写章类别名称!' }],
-                        })(
-                            <Input type="text" placeholder="章类别名称" />
-                        )}
-                    </Form.Item>
+                <Form wrappedComponentRef={(inst) => this.formCachetType = inst}>
+                    <StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
+                    <StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"章类别名称!"}/>
                 </Form>
 
                 <div style={{textAlign:"right"}}>

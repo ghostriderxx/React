@@ -137,9 +137,7 @@ const rootReducer = combineReducers({
     form: formReducer, // 挂载redux-form的reducer;
 });
 
-const storeEnhancer = composeWithDevTools(
-    applyMiddleware()
-);
+const storeEnhancer = composeWithDevTools();
 
 const store = createStore(rootReducer, storeEnhancer);
 

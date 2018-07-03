@@ -180,9 +180,7 @@ const rootReducer = combineReducers({
     bookInfo: bookInfoReducer,
 });
 
-const storeEnhancer = composeWithDevTools(
-    applyMiddleware()
-);
+const storeEnhancer = composeWithDevTools();
 
 const store = createStore(rootReducer, storeEnhancer);
 

@@ -24,22 +24,6 @@ class UserInfoForm extends React.Component {
         super(props);
     }
 
-    render() {
-        return (
-            "UserInfoForm"
-        );
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// BookInfoForm
-//
-@createForm()
-class BookInfoForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleSubmit(e) {
         e.preventDefault();
 
@@ -101,6 +85,80 @@ class BookInfoForm extends React.Component {
                             <button type={"button"} onClick={() => resetFields(["name"])}>清空[姓名]</button>
                             <button type={"button"} onClick={() => resetFields(["age"])}>清空[年龄]</button>
                             <button type={"button"} onClick={() => resetFields(["gender"])}>清空[性别]</button>
+                            <button type={"button"} onClick={() => resetFields()}>清空全部</button>
+                            <button type={"submit"} >提交</button>
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        );
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// BookInfoForm
+//
+@createForm()
+class BookInfoForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+
+        this.props.form.validateFields((error, value) => {
+            console.log(error, value);
+        });
+    }
+
+    render() {
+
+        const {getFieldDecorator, getFieldError, resetFields} = this.props.form;
+
+        return (
+            <div>
+                <fieldset>
+                    <legend>个人信息</legend>
+                    <form onSubmit={(e) => this.handleSubmit(e)}>
+                        书名：
+                        {
+                            getFieldDecorator('bookName', {
+                                rules: [{ required: true, message: '请填写书名!' }],
+                                initialValue: '',
+                            })(<input type={"text"}/>)
+                        }
+                        <div style={{ color: 'red' }}>
+                            {(getFieldError('bookName') || []).join(', ')}
+                        </div>
+
+                        页数：
+                        {
+                            getFieldDecorator('pageNums', {
+                                rules: [{ required: true, message: '请填写页数!' }],
+                                initialValue: '',
+                            })(<input type={"number"}/>)
+                        }
+                        <div style={{ color: 'red' }}>
+                            {(getFieldError('pageNums') || []).join(', ')}
+                        </div>
+
+                        书号：
+                        {
+                            getFieldDecorator('isbn', {
+                                rules: [{ required: true, message: '请填写书号!' }],
+                                initialValue: '',
+                            })(<input type={"text"}/>)
+                        }
+                        <div style={{ color: 'red' }}>
+                            {(getFieldError('isbn') || []).join(', ')}
+                        </div>
+
+                        <br/>
+                        <div>
+                            <button type={"button"} onClick={() => resetFields("bookName")}>清空[书名]</button>
+                            <button type={"button"} onClick={() => resetFields("pageNums")}>清空[页数]</button>
+                            <button type={"button"} onClick={() => resetFields("isbn")}>清空[书号]</button>
                             <button type={"button"} onClick={() => resetFields()}>清空全部</button>
                             <button type={"submit"} >提交</button>
                         </div>
