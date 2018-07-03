@@ -13,8 +13,11 @@ import {
 } from "../../framework/util";
 import {
     Button,
+    Form,
+    StringInput,
+    NumberInput,
+    Panel
 } from "../../framework/taglib";
-import { Form, Input, InputNumber, Upload, Icon} from 'antd'; // 新型Form还没研究明白，怎么封装还没谱...
 
 /////////////////////////////////////////////////////////////////////////////
 // Model
@@ -23,12 +26,16 @@ const modelResCachetModify = {
     namespace: 'resCachetModify',
 
     state: {
-        zbh: null,
-        zmc: null,
-        zlbbh: null,
-        sigzbh: null,
-        zgd: null,
-        zkd: null,
+        cachetds: null,
+    },
+
+    reducers: {
+        queryCachetInfoSuccess(state, {payload}) {
+            return {
+                ...state,
+                cachetds: payload,
+            };
+        },
     },
 
     effects: {
@@ -59,20 +66,6 @@ const modelResCachetModify = {
             });
         },
     },
-
-    reducers: {
-        queryCachetInfoSuccess(state, {payload}) {
-            return {
-                ...state,
-                zbh: payload[0].zbh,
-                zmc: payload[0].zmc,
-                zlbbh: payload[0].zlbbh,
-                sigzbh: payload[0].sigzbh,
-                zgd: payload[0].zgd,
-                zkd: payload[0].zkd,
-            };
-        },
-    },
 };
 export {modelResCachetModify};
 
@@ -81,30 +74,6 @@ export {modelResCachetModify};
 // UI
 //
 @connect(({resCachetModify})=>({resCachetModify}))
-@Form.create({
-    mapPropsToFields(props) {
-        return {
-            zbh: Form.createFormField({
-                value: props.resCachetModify.zbh,
-            }),
-            zmc: Form.createFormField({
-                value: props.resCachetModify.zmc,
-            }),
-            zlbbh: Form.createFormField({
-                value: props.resCachetModify.zlbbh,
-            }),
-            sigzbh: Form.createFormField({
-                value: props.resCachetModify.sigzbh,
-            }),
-            zgd: Form.createFormField({
-                value: props.resCachetModify.zgd,
-            }),
-            zkd: Form.createFormField({
-                value: props.resCachetModify.zkd,
-            }),
-        };
-    },
-})
 export default class ResCachetModify extends React.Component {
     constructor(props) {
         super(props);
@@ -120,7 +89,7 @@ export default class ResCachetModify extends React.Component {
     }
 
     saveCachetInfoModify(){
-        this.props.form.validateFields((err, values) => {
+        this.formCachet.checkFormValues((err, values) => {
             if (!err) {
                 const {zbh,
                     zmc,
@@ -150,94 +119,23 @@ export default class ResCachetModify extends React.Component {
     }
 
     render(){
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        const formItemLayout = {
-            labelCol: {
-                span: 4
-            },
-            wrapperCol: {
-                span: 20
-            },
-        };
         return (
-            <div>
-                <Form>
-                    <Form.Item
-                        label="章编号"
-                        {...formItemLayout}
-                    >
-                        {getFieldDecorator('zbh', {
-                            rules: [{ required: true, message: '请填写章编号!' }],
-                        })(
-                            <Input type="text" placeholder="章编号" />
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="章名称"
-                        {...formItemLayout}>
-                        {getFieldDecorator('zmc', {
-                            rules: [{ required: true, message: '请填写章名称!' }],
-                        })(
-                            <Input type="text" placeholder="章名称" />
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="章类别编号"
-                        {...formItemLayout}>
-                        {getFieldDecorator('zlbbh', {
-                            rules: [{ required: true, message: '请填写章类别编号!' }],
-                        })(
-                            <Input type="text" placeholder="章类别编号" />
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="数字签章名称"
-                        {...formItemLayout}>
-                        {getFieldDecorator('sigzbh', {
-                            rules: [{ required: true, message: '请填写数字签章名称!' }],
-                        })(
-                            <Input type="text" placeholder="数字签章名称" />
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="章高度"
-                        {...formItemLayout}>
-                        {getFieldDecorator('zgd', {
-                            rules: [{ required: true, message: '请填写章高度!' }],
-                        })(
-                            <InputNumber type="text" placeholder="章高度" />
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="章宽度"
-                        {...formItemLayout}>
-                        {getFieldDecorator('zkd', {
-                            rules: [{ required: true, message: '请填写章宽度!' }],
-                        })(
-                            <InputNumber type="text" placeholder="章宽度" />
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        label="选择章图片"
-                        {...formItemLayout}>
-                        {getFieldDecorator('image', {
-                            valuePropName: 'fileList',
-                            getValueFromEvent: (e) => this.normFile(e),
-                        })(
-                            <Upload name="logo" action="/upload.do" listType="picture">
-                                <Button>
-                                    <Icon type="upload" /> Click to upload
-                                </Button>
-                            </Upload>
-                        )}
-                    </Form.Item>
+            <Panel>
+                <Form wrappedComponentRef={(inst) => this.formCachet = inst}
+                      dataSource={this.props.resCachetModify.cachetds}>
+                    <StringInput name={"zbh"} labelValue={"章编号"} required={true} requiredMessage={"请填写章编号!"}/>
+                    <StringInput name={"zmc"} labelValue={"章名称"} required={true} requiredMessage={"请填写章名称!"}/>
+                    <StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
+                    <StringInput name={"sigzbh"} labelValue={"数字签章名称"} required={true} requiredMessage={"数字签章名称!"}/>
+                    <NumberInput name={"zgd"} labelValue={"章高度"} required={true} requiredMessage={"请填写章高度!"}/>
+                    <NumberInput name={"zkd"} labelValue={"章宽度"} required={true} requiredMessage={"请填写章宽度!"}/>
                 </Form>
 
                 <div style={{textAlign:"right"}}>
                     <Button onClick={()=>this.saveCachetInfoModify()}>保存</Button>
                     <Button onClick={()=>this.cancel()}>取消</Button>
                 </div>
-            </div>
+            </Panel>
         )
     }
 }
