@@ -9,7 +9,7 @@ import {Tab, TabPage} from "./tab/Tab";
 
 import Form from "./form/Form"
 import StringInput from "./form/StringInput"
-
+import NumberInput from "./form/NumberInput"
 export {
     Button,
     Grid,
@@ -23,4 +23,5 @@ export {
 
     Form,
     StringInput,
+    NumberInput,
 }

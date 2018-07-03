@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 // ## Antd
 import { Input } from 'antd';
 
-export default class StringInput extends React.Component{
+export default class NumberInput extends React.Component{
     constructor(props){
         super(props);
     }
@@ -18,11 +18,11 @@ export default class StringInput extends React.Component{
     render(){
         const {name, labelValue, required, requiredMessage, initialValue, ...rest} = this.props;
 
-        return <Input {...rest} type="text" />;
+        return <Input {...rest} type="number" />;
     }
 }
 
-StringInput.propTypes = {
+NumberInput.propTypes = {
     name: PropTypes.string.isRequired,
     labelValue: PropTypes.string,
     required: PropTypes.bool,

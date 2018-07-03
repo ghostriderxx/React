@@ -53,14 +53,15 @@ export default class Form extends React.Component{
                 {
                     React.Children.map(this.props.children, (formItem, i) => {
 
-                        const {name, labelValue, required, requiredMessage} = formItem.props;
+                        const {name, labelValue, required, requiredMessage, initialValue} = formItem.props;
 
                         return (
                             <AntdForm.Item label={labelValue} {...formItemLayout}>
                                 {getFieldDecorator(name, {
                                     rules: [{ required, message: requiredMessage }],
+                                    initialValue
                                 })(
-                                    <Input type="text" />
+                                    formItem
                                 )}
                             </AntdForm.Item>
                         );
