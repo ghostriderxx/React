@@ -7,7 +7,26 @@ import React from 'react';
 // ## antd
 import { Form as AntdForm, Input, message} from 'antd';
 
-@AntdForm.create()
+@AntdForm.create({
+    mapPropsToFields(props) {
+        if(props.dataSource && props.dataSource.length > 0){
+
+            var vdo = props.dataSource[0];
+
+            return Object.keys(vdo).reduce(
+                (prev, curr) => {
+                    return {
+                        ...prev,
+                        [curr]: AntdForm.createFormField({
+                            value: vdo[curr],
+                        })
+                    }
+                },
+                {}
+            );
+        }
+    },
+})
 export default class Form extends React.Component{
     constructor(props){
         super(props);

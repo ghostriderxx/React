@@ -12,7 +12,8 @@ import {
 import {
     Button,
     Form,
-    StringInput
+    StringInput,
+    Panel,
 } from "../../framework/taglib";
 
 import {
@@ -29,20 +30,22 @@ const modelResCachetTypeAdd = {
     state: {
     },
 
+    reducers: {
+    },
+
     effects: {
         * saveCachetTypeInfoAdd({payload}, {call, put}) {
             const {zlbbh, zlbmc} = payload;
 
             yield call(request, `/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
 
+            yield call(MsgBox.show, "保存成功!")
+
             // 关闭RES
             yield put({
                 type: "lane/closeRes",
             });
         },
-    },
-
-    reducers: {
     },
 };
 export {modelResCachetTypeAdd};
@@ -83,7 +86,7 @@ export default class ResCachetTypeAdd extends React.Component {
 
     render(){
         return (
-            <div>
+            <Panel>
                 <Form wrappedComponentRef={(inst) => this.formCachetType = inst}>
                     <StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
                     <StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"章类别名称!"}/>
@@ -93,7 +96,7 @@ export default class ResCachetTypeAdd extends React.Component {
                     <Button onClick={()=>this.saveCachetTypeInfoAdd()}>保存</Button>
                     <Button onClick={()=>this.cancel()}>取消</Button>
                 </div>
-            </div>
+            </Panel>
         );
     }
 }
