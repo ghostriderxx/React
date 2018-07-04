@@ -36,23 +36,10 @@ export default class CachetMng extends React.Component {
             <Hlayout>
                 {/* 章类别信息 */}
                 <Panel width={370}>
-                    <Grid  name={"dwCachetTypeInfo"}
-                           dataSource={cachettypeds}
-                           rowKey="empno"
-                           onRowClick={(record) => { // 点击行
-                               this.props.dispatch({
-                                   type: "cachetMng/cachetTypeGridClick",
-                                   payload: record.zlbbh
-                               });
-                           }}
-                           columns={[{
-                               title: '章类别编号',
-                               dataIndex: 'zlbbh',
-                           }, {
-                               title: '章类别名称',
-                               dataIndex: 'zlbmc',
-                           }]}
-                    />
+                    <Grid name={"dwCachetTypeInfo"} dataSource={cachettypeds} onRowClick={this.cachetTypeGridClick}>
+                        <Grid.Column name={"zlbbh"} head={"章类别编号"}/>
+                        <Grid.Column name={"zlbmc"} head={"章类别名称"}/>
+                    </Grid>
 
                     <Buttons>
                         <Buttons.Button onClick={()=>this.cachetTypeAdd()}>新增</Buttons.Button>
@@ -67,35 +54,14 @@ export default class CachetMng extends React.Component {
                         <Tab.TabPage tab="章信息" key="cachetInfo">
                             <Hlayout>
                                 <Panel>
-                                    <Grid  name={"dwCachetInfo"}
-                                           dataSource={cachetds}
-                                           rowKey="mbid"
-                                           onRowClick={(record) => {
-                                               this.props.dispatch({
-                                                   type: "cachetMng/viewCachetImage",
-                                                   payload: record.zbh,
-                                               });
-                                           }}
-                                           columns={[{
-                                               title: '章编号',
-                                               dataIndex: 'zbh',
-                                           },{
-                                               title: '章名',
-                                               dataIndex: 'zmc',
-                                           }, {
-                                               title: '数字签章名称',
-                                               dataIndex: 'sigzbh',
-                                           },{
-                                               title: '章高度',
-                                               dataIndex: 'zgd',
-                                           }, {
-                                               title: '章宽度',
-                                               dataIndex: 'zkd',
-                                           },{
-                                               title: '章类别',
-                                               dataIndex: 'zlbbh',
-                                           }]}
-                                    />
+                                    <Grid name={"dwCachetInfo"} dataSource={cachetds} onRowClick={this.viewCachetImage}>
+                                        <Grid.Column name={"zbh"} head={"章编号"}/>
+                                        <Grid.Column name={"zmc"} head={"章名"}/>
+                                        <Grid.Column name={"sigzbh"} head={"数字签章名称"}/>
+                                        <Grid.Column name={"zgd"} head={"章高度"}/>
+                                        <Grid.Column name={"zkd"} head={"章宽度"}/>
+                                        <Grid.Column name={"zlbbh"} head={"章类别"}/>
+                                    </Grid>
                                 </Panel>
                                 <Panel>
                                     <img src={cachetImageUrl} style={{width: 100, height:100}}/>
@@ -108,34 +74,34 @@ export default class CachetMng extends React.Component {
                             </Buttons>
                         </Tab.TabPage>
                         <Tab.TabPage tab="章所在模板" key="cachetLoca">
-                            <Grid  name={"dwTempInfor"}
-                                   dataSource={tempds}
-                                   rowKey="mbid"
-                                   columns={[{
-                                       title: '格式名称',
-                                       dataIndex: 'mbmc',
-                                   },{
-                                       title: '中文名称',
-                                       dataIndex: 'zwmc',
-                                   }, {
-                                       title: '模板类型',
-                                       dataIndex: 'mblx',
-                                   },{
-                                       title: '打印类型',
-                                       dataIndex: 'dylx',
-                                   }, {
-                                       title: '应用系统',
-                                       dataIndex: 'systemtype',
-                                   },{
-                                       title: '上传时间',
-                                       dataIndex: 'scsj',
-                                   }]}
-                            />
+                            <Grid name={"dwTempInfor"} dataSource={tempds}>
+                                <Grid.Column name={"mbmc"} head={"格式名称"}/>
+                                <Grid.Column name={"zwmc"} head={"中文名称"}/>
+                                <Grid.Column name={"mblx"} head={"模板类型"}/>
+                                <Grid.Column name={"dylx"} head={"打印类型"}/>
+                                <Grid.Column name={"systemtype"} head={"应用系统"}/>
+                                <Grid.Column name={"scsj"} head={"上传时间"}/>
+                            </Grid>
                         </Tab.TabPage>
                     </Tab>
                 </Panel>
             </Hlayout>
         )
+    }
+
+    // onXXX
+    cachetTypeGridClick = (record) =>{
+        this.props.dispatch({
+            type: "cachetMng/cachetTypeGridClick",
+            payload: record.zlbbh
+        });
+    }
+
+    viewCachetImage = (record) =>{
+        this.props.dispatch({
+            type: "cachetMng/viewCachetImage",
+            payload: record.zbh,
+        });
     }
 
 

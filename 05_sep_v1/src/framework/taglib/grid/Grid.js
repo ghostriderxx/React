@@ -14,6 +14,8 @@ import {
 import Frame from "../../../index"
 import {delay} from "redux-saga";
 
+import Column from "./Column"
+
 /////////////////////////////////////////////////////////////////////////////
 // ModelFactory
 //
@@ -182,8 +184,16 @@ export default class GridWarpper extends React.Component{
     }
 
     render(){
+        const columns = this.props.children.map((column) => {
+            return {
+                title: column.props.head,
+                dataIndex: column.props.name,
+            }
+        });
+
         return (
-            <this.Instance {...this.props}></this.Instance>
+            <this.Instance {...this.props} columns={columns}></this.Instance>
         );
     }
 }
+GridWarpper.Column = Column;
