@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: "development",
     entry: {
-        getFieldDecorator: './src/getFieldDecorator.js',
+        "01_simple": './src/01_simple.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -50,7 +50,7 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
-            filename: 'getFieldDecorator.html',
+            filename: '01_simple.html',
 
             // Required
             inject: false,
