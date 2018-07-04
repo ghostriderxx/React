@@ -76,7 +76,8 @@ class Form extends React.Component{
     }
 }
 
-export default Form;
-
 Form.StringInput = StringInput;
 Form.NumberInput = NumberInput;
+
+export default Form;
+

@@ -11,7 +11,6 @@ import {
 
 import {
     Buttons,
-    Button,
     Form,
     Panel,
 } from "../../framework/taglib";
@@ -41,8 +40,8 @@ export default class ResCachetTypeAdd extends React.Component {
                 </Form>
 
                 <Buttons align={"right"}>
-                    <Button onClick={()=>this.saveCachetTypeInfoAdd()}>保存</Button>
-                    <Button onClick={()=>this.cancel()}>取消</Button>
+                    <Buttons.Button onClick={()=>this.saveCachetTypeInfoAdd()}>保存</Buttons.Button>
+                    <Buttons.Button onClick={()=>this.cancel()}>取消</Buttons.Button>
                 </Buttons>
             </Panel>
         );

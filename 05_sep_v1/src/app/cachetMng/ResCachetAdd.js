@@ -10,14 +10,12 @@ import {
 } from "../../framework/core";
 import {
     Buttons,
-    Button,
     Form,
     Panel,
 } from "../../framework/taglib";
 import {
     request,
 } from "../../framework/util";
-
 
 /////////////////////////////////////////////////////////////////////////////
 // UI
@@ -41,8 +39,8 @@ export default class ResCachetAdd extends React.Component {
                 </Form>
 
                 <Buttons align={"right"}>
-                    <Button onClick={()=>this.saveCachetInfoAdd()}>保存</Button>
-                    <Button onClick={()=>this.cancel()}>取消</Button>
+                    <Buttons.Button onClick={()=>this.saveCachetInfoAdd()}>保存</Buttons.Button>
+                    <Buttons.Button onClick={()=>this.cancel()}>取消</Buttons.Button>
                 </Buttons>
             </Panel>
         )

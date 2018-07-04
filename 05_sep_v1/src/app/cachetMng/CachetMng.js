@@ -9,18 +9,16 @@ import {
     connect
 } from "../../framework/core";
 import {
-    Button,
+    Buttons,
     Grid,
     Hlayout,
     Panel,
     Tab,
-    TabPage,
 } from "../../framework/taglib";
 import {
     request,
     MsgBox,
 } from "../../framework/util";
-
 
 /////////////////////////////////////////////////////////////////////////////
 // UI
@@ -55,15 +53,18 @@ export default class CachetMng extends React.Component {
                                dataIndex: 'zlbmc',
                            }]}
                     />
-                    <Button onClick={()=>this.cachetTypeAdd()}>新增</Button>
-                    <Button onClick={()=>this.cachetTypeModify()}>修改</Button>
-                    <Button onClick={()=>this.cachetTypeDelete()}>删除</Button>
+
+                    <Buttons>
+                        <Buttons.Button onClick={()=>this.cachetTypeAdd()}>新增</Buttons.Button>
+                        <Buttons.Button onClick={()=>this.cachetTypeModify()}>修改</Buttons.Button>
+                        <Buttons.Button onClick={()=>this.cachetTypeDelete()}>删除</Buttons.Button>
+                    </Buttons>
                 </Panel>
 
                 <Panel>
                     {/* 章信息 */}
                     <Tab defaultActiveKey="cachetInfo">
-                        <TabPage tab="章信息" key="cachetInfo">
+                        <Tab.TabPage tab="章信息" key="cachetInfo">
                             <Hlayout>
                                 <Panel>
                                     <Grid  name={"dwCachetInfo"}
@@ -100,11 +101,13 @@ export default class CachetMng extends React.Component {
                                     <img src={cachetImageUrl} style={{width: 100, height:100}}/>
                                 </Panel>
                             </Hlayout>
-                            <Button onClick={()=>this.cachetAdd()}>新增</Button>
-                            <Button onClick={()=>this.cachetModify()}>修改</Button>
-                            <Button onClick={()=>this.cachetDelete()}>删除</Button>
-                        </TabPage>
-                        <TabPage tab="章所在模板" key="cachetLoca">
+                            <Buttons>
+                                <Buttons.Button onClick={()=>this.cachetAdd()}>新增</Buttons.Button>
+                                <Buttons.Button onClick={()=>this.cachetModify()}>修改</Buttons.Button>
+                                <Buttons.Button onClick={()=>this.cachetDelete()}>删除</Buttons.Button>
+                            </Buttons>
+                        </Tab.TabPage>
+                        <Tab.TabPage tab="章所在模板" key="cachetLoca">
                             <Grid  name={"dwTempInfor"}
                                    dataSource={tempds}
                                    rowKey="mbid"
@@ -128,7 +131,7 @@ export default class CachetMng extends React.Component {
                                        dataIndex: 'scsj',
                                    }]}
                             />
-                        </TabPage>
+                        </Tab.TabPage>
                     </Tab>
                 </Panel>
             </Hlayout>

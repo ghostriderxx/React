@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Tabs } from 'antd';
 
-class Tab extends React.Component {
+export default class Tab extends React.Component {
     constructor(props){
         super(props);
     }
@@ -18,6 +18,4 @@ class Tab extends React.Component {
     }
 }
 
-const TabPage = Tabs.TabPane;
-
-export {Tab, TabPage};
+Tab.TabPage = Tabs.TabPane;
