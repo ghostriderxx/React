@@ -17,14 +17,14 @@ export default class Top extends React.Component {
         super(props)
     }
 
-    componentDidMount() {
-    }
-
     render() {
         return (
             <Panel className={"app-top"}>
                 <Panel className={"app-top-title"}></Panel>
             </Panel>
         );
+    }
+
+    componentDidMount() {
     }
 }

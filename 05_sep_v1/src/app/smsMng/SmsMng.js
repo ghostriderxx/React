@@ -9,12 +9,12 @@ export default class SmsMng extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-    }
-
     render(){
         return (
             "sms"
         )
+    }
+
+    componentDidMount() {
     }
 }

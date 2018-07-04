@@ -9,12 +9,12 @@ export default class PrintTplMng extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-    }
-
     render(){
         return (
             "PrintTplMng"
         )
+    }
+
+    componentDidMount() {
     }
 }
