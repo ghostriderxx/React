@@ -81,11 +81,7 @@ export default class SmsManageLeaf extends React.Component{
         this.formCachetType.checkFormValues((err, values) => {
             const {mbbh,mbmc} = values;
             this.props.dispatch({
-                type: "smsManageLeaf/resAddSms",
-                payload:{
-                    mbbh,
-                    mbmc
-                }
+                type: "smsManageLeaf/resAddSms"
             });
         });
     }
@@ -94,11 +90,7 @@ export default class SmsManageLeaf extends React.Component{
         this.formCachetType.checkFormValues((err, values) => {
             const {mbbh,mbmc} = values;
             this.props.dispatch({
-                type: "smsManageLeaf/resUpdateSms",
-                payload:{
-                    mbbh,
-                    mbmc
-                }
+                type: "smsManageLeaf/resUpdateSms"
             });
         });
     }
@@ -118,16 +110,29 @@ const modelSmsManageLeaf = {
         mbmc:'',
     },
     effects:{
-        * querySmsInfo({payload}, {call,put}){
-            const {mbbh,mbmc} = payload;
+        * querySmsInfo({payload}, {call,put,select}){
+
+            // 这部分多余，要删掉！！！！！！！！！！！！！！！！！
+            const mbbh1= payload.mbbh;
+            const mbmc1= payload.mbmc;
+            yield put({
+                type: "syncForm",
+                payload:{
+                    mbbh:mbbh1 ,
+                    mbmc:mbmc1,
+                }
+            });
+
+            const {mbbh, mbmc} = yield select(state => state["smsManageLeaf"]);
+
             const vdo = yield call(request, `/sep/SmsServlet/querySmsInfo?mbbh=${mbbh}&mbmc=${mbmc}`);
+
             const {vds} = vdo;
+
             yield put({
                 type: "querySmsInfoSuccess",
                 payload:{
-                    vds,
-                    mbbh,
-                    mbmc
+                    vds
                 }
             });
         },
@@ -143,13 +148,9 @@ const modelSmsManageLeaf = {
                 }
             });
 
-            const {mbbh} = payload;
             // RES关闭后的回调函数; 平面化代码结构
             yield put({
                 type: "smsManageLeaf/querySmsInfo",
-                payload :{
-                    mbbh
-                }
             });
         },
 
@@ -186,14 +187,9 @@ const modelSmsManageLeaf = {
                 }
             });
 
-            const {mbbh,mbmc} = payload;
             // RES关闭后的回调函数; 平面化代码结构
             yield put({
                 type: "querySmsInfo",
-                payload:{
-                    mbbh,
-                    mbmc
-                }
             });
         },
 
@@ -227,31 +223,33 @@ const modelSmsManageLeaf = {
                 return;
             }
 
-
             // 删除
             yield call(request, `/sep/SmsServlet/delSmsInfo?mbbh=${mbbhResult}`);
             MsgBox.show("删除成功!");
 
-            // 重新查询
-            const  mbbh = yield select(state => state["smsManageLeaf"].mbbh);
 
+            // 重新查询
             yield put({
                 type: "querySmsInfo",
-                payload: {
-                    mbbh
-                }
             });
         }
     },
     reducers:{
-        querySmsInfoSuccess(state, {payload}) {
+        syncForm(state, {payload}) {
             return {
                 ...state,
-                smsds: payload.vds,
                 mbbh: payload.mbbh,
                 mbmc : payload.mbmc
             };
         },
+
+        querySmsInfoSuccess(state, {payload}) {
+            return {
+                ...state,
+                smsds: payload.vds,
+            };
+        },
+
         clearSuccess(state, {payload}){
             return {
                 smsds: [],
