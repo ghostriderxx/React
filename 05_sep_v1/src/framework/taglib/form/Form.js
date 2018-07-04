@@ -7,6 +7,10 @@ import React from 'react';
 // ## antd
 import { Form as AntdForm, Input, message} from 'antd';
 
+// ## Framework
+import StringInput from "./StringInput"
+import NumberInput from "./NumberInput"
+
 @AntdForm.create({
     mapPropsToFields(props) {
         if(props.dataSource && props.dataSource.length > 0){
@@ -27,7 +31,7 @@ import { Form as AntdForm, Input, message} from 'antd';
         }
     },
 })
-export default class Form extends React.Component{
+class Form extends React.Component{
     constructor(props){
         super(props);
     }
@@ -71,3 +75,8 @@ export default class Form extends React.Component{
         )
     }
 }
+
+export default Form;
+
+Form.StringInput = StringInput;
+Form.NumberInput = NumberInput;

@@ -12,8 +12,6 @@ import Button from "./button/Button";
 import {Tab, TabPage} from "./tab/Tab";
 
 import Form from "./form/Form"
-import StringInput from "./form/StringInput"
-import NumberInput from "./form/NumberInput"
 export {
     Buttons,
     Button,
@@ -28,6 +26,4 @@ export {
     SheetContainer,
 
     Form,
-    StringInput,
-    NumberInput,
 }

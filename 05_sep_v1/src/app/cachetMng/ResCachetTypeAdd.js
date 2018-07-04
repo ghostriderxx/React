@@ -13,7 +13,6 @@ import {
     Buttons,
     Button,
     Form,
-    StringInput,
     Panel,
 } from "../../framework/taglib";
 
@@ -37,8 +36,8 @@ export default class ResCachetTypeAdd extends React.Component {
         return (
             <Panel>
                 <Form wrappedComponentRef={(inst) => this.formCachetType = inst}>
-                    <StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
-                    <StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"章类别名称!"}/>
+                    <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
+                    <Form.StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"章类别名称!"}/>
                 </Form>
 
                 <Buttons align={"right"}>
