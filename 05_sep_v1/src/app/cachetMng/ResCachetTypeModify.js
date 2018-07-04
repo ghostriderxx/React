@@ -38,8 +38,8 @@ export default class ResCachetTypeModify extends React.Component {
                 </Form>
 
                 <Buttons align={"right"}>
-                    <Buttons.Button onClick={()=>this.saveCachetTypeInfoModify()}>保存</Buttons.Button>
-                    <Buttons.Button onClick={()=>this.cancel()}>取消</Buttons.Button>
+                    <Buttons.Button onClick={this.saveCachetTypeInfoModify}>保存</Buttons.Button>
+                    <Buttons.Button onClick={this.cancel}>取消</Buttons.Button>
                 </Buttons>
             </Panel>
         );
@@ -54,7 +54,7 @@ export default class ResCachetTypeModify extends React.Component {
         });
     }
 
-    saveCachetTypeInfoModify(){
+    saveCachetTypeInfoModify = () => {
         this.formCachetType.checkFormValues((err, values) => {
             if (!err) {
                 const {zlbbh, zlbmc} = values;
@@ -70,7 +70,7 @@ export default class ResCachetTypeModify extends React.Component {
         });
     }
 
-    cancel(){
+    cancel = () => {
         this.props.closeRES();
     }
 }

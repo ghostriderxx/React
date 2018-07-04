@@ -42,9 +42,9 @@ export default class CachetMng extends React.Component {
                     </Grid>
 
                     <Buttons>
-                        <Buttons.Button onClick={()=>this.cachetTypeAdd()}>新增</Buttons.Button>
-                        <Buttons.Button onClick={()=>this.cachetTypeModify()}>修改</Buttons.Button>
-                        <Buttons.Button onClick={()=>this.cachetTypeDelete()}>删除</Buttons.Button>
+                        <Buttons.Button onClick={this.cachetTypeAdd}>新增</Buttons.Button>
+                        <Buttons.Button onClick={this.cachetTypeModify}>修改</Buttons.Button>
+                        <Buttons.Button onClick={this.cachetTypeDelete}>删除</Buttons.Button>
                     </Buttons>
                 </Panel>
 
@@ -68,9 +68,9 @@ export default class CachetMng extends React.Component {
                                 </Panel>
                             </Hlayout>
                             <Buttons>
-                                <Buttons.Button onClick={()=>this.cachetAdd()}>新增</Buttons.Button>
-                                <Buttons.Button onClick={()=>this.cachetModify()}>修改</Buttons.Button>
-                                <Buttons.Button onClick={()=>this.cachetDelete()}>删除</Buttons.Button>
+                                <Buttons.Button onClick={this.cachetAdd}>新增</Buttons.Button>
+                                <Buttons.Button onClick={this.cachetModify}>修改</Buttons.Button>
+                                <Buttons.Button onClick={this.cachetDelete}>删除</Buttons.Button>
                             </Buttons>
                         </Tab.TabPage>
                         <Tab.TabPage tab="章所在模板" key="cachetLoca">
@@ -106,36 +106,36 @@ export default class CachetMng extends React.Component {
 
 
     // 章类别信息 增、删、改
-    cachetTypeAdd(){
+    cachetTypeAdd = () => {
         this.props.dispatch({
             type: "cachetMng/cachetTypeAdd"
         });
     }
-    cachetTypeModify(){
+    cachetTypeModify = () => {
         this.props.dispatch({
             type: "cachetMng/cachetTypeModify"
         });
     }
-    cachetTypeDelete(){
+    cachetTypeDelete = () => {
         this.props.dispatch({
             type: "cachetMng/cachetTypeDelete",
         });
     }
 
     // 章信息 增、删、改
-    cachetAdd(){
+    cachetAdd = () => {
         this.props.dispatch({
             type: "cachetMng/cachetAdd",
         });
     }
 
-    cachetModify(){
+    cachetModify = () => {
         this.props.dispatch({
             type: "cachetMng/cachetModify",
         });
     }
 
-    cachetDelete(){
+    cachetDelete = () => {
         this.props.dispatch({
             type: "cachetMng/cachetDelete",
         });
