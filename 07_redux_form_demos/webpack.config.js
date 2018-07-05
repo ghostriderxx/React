@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         "01_simple": './src/01_simple.js',
         "02_syncValidation": './src/02_syncValidation.js',
+        "03_fieldLevelValidation": './src/03_fieldLevelValidation.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
