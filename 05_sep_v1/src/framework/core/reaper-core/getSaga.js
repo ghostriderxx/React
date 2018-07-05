@@ -109,7 +109,30 @@ function createEffects(model) {
       return sagaEffects.take(type);
     }
   }
-  return { ...sagaEffects, put, take };
+
+  function invoke(type,payload){
+     return put({
+          type,
+          payload
+      });
+  }
+  
+
+
+  function openRES(title, componentPath, width, height, params) {
+     return invoke("lane/openRes", {
+            componentPath,
+            width,
+            title,
+            params
+        });
+    }
+
+    function closeRES(params) {
+        return invoke("lane/closeRes");
+    }
+
+  return { ...sagaEffects, put, take,invoke,openRES, closeRES};
 }
 
 function applyOnEffect(fns, effect, model, key) {

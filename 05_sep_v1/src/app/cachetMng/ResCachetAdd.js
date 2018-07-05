@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect,
+    Rui
 } from "../../framework/core";
 import {
     Buttons,
@@ -20,8 +21,8 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect(({resCachetAdd})=>({resCachetAdd}))
-export default class ResCachetAdd extends React.Component {
+@connect("resCachetAdd")
+export default class ResCachetAdd extends Rui {
     constructor(props) {
         super(props);
     }
@@ -59,16 +60,13 @@ export default class ResCachetAdd extends React.Component {
                     zgd,
                     zkd} = values;
 
-                this.props.dispatch({
-                    type: "resCachetAdd/saveCachetInfoAdd",
-                    payload: {
+                this.props.invoke("saveCachetInfoAdd",{
                         zbh,
                         zmc,
                         zlbbh,
                         sigzbh,
                         zgd,
                         zkd,
-                    }
                 });
             }
         });
@@ -83,7 +81,7 @@ export default class ResCachetAdd extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelResCachetAdd = {
+export const modelResCachetAdd = {
     namespace: 'resCachetAdd',
 
     state: {
@@ -94,7 +92,7 @@ const modelResCachetAdd = {
 
     effects: {
         // 保存增加的章信息
-        * saveCachetInfoAdd({payload}, {call, put}) {
+        * saveCachetInfoAdd({payload}, {invoke, closeRES}) {
             const {
                 zbh,
                 zmc,
@@ -104,13 +102,10 @@ const modelResCachetAdd = {
                 zkd
             } = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetInfoAdd?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}`);
+            yield request(`/sep/CachetServlet/saveCachetInfoAdd?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}`);
 
             // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         },
     },
 };
-export {modelResCachetAdd};

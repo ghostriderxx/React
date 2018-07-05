@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect,
+    Rui,
 } from "../../framework/core";
 import {
     request,
@@ -17,13 +18,11 @@ import {
     Form,
 } from "../../framework/taglib";
 
-
-
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect(({resCachetTypeModify})=>({resCachetTypeModify}))
-export default class ResCachetTypeModify extends React.Component {
+@connect("resCachetTypeModify")
+export default class ResCachetTypeModify extends Rui {
     constructor(props) {
         super(props);
     }
@@ -48,10 +47,7 @@ export default class ResCachetTypeModify extends React.Component {
     componentDidMount() {
         const zlbbh = this.props.params.zlbbh;
 
-        this.props.dispatch({
-            type: "resCachetTypeModify/queryCachetTypeInfo",
-            payload: zlbbh,
-        });
+        this.props.invoke("queryCachetTypeInfo", zlbbh);
     }
 
     saveCachetTypeInfoModify = () => {
@@ -59,12 +55,9 @@ export default class ResCachetTypeModify extends React.Component {
             if (!err) {
                 const {zlbbh, zlbmc} = values;
 
-                this.props.dispatch({
-                    type: "resCachetTypeModify/saveCachetTypeInfoModify",
-                    payload: {
-                        zlbbh,
-                        zlbmc,
-                    }
+                this.props.invoke("saveCachetTypeInfoModify", {
+                    zlbbh,
+                    zlbmc,
                 });
             }
         });
@@ -78,7 +71,7 @@ export default class ResCachetTypeModify extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelResCachetTypeModify = {
+export const modelResCachetTypeModify = {
     namespace: 'resCachetTypeModify',
 
     state: {
@@ -95,24 +88,17 @@ const modelResCachetTypeModify = {
     },
 
     effects: {
-        * queryCachetTypeInfo({payload}, {call, put}) {
-            const data = yield call(request, `/sep/CachetServlet/queryCachetTypeInfo?zlbbh=${payload}`);
-            yield put({
-                type: "queryCachetTypeInfoSuccess",
-                payload: data.cachettypeds
-            });
+        * queryCachetTypeInfo({payload}, {invoke}) {
+            const data = yield request(`/sep/CachetServlet/queryCachetTypeInfo?zlbbh=${payload}`);
+            yield invoke("queryCachetTypeInfoSuccess", data.cachettypeds);
         },
 
-        * saveCachetTypeInfoModify({payload}, {call, put}) {
+        * saveCachetTypeInfoModify({payload}, {invoke, closeRES}) {
             const {zlbbh, zlbmc} = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetTypeInfoModify?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+            yield request(`/sep/CachetServlet/saveCachetTypeInfoModify?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
 
-            yield put({
-                type: "lane/closeRes",
-            });
-
+            yield closeRES();
         },
     },
 };
-export {modelResCachetTypeModify};

@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect,
+    Rui,
 } from "../../framework/core";
 
 import {
@@ -25,8 +26,8 @@ import {
 // UI
 //
 // @Form.create()
-@connect(({resCachetTypeAdd})=>({resCachetTypeAdd}))
-export default class ResCachetTypeAdd extends React.Component {
+@connect("resCachetTypeAdd")
+export default class ResCachetTypeAdd extends Rui {
     constructor(props) {
         super(props);
     }
@@ -55,19 +56,16 @@ export default class ResCachetTypeAdd extends React.Component {
             if (!err) {
                 const {zlbbh, zlbmc} = values;
 
-                this.props.dispatch({
-                    type: "resCachetTypeAdd/saveCachetTypeInfoAdd",
-                    payload: {
-                        zlbbh,
-                        zlbmc,
-                    }
+                this.props.invoke("saveCachetTypeInfoAdd", {
+                    zlbbh,
+                    zlbmc,
                 });
             }
         });
     }
 
     cancel = () => {
-        this.props.closeRES("helloworld");
+        this.props.closeRES();
     }
 }
 
@@ -75,7 +73,7 @@ export default class ResCachetTypeAdd extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelResCachetTypeAdd = {
+export const modelResCachetTypeAdd = {
     namespace: 'resCachetTypeAdd',
 
     state: {
@@ -85,18 +83,14 @@ const modelResCachetTypeAdd = {
     },
 
     effects: {
-        * saveCachetTypeInfoAdd({payload}, {call, put}) {
+        * saveCachetTypeInfoAdd({payload}, {closeRES}) {
             const {zlbbh, zlbmc} = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+            yield request(`/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
 
-            yield call(MsgBox.show, "保存成功!")
+            yield MsgBox.show("保存成功!");
 
-            // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         },
     },
 };
-export {modelResCachetTypeAdd};

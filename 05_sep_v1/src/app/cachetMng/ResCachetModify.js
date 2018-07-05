@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect,
+    Rui,
 } from "../../framework/core";
 import {
     request,
@@ -21,8 +22,8 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect(({resCachetModify})=>({resCachetModify}))
-export default class ResCachetModify extends React.Component {
+@connect("resCachetModify")
+export default class ResCachetModify extends Rui {
     constructor(props) {
         super(props);
     }
@@ -51,10 +52,7 @@ export default class ResCachetModify extends React.Component {
     componentDidMount() {
         const zbh = this.props.params.zbh;
 
-        this.props.dispatch({
-            type: "resCachetModify/queryCachetInfo",
-            payload: zbh,
-        });
+        this.props.invoke("queryCachetInfo", zbh);
     }
 
     saveCachetInfoModify = () => {
@@ -67,17 +65,14 @@ export default class ResCachetModify extends React.Component {
                     zgd,
                     zkd} = values;
 
-                this.props.dispatch({
-                    type: "resCachetModify/saveCachetInfoModify",
-                    payload: {
-                        zbh,
-                        zmc,
-                        zlbbh,
-                        sigzbh,
-                        zgd,
-                        zkd,
-                        yzbh: zbh,
-                    }
+                this.props.invoke("saveCachetInfoModify", {
+                    zbh,
+                    zmc,
+                    zlbbh,
+                    sigzbh,
+                    zgd,
+                    zkd,
+                    yzbh: zbh,
                 });
             }
         });
@@ -91,7 +86,7 @@ export default class ResCachetModify extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelResCachetModify = {
+export const modelResCachetModify = {
     namespace: 'resCachetModify',
 
     state: {
@@ -108,15 +103,13 @@ const modelResCachetModify = {
     },
 
     effects: {
-        * queryCachetInfo({payload}, {call, put}) {
-            const data = yield call(request, `/sep/CachetServlet/queryCachetInfo?zbh=${payload}`);
-            yield put({
-                type: "queryCachetInfoSuccess",
-                payload: data.cachetds
-            });
+        * queryCachetInfo({payload}, {invoke}) {
+            const data = yield request(`/sep/CachetServlet/queryCachetInfo?zbh=${payload}`);
+
+            yield invoke("queryCachetInfoSuccess", data.cachetds);
         },
 
-        * saveCachetInfoModify({payload}, {call, put}) {
+        * saveCachetInfoModify({payload}, {closeRES}) {
             const {
                 zbh,
                 zmc,
@@ -127,13 +120,10 @@ const modelResCachetModify = {
                 yzbh,
             } = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetInfoModify?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}&yzbh=${yzbh}`);
+            yield request(`/sep/CachetServlet/saveCachetInfoModify?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}&yzbh=${yzbh}`);
 
             // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         },
     },
 };
-export {modelResCachetModify};

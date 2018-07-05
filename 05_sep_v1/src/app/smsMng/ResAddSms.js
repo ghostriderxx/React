@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from  "../../framework/core";
+import {connect,Rui} from  "../../framework/core";
 import {
     Buttons,
     Panel,
@@ -8,8 +8,8 @@ import {
 
 import {request,MsgBox} from "../../framework/util";
 
-@connect(({resAddSms})=>({resAddSms}))
-export default class ResAddSms extends React.Component{
+@connect("resAddSms")
+export default class ResAddSms extends Rui{
     constructor(props){
         super(props)
     }
@@ -39,10 +39,7 @@ export default class ResAddSms extends React.Component{
     saveAddTemplate =()=>{
         this.formObj.checkFormValues((err, values) => {
             if (!err) {
-                this.props.dispatch({
-                    type: "resAddSms/saveAddTemplate",
-                    payload: values
-                });
+                this.props.invoke("saveAddTemplate",values);
             }
         });
     }
@@ -57,8 +54,7 @@ export const modelResAddSms = {
     state:{
     },
     effects:{
-        *saveAddTemplate({payload}, {call,put}){
-            console.dir(payload);
+        *saveAddTemplate({payload}, {invoke,closeRES}){
             const {
                 mbbh,
                 mbmc,
@@ -67,17 +63,12 @@ export const modelResAddSms = {
                 tfbz,
                 appid
             } = payload;
-
-            yield call(request, `/sep/SmsServlet/saveAddTemplate?mbbh=${mbbh}&mbmc=${mbmc}&mbnr=${mbnr}
+            yield request(`/sep/SmsServlet/saveAddTemplate?mbbh=${mbbh}&mbmc=${mbmc}&mbnr=${mbnr}
                 &sql=${sql}&tfbz=${tfbz}&appid=${appid}`);
 
-
             MsgBox.show("新增成功");
-
             // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         }
     },
     reducers:{
