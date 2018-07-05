@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from  "../../framework/core";
+import {connect,Rui} from  "../../framework/core";
 import {
     Buttons,
     Grid,
@@ -7,10 +7,11 @@ import {
     Form
 } from "../../framework/taglib";
 
+
 import {MsgBox, request} from "../../framework/util";
 
 @connect(({smsManageLeaf})=>({smsManageLeaf}))
-export default class SmsManageLeaf extends React.Component{
+export default class SmsManageLeaf extends Rui{
     constructor(props){
         super(props);
     }
@@ -58,21 +59,16 @@ export default class SmsManageLeaf extends React.Component{
                     mbmc = "";
                 }
 
-                this.props.dispatch({
-                    type: "smsManageLeaf/querySmsInfo",
-                    payload: {
-                        mbbh,
-                        mbmc
-                    }
-                });
+                this.invoke("smsManageLeaf/querySmsInfo",{
+                    mbbh,
+                    mbmc
+                })
             }
         });
     }
 
     clear = () =>{
-        this.props.dispatch({
-            type: "smsManageLeaf/clearSuccess",
-        });
+        this.invoke("smsManageLeaf/clearSuccess");
 
     }
 
@@ -80,12 +76,9 @@ export default class SmsManageLeaf extends React.Component{
         //为了获取当前form的value
         this.formCachetType.checkFormValues((err, values) => {
             const {mbbh,mbmc} = values;
-            this.props.dispatch({
-                type: "smsManageLeaf/resAddSms",
-                payload:{
-                    mbbh,
-                    mbmc
-                }
+            this.invoke("smsManageLeaf/resAddSms",{
+                mbbh,
+                mbmc
             });
         });
     }
@@ -93,20 +86,15 @@ export default class SmsManageLeaf extends React.Component{
     xgSms = ()=>{
         this.formCachetType.checkFormValues((err, values) => {
             const {mbbh,mbmc} = values;
-            this.props.dispatch({
-                type: "smsManageLeaf/resUpdateSms",
-                payload:{
-                    mbbh,
-                    mbmc
-                }
+            this.invoke("smsManageLeaf/resUpdateSms",{
+                mbbh,
+                mbmc
             });
         });
     }
 
     scSms = ()=>{
-        this.props.dispatch({
-            type: "smsManageLeaf/deleteSms"
-        });
+        this.invoke("smsManageLeaf/deleteSms");
     }
 }
 
@@ -226,7 +214,6 @@ const modelSmsManageLeaf = {
             if(!confirm("您确认要删除【"+mbmcResult+"】吗？")){
                 return;
             }
-
 
             // 删除
             yield call(request, `/sep/SmsServlet/delSmsInfo?mbbh=${mbbhResult}`);
