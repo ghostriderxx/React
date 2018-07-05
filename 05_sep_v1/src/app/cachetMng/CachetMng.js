@@ -92,36 +92,36 @@ export default class CachetMng extends Rui {
 
     // onXXX
     cachetTypeGridClick = (record) =>{
-        this.invoke("cachetMng/cachetTypeGridClick", record.zlbbh);
+        this.props.invoke("cachetTypeGridClick", record.zlbbh);
     }
 
     viewCachetImage = (record) =>{
-        this.invoke("cachetMng/viewCachetImage", record.zbh);
+        this.props.invoke("viewCachetImage", record.zbh);
     }
 
 
     // 章类别信息 增、删、改
     cachetTypeAdd = () => {
-        this.invoke("cachetMng/cachetTypeAdd");
+        this.props.invoke("cachetTypeAdd");
     }
     cachetTypeModify = () => {
-        this.invoke("cachetMng/cachetTypeModify");
+        this.props.invoke("cachetTypeModify");
     }
     cachetTypeDelete = () => {
-        this.invoke("cachetMng/cachetTypeDelete");
+        this.props.invoke("cachetTypeDelete");
     }
 
     // 章信息 增、删、改
     cachetAdd = () => {
-        this.invoke("cachetMng/cachetAdd");
+        this.props.invoke("cachetAdd");
     }
 
     cachetModify = () => {
-        this.invoke("cachetMng/cachetModify");
+        this.props.invoke("cachetModify");
     }
 
     cachetDelete = () => {
-        this.invoke("cachetMng/cachetDelete");
+        this.props.invoke("cachetDelete");
     }
 }
 

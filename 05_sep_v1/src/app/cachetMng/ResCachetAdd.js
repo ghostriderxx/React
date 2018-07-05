@@ -60,7 +60,7 @@ export default class ResCachetAdd extends Rui {
                     zgd,
                     zkd} = values;
 
-                this.invoke("resCachetAdd/saveCachetInfoAdd",{
+                this.props.invoke("saveCachetInfoAdd",{
                         zbh,
                         zmc,
                         zlbbh,
@@ -73,7 +73,7 @@ export default class ResCachetAdd extends Rui {
     }
 
     cancel = () => {
-        this.closeRES();
+        this.props.closeRES();
     }
 }
 

@@ -52,7 +52,7 @@ export default class ResCachetModify extends Rui {
     componentDidMount() {
         const zbh = this.props.params.zbh;
 
-        this.invoke("resCachetModify/queryCachetInfo", zbh);
+        this.props.invoke("queryCachetInfo", zbh);
     }
 
     saveCachetInfoModify = () => {
@@ -65,7 +65,7 @@ export default class ResCachetModify extends Rui {
                     zgd,
                     zkd} = values;
 
-                this.invoke("resCachetModify/saveCachetInfoModify", {
+                this.props.invoke("saveCachetInfoModify", {
                     zbh,
                     zmc,
                     zlbbh,
@@ -79,7 +79,7 @@ export default class ResCachetModify extends Rui {
     }
 
     cancel = () => {
-        this.closeRES();
+        this.props.closeRES();
     }
 }
 

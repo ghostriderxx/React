@@ -56,7 +56,7 @@ export default class ResCachetTypeAdd extends Rui {
             if (!err) {
                 const {zlbbh, zlbmc} = values;
 
-                this.invoke("resCachetTypeAdd/saveCachetTypeInfoAdd", {
+                this.props.invoke("saveCachetTypeInfoAdd", {
                     zlbbh,
                     zlbmc,
                 });
@@ -65,7 +65,7 @@ export default class ResCachetTypeAdd extends Rui {
     }
 
     cancel = () => {
-        this.closeRES();
+        this.props.closeRES();
     }
 }
 
