@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect,
+    Rui,
 } from "../../framework/core";
 import {
     Buttons,
@@ -24,7 +25,7 @@ import {
 // UI
 //
 @connect(({cachetMng})=>({cachetMng}))
-export default class CachetMng extends React.Component {
+export default class CachetMng extends Rui {
     constructor(props){
         super(props);
     }
@@ -91,54 +92,36 @@ export default class CachetMng extends React.Component {
 
     // onXXX
     cachetTypeGridClick = (record) =>{
-        this.props.dispatch({
-            type: "cachetMng/cachetTypeGridClick",
-            payload: record.zlbbh
-        });
+        this.invoke("cachetMng/cachetTypeGridClick", record.zlbbh);
     }
 
     viewCachetImage = (record) =>{
-        this.props.dispatch({
-            type: "cachetMng/viewCachetImage",
-            payload: record.zbh,
-        });
+        this.invoke("cachetMng/viewCachetImage", record.zbh);
     }
 
 
     // 章类别信息 增、删、改
     cachetTypeAdd = () => {
-        this.props.dispatch({
-            type: "cachetMng/cachetTypeAdd"
-        });
+        this.invoke("cachetMng/cachetTypeAdd");
     }
     cachetTypeModify = () => {
-        this.props.dispatch({
-            type: "cachetMng/cachetTypeModify"
-        });
+        this.invoke("cachetMng/cachetTypeModify");
     }
     cachetTypeDelete = () => {
-        this.props.dispatch({
-            type: "cachetMng/cachetTypeDelete",
-        });
+        this.invoke("cachetMng/cachetTypeDelete");
     }
 
     // 章信息 增、删、改
     cachetAdd = () => {
-        this.props.dispatch({
-            type: "cachetMng/cachetAdd",
-        });
+        this.invoke("cachetMng/cachetAdd");
     }
 
     cachetModify = () => {
-        this.props.dispatch({
-            type: "cachetMng/cachetModify",
-        });
+        this.invoke("cachetMng/cachetModify");
     }
 
     cachetDelete = () => {
-        this.props.dispatch({
-            type: "cachetMng/cachetDelete",
-        });
+        this.invoke("cachetMng/cachetDelete");
     }
 }
 
@@ -192,323 +175,213 @@ export const modelCachetMng = {
     },
     effects: {
         // 查询章类别信息
-        * queryCachetTypeList({payload}, {call, put}) {
-            const vdo = yield call(request, "/sep/CachetServlet/queryCachetTypeList");
+        * queryCachetTypeList({payload}, {invoke}) {
+            const vdo = yield request("/sep/CachetServlet/queryCachetTypeList");
             const {cachettypeds} = vdo;
 
-            yield put({type: `queryCachetTypeListSuccess`, payload: cachettypeds});
+            yield invoke("queryCachetTypeListSuccess", cachettypeds);
 
             if(cachettypeds.length){
                 const zlbbh = cachettypeds[0].zlbbh;
-                yield put({
-                    type: `cachetTypeGridClick`,
-                    payload:zlbbh
-                });
+                yield invoke("cachetTypeGridClick", zlbbh);
             }
         },
 
         // 点击章类别信息
-        *cachetTypeGridClick({payload}, {call, put}) {
+        *cachetTypeGridClick({payload}, {invoke}) {
             const zlbbh = payload;
-            yield put({
-                type: `queryCachetList`,
-                payload:zlbbh
-            });
-            yield put({
-                type: `queryCachetLoca`,
-                payload:zlbbh
-            });
+            yield invoke(`queryCachetList`, zlbbh);
+            yield invoke(`queryCachetLoca`, zlbbh);
         },
 
         // 根据章类别编号查询章信息
-        * queryCachetList({payload}, {call, put}) {
-            const vdo = yield call(request, `/sep/CachetServlet/queryCachetList?zlbbh=${payload}`);
+        * queryCachetList({payload}, {invoke}) {
+            const vdo = yield request(`/sep/CachetServlet/queryCachetList?zlbbh=${payload}`);
             const {cachetds} = vdo;
 
-            yield put({
-                type: `queryCachetListSuccess`,
-                payload: cachetds
-            });
+            yield invoke(`queryCachetListSuccess`, cachetds);
 
             if(cachetds.length){
                 const zbh = cachetds[0].zbh;
-                yield put({
-                    type: `viewCachetImage`,
-                    payload: zbh
-                });
+
+                yield invoke(`viewCachetImage`, zbh);
             }
         },
 
         // 根据章类别编号查询所在模版信息
-        * queryCachetLoca({payload}, {call, put}) {
-
-            const vdo = yield call(request, `/sep/CachetServlet/queryCachetLoca?zlbbh=${payload}`);
+        * queryCachetLoca({payload}, {invoke}) {
+            const vdo = yield request(`/sep/CachetServlet/queryCachetLoca?zlbbh=${payload}`);
             const {tempds} = vdo;
 
-            yield put({
-                type: `queryCachetLocaSuccess`,
-                payload: tempds
-            });
+            yield invoke(`queryCachetLocaSuccess`, tempds);
         },
 
         // 显示章图片
-        * viewCachetImage({payload}, {call, put}) {
+        * viewCachetImage({payload}, {invoke}) {
             const cacheImageUrl = `/sep/CachetServlet/viewCachetImage?zbh=${payload}&_=${Math.random()}`;
 
-            yield put({
-                type: `viewCachetImageSuccess`,
-                payload: cacheImageUrl,
-            });
+            yield invoke(`viewCachetImageSuccess`, cacheImageUrl);
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 删除章类别信息
-        * cachetTypeDelete({payload}, {call, put, select}) {
-            const rowNu = yield yield put({ // 个人感觉还是把这部分逻辑放到UI层中，比较负责业务习惯；
-                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
-            });
+        * cachetTypeDelete({payload}, {invoke}) {
+            const rowNu = yield yield invoke("dwCachetTypeInfo/gridGetCurrentRowNumber");
             if(rowNu == 0){
                 alert("请先选中一行！");
                 return;
             }
 
-
             // 获取即将删除的zlbbh、zlbmc
-            const zlbbh = yield yield put({ // 写在这，明显代码语法比较复杂;
-                type: "dwCachetTypeInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNu,
-                    columnName: "zlbbh",
-                }
+            const zlbbh = yield yield invoke("dwCachetTypeInfo/gridGetCellValue", {
+                rowNumber: rowNu,
+                columnName: "zlbbh",
             });
-            const zlbmc = yield yield put({
-                type: "dwCachetTypeInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNu,
-                    columnName: "zlbmc",
-                }
+            const zlbmc = yield yield invoke("dwCachetTypeInfo/gridGetCellValue", {
+                rowNumber: rowNu,
+                columnName: "zlbmc",
             });
             if(!confirm("您确认要删除【"+zlbmc+"】吗？")){
                 return;
             }
 
             // 删除
-            yield call(request, `/sep/CachetServlet/deleteCachetTypeInfo?zlbbh=${zlbbh}`);
+            yield request(`/sep/CachetServlet/deleteCachetTypeInfo?zlbbh=${zlbbh}`);
 
             // 重新查询章类别
-            yield put({
-                type: "queryCachetTypeList"
-            });
+            yield invoke("queryCachetTypeList");
 
             MsgBox.show("删除成功!");
         },
 
         // 新增章类别信息
-        * cachetTypeAdd({payload}, {call, put, select}) {
+        * cachetTypeAdd({payload}, {invoke, openRES}) {
             // openRES
-            yield yield put({
-                type: "lane/openRes",
-                payload: {
-                    componentPath: "app/cachetMng/ResCachetTypeAdd.js",
-                    width: 600,
-                    title: "新增章类别信息"
-                }
-            });
+            yield yield openRES("新增章类别信息", "app/cachetMng/ResCachetTypeAdd.js", 600);
 
-            // RES关闭后的回调函数; 平面化代码结构
-            yield put({
-                type: "queryCachetTypeList",
-            });
+            // RES关闭后的回调函数;
+            yield invoke("queryCachetTypeList");
         },
 
         // 修改章类别信息
-        * cachetTypeModify({payload}, {call, put, select}) {
-            const rowNu = yield yield put({
-                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
-            });
+        * cachetTypeModify({payload}, {invoke, openRES}) {
+            const rowNu = yield yield invoke("dwCachetTypeInfo/gridGetCurrentRowNumber");
             if(rowNu == 0){
                 alert("请先选中一行！");
                 return;
             }
 
             // zlbbh
-            const zlbbh = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetTypeInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNu,
-                    columnName: "zlbbh",
-                }
+            const zlbbh = yield yield invoke("dwCachetTypeInfo/gridGetCellValue", {
+                rowNumber: rowNu,
+                columnName: "zlbbh",
             });
 
             // openRES
-            yield yield put({
-                type: "lane/openRes",
-                payload: {
-                    componentPath: "app/cachetMng/ResCachetTypeModify.js",
-                    width: 600,
-                    title: "修改章类别信息",
-                    params:{
-                        zlbbh,
-                    }
-                }
+            yield yield openRES("修改章类别信息", "app/cachetMng/ResCachetTypeModify.js", 600, 600, {
+                zlbbh,
             });
 
             // RES关闭后的回调函数; 平面化代码结构
-            yield put({
-                type: "queryCachetTypeList",
-            });
+            yield invoke("queryCachetTypeList");
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 删除章信息
-        * cachetDelete({payload}, {call, put, select}) {
-            const rowNu = yield yield put({
-                type: "dwCachetInfo/gridGetCurrentRowNumber"
-            });
+        * cachetDelete({payload}, {invoke}) {
+            const rowNu = yield yield invoke("dwCachetInfo/gridGetCurrentRowNumber");
             if(rowNu == 0){
                 alert("请先选中一行！");
                 return;
             }
 
             // 获取zbh、zmc
-            const zbh = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNu,
-                    columnName: "zbh",
-                }
+            const zbh = yield yield invoke("dwCachetInfo/gridGetCellValue", {
+                rowNumber: rowNu,
+                columnName: "zbh",
             });
-            const zmc = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNu,
-                    columnName: "zmc",
-                }
+            const zmc = yield yield invoke("dwCachetInfo/gridGetCellValue", {
+                rowNumber: rowNu,
+                columnName: "zmc",
             });
             if(!confirm("您确认要删除【"+zmc+"】吗？")){
                 return false;
             }
 
             // 删除
-            yield call(request, `/sep/CachetServlet/deleteCachetInfo?zbh=${zbh}`);
+            yield request(`/sep/CachetServlet/deleteCachetInfo?zbh=${zbh}`);
 
 
             // 重新查询某特性[章类别信息]下的[章信息]、[模板信息]；
-            const currentRowNumber1 = yield yield put({
-                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
-            });
+            const currentRowNumber1 = yield yield invoke("dwCachetTypeInfo/gridGetCurrentRowNumber");
             if(currentRowNumber1 == 0){
                 alert("请先选中一行！");
                 return;
             }
-            const zlbbh = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetTypeInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: currentRowNumber1,
-                    columnName: "zlbbh",
-                }
+            const zlbbh = yield yield invoke("dwCachetTypeInfo/gridGetCellValue", {
+                rowNumber: currentRowNumber1,
+                columnName: "zlbbh",
             });
-            yield put({
-                type: `cachetTypeGridClick`,
-                payload:zlbbh
-            });
+            yield invoke(`cachetTypeGridClick`, zlbbh);
 
             // 消息提示
             MsgBox.show("删除成功!");
         },
 
         // 新增章信息
-        * cachetAdd({payload}, {call, put, select}) {
+        * cachetAdd({payload}, {invoke, openRES}) {
 
-            const rowNu = yield yield put({
-                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
-            });
+            const rowNu = yield yield invoke("dwCachetTypeInfo/gridGetCurrentRowNumber");
             if(rowNu == null){
                 alert("请先选择章类别信息！");
                 return false;
             }
-            const zlbbh = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetTypeInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNu,
-                    columnName: "zlbbh",
-                }
+            const zlbbh = yield yield invoke("dwCachetTypeInfo/gridGetCellValue", {
+                rowNumber: rowNu,
+                columnName: "zlbbh",
             });
 
-            yield yield put({
-                type: "lane/openRes",
-                payload: {
-                    componentPath: "app/cachetMng/ResCachetAdd.js",
-                    width: 600,
-                    title: "新增章信息",
-                    params: {
-                        zlbbh
-                    }
-                }
+            yield yield openRES("新增章信息", "app/cachetMng/ResCachetAdd.js", 600, 600, {
+                zlbbh
             });
 
             // 重新查询某特性[章类别信息]下的[章信息]、[模板信息]；
-            yield put({
-                type: `cachetTypeGridClick`,
-                payload:zlbbh
-            });
+            yield invoke(`cachetTypeGridClick`, zlbbh);
         },
 
         // 修改章信息
-        * cachetModify({payload}, {call, put, select}) {
-            const rowNu = yield yield put({
-                type: "dwCachetInfo/gridGetCurrentRowNumber"
-            });
+        * cachetModify({payload}, {invoke, openRES}) {
+            const rowNu = yield yield invoke("dwCachetInfo/gridGetCurrentRowNumber");
             if(rowNu == null){
                 alert("请先选中一行！");
                 return false;
             }
 
             // zbh
-            const zbh = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNu,
-                    columnName: "zbh",
-                }
+            const zbh = yield yield invoke("dwCachetInfo/gridGetCellValue",{
+                rowNumber: rowNu,
+                columnName: "zbh",
             });
 
             // openRES
-            yield yield put({
-                type: "lane/openRes",
-                payload: {
-                    componentPath: "app/cachetMng/ResCachetModify.js",
-                    width: 600,
-                    title: "修改章信息",
-                    params:{
-                        zbh,
-                    }
-                }
+            yield yield openRES("修改章信息", "app/cachetMng/ResCachetModify.js", 600, 600, {
+                zbh
             });
-
 
             // actionAfterClose
             // 重新查询某特性[章类别信息]下的[章信息]、[模板信息]；
-            const currentRowNumber1 = yield yield put({
-                type: "dwCachetTypeInfo/gridGetCurrentRowNumber"
-            });
+            const currentRowNumber1 = yield yield invoke("dwCachetTypeInfo/gridGetCurrentRowNumber");
             if(currentRowNumber1 == 0){
                 alert("请先选中一行！");
                 return;
             }
-            const zlbbh = yield yield put({ // 用消息手段操作Grid;
-                type: "dwCachetTypeInfo/gridGetCellValue",
-                payload: {
-                    rowNumber: currentRowNumber1,
-                    columnName: "zlbbh",
-                }
+            const zlbbh = yield yield invoke("dwCachetTypeInfo/gridGetCellValue", {
+                rowNumber: currentRowNumber1,
+                columnName: "zlbbh",
             });
-            yield put({
-                type: `cachetTypeGridClick`,
-                payload:zlbbh
-            });
+            yield invoke(`cachetTypeGridClick`, zlbbh);
         },
     },
 };

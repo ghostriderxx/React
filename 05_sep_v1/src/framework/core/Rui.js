@@ -13,14 +13,14 @@ export default class Rui extends React.Component {
 
     invoke(type, payload) {
         const dispatch = this.context && this.context.store && this.context.store.dispatch;
-        dispatch({
+        return dispatch({
             type: type,
             payload: payload,
         });
     }
 
     openRES(title, componentPath, width, height, params) {
-        this.invoke("lane/openRes", {
+        return this.invoke("lane/openRes", {
             componentPath,
             width,
             title,
