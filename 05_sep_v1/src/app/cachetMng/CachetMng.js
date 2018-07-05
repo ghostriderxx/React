@@ -24,7 +24,7 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect(({cachetMng})=>({cachetMng}))
+@connect("cachetMng")
 export default class CachetMng extends Rui {
     constructor(props){
         super(props);

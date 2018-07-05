@@ -21,7 +21,7 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect(({resCachetTypeModify})=>({resCachetTypeModify}))
+@connect("resCachetTypeModify")
 export default class ResCachetTypeModify extends Rui {
     constructor(props) {
         super(props);

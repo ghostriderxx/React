@@ -21,7 +21,7 @@ import Top from "./top/Top";
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect(({app})=>({app}))
+@connect("app")
 export default class App extends React.Component{
     constructor(props){
         super(props)

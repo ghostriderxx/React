@@ -26,7 +26,7 @@ import {
 // UI
 //
 // @Form.create()
-@connect(({resCachetTypeAdd})=>({resCachetTypeAdd}))
+@connect("resCachetTypeAdd")
 export default class ResCachetTypeAdd extends Rui {
     constructor(props) {
         super(props);

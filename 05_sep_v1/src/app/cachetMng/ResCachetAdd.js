@@ -21,7 +21,7 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect(({resCachetAdd})=>({resCachetAdd}))
+@connect("resCachetAdd")
 export default class ResCachetAdd extends Rui {
     constructor(props) {
         super(props);
