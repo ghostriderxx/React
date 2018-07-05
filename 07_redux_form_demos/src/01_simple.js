@@ -40,7 +40,7 @@ class SimpleForm extends React.Component {
     }
 
     render() {
-        const rowStyle = {display: "flex", justifyContent: "flex-start"};
+        const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
         const labelStyle = {width:120, textAlign:"right"};
 
         const {handleSubmit, pristine, reset, submitting} = this.props;
@@ -79,20 +79,20 @@ class SimpleForm extends React.Component {
 
                         <div style={rowStyle}>
                             <label style={labelStyle}>Sex：</label>
-                            <div>
-                                <Field
-                                    name="sex"
-                                    component="input"
-                                    type="radio"
-                                    value="male"/>
-                                Male
-                                <Field
-                                    name="sex"
-                                    component="input"
-                                    type="radio"
-                                    value="female"/>
-                                Female
-                            </div>
+
+                            <Field
+                                name="sex"
+                                component="input"
+                                type="radio"
+                                value="male"/>
+                            Male
+                            <Field
+                                name="sex"
+                                component="input"
+                                type="radio"
+                                value="female"/>
+                            Female
+
                         </div>
 
                         <div style={rowStyle}>
