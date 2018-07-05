@@ -109,8 +109,7 @@ const renderRadioAreaField = ({input, label, name,  code, meta: {touched, error,
 /////////////////////////////////////////////////////////////////////////////
 // Dependency
 //
-// 将需要作为 Form 表单初始值的数据，映射到组件的 props.initialValues 属性中
-// reduxForm 会自动把 connect() 注入到组件中的 initialValues 字段填充到 Form 表单中
+// reduxForm 会自动根据 this.props.initialValus 字段值给 Form 表单赋初值
 @connect(
     ({account}) => ({initialValues: account.data})
 )
@@ -148,7 +147,6 @@ class InitializeFromStateForm extends React.Component {
 
 
     render() {
-        const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'];
         const {handleSubmit, pristine, reset, submitting} = this.props;
         return (
             <div style={{display: "flex", justifyContent: "center"}}>
@@ -189,7 +187,7 @@ class InitializeFromStateForm extends React.Component {
                             name="favoriteColor"
                             component={renderSelectAreaField}
                             label={"Favorite Color"}
-                            code={colors}/>
+                            code={['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']}/>
 
                         <Field
                             name="employed"
