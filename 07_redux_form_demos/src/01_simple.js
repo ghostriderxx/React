@@ -122,12 +122,8 @@ class SimpleForm extends React.Component {
                         </div>
 
                         <div>
-                            <button type="submit" disabled={pristine || submitting}>
-                                Submit
-                            </button>
-                            <button type="button" disabled={pristine || submitting} onClick={reset}>
-                                Clear Values
-                            </button>
+                            <button type="submit" disabled={pristine || submitting}>Submit</button>
+                            <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
                         </div>
                     </form>
                 </Spin>
