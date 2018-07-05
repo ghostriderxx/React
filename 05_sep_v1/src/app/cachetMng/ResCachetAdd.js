@@ -83,7 +83,7 @@ export default class ResCachetAdd extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelResCachetAdd = {
+export const modelResCachetAdd = {
     namespace: 'resCachetAdd',
 
     state: {
@@ -113,4 +113,3 @@ const modelResCachetAdd = {
         },
     },
 };
-export {modelResCachetAdd};

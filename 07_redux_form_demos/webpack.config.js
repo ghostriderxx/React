@@ -6,6 +6,7 @@ module.exports = {
     mode: "development",
     entry: {
         "01_simple": './src/01_simple.js',
+        "02_syncValidation": './src/02_syncValidation.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -51,14 +52,24 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             filename: '01_simple.html',
-
-            // Required
+            chunks: ['01_simple'],
             inject: false,
             template: require('html-webpack-template'),
-            // template: 'node_modules/html-webpack-template/index.ejs',
-
-            // Optional
             appMountId: 'app'
-        })
+        }),
+        new HtmlWebpackPlugin({
+            filename: '02_syncValidation.html',
+            chunks: ['02_syncValidation'],
+            inject: false,
+            template: require('html-webpack-template'),
+            appMountId: 'app'
+        }),
+        new HtmlWebpackPlugin({
+            filename: '03_fieldLevelValidation.html',
+            chunks: ['03_fieldLevelValidation'],
+            inject: false,
+            template: require('html-webpack-template'),
+            appMountId: 'app'
+        }),
     ]
 };

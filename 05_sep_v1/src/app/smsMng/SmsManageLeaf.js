@@ -102,7 +102,7 @@ export default class SmsManageLeaf extends React.Component{
     }
 }
 
-const modelSmsManageLeaf = {
+export const modelSmsManageLeaf = {
     namespace : "smsManageLeaf",
     state: {
         smsds: [],
@@ -259,4 +259,3 @@ const modelSmsManageLeaf = {
         },
     },
 };
-export {modelSmsManageLeaf};

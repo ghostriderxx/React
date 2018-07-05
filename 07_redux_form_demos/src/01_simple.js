@@ -18,7 +18,7 @@ import {Field, reduxForm} from 'redux-form'
 
 // ## antd
 import 'antd/dist/antd.css';
-import {Spin, Input} from 'antd';
+import {Spin} from 'antd';
 
 // ## util
 import {delay} from "./utils";
@@ -39,9 +39,9 @@ class SimpleForm extends React.Component {
         super(props);
     }
 
-    render() {
-        const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+    render() {const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
         const labelStyle = {width:120, textAlign:"right"};
+
 
         const {handleSubmit, pristine, reset, submitting} = this.props;
 
