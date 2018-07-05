@@ -8,6 +8,7 @@ module.exports = {
         "01_simple": './src/01_simple.js',
         "02_syncValidation": './src/02_syncValidation.js',
         "03_fieldLevelValidation": './src/03_fieldLevelValidation.js',
+        "07_initializeFromState": "./src/07_initializeFromState.js",
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -68,6 +69,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: '03_fieldLevelValidation.html',
             chunks: ['03_fieldLevelValidation'],
+            inject: false,
+            template: require('html-webpack-template'),
+            appMountId: 'app'
+        }),
+        new HtmlWebpackPlugin({
+            filename: '03_fieldLevelValidation.html',
+            chunks: ['07_initializeFromState'],
             inject: false,
             template: require('html-webpack-template'),
             appMountId: 'app'
