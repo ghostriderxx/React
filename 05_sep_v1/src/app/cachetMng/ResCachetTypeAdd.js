@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect，
+    Rui,
 } from "../../framework/core";
 
 import {
@@ -26,7 +27,7 @@ import {
 //
 // @Form.create()
 @connect(({resCachetTypeAdd})=>({resCachetTypeAdd}))
-export default class ResCachetTypeAdd extends React.Component {
+export default class ResCachetTypeAdd extends Rui {
     constructor(props) {
         super(props);
     }

@@ -128,7 +128,11 @@ function createEffects(model) {
         });
     }
 
-  return { ...sagaEffects, put, take,invoke,openRES};
+    function closeRES(params) {
+        return invoke("lane/closeRes");
+    }
+
+  return { ...sagaEffects, put, take,invoke,openRES, closeRES};
 }
 
 function applyOnEffect(fns, effect, model, key) {

@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect,
+    Rui,
 } from "../../framework/core";
 import {
     request,
@@ -23,7 +24,7 @@ import {
 // UI
 //
 @connect(({resCachetTypeModify})=>({resCachetTypeModify}))
-export default class ResCachetTypeModify extends React.Component {
+export default class ResCachetTypeModify extends Rui {
     constructor(props) {
         super(props);
     }

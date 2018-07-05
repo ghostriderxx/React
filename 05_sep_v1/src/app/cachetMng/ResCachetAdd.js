@@ -6,7 +6,8 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect
+    connect,
+    Rui
 } from "../../framework/core";
 import {
     Buttons,
@@ -21,7 +22,7 @@ import {
 // UI
 //
 @connect(({resCachetAdd})=>({resCachetAdd}))
-export default class ResCachetAdd extends React.Component {
+export default class ResCachetAdd extends Rui {
     constructor(props) {
         super(props);
     }
@@ -59,16 +60,13 @@ export default class ResCachetAdd extends React.Component {
                     zgd,
                     zkd} = values;
 
-                this.props.dispatch({
-                    type: "resCachetAdd/saveCachetInfoAdd",
-                    payload: {
+                this.invoke("resCachetAdd/saveCachetInfoAdd",{
                         zbh,
                         zmc,
                         zlbbh,
                         sigzbh,
                         zgd,
                         zkd,
-                    }
                 });
             }
         });
@@ -94,7 +92,7 @@ export const modelResCachetAdd = {
 
     effects: {
         // 保存增加的章信息
-        * saveCachetInfoAdd({payload}, {call, put}) {
+        * saveCachetInfoAdd({payload}, {invoke, closeRES}) {
             const {
                 zbh,
                 zmc,
@@ -104,12 +102,10 @@ export const modelResCachetAdd = {
                 zkd
             } = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetInfoAdd?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}`);
+            yield request(`/sep/CachetServlet/saveCachetInfoAdd?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}`);
 
             // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         },
     },
 };
