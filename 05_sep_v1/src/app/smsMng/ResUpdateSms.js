@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from  "../../framework/core";
+import {connect,Rui} from  "../../framework/core";
 import {
     Buttons,
     Panel,
@@ -8,12 +8,11 @@ import {
 
 import {request,MsgBox} from "../../framework/util";
 
-@connect(({resUpdateSms})=>({resUpdateSms}))
-export  default  class  ResUpdateSms extends  React.Component{
+@connect("resUpdateSms")
+export  default  class  ResUpdateSms extends Rui{
     constructor(props){
         super(props);
     }
-
     render(){
         return (
             <Panel>
@@ -37,11 +36,8 @@ export  default  class  ResUpdateSms extends  React.Component{
 
     componentDidMount() {
         const mbbh = this.props.params.mbbh;
-        this.props.dispatch({
-            type: "resUpdateSms/initUpdateDs",
-            payload: {
+        this.props.invoke("initUpdateDs",{
                 mbbh
-            },
         });
     }
 
@@ -50,12 +46,9 @@ export  default  class  ResUpdateSms extends  React.Component{
         this.formObj.checkFormValues((err, values) => {
             if (!err) {
                 const ymbbh = this.props.resUpdateSms.smsds[0].ymbbh;
-                this.props.dispatch({
-                    type: "resUpdateSms/saveAddTemplate",
-                    payload: {
-                        values,
-                        ymbbh
-                    },
+                this.props.invoke("saveAddTemplate",{
+                    values,
+                    ymbbh
                 });
             }
         });
@@ -73,19 +66,16 @@ export const modelResUpdateSms = {
         smsds:[]
     },
     effects:{
-        * initUpdateDs ({payload}, {call, put}){
+        * initUpdateDs ({payload}, {invoke}){
             const {mbbh} = payload;
-            const data = yield call(request, `/sep/SmsServlet/initUpdateDs?mbbh=${mbbh}`);
+            const data = yield request(`/sep/SmsServlet/initUpdateDs?mbbh=${mbbh}`);
             const smsds = data.vds;
-            yield put({
-                type: "initUpdateDsSuccess",
-                payload:{
-                    smsds
-                }
+            yield invoke("initUpdateDsSuccess",{
+                smsds
             });
         },
 
-        * saveAddTemplate({payload}, {call, put}){
+        * saveAddTemplate({payload}, {invoke,closeRES}){
             const {
                 mbbh,
                 mbmc,
@@ -96,16 +86,10 @@ export const modelResUpdateSms = {
             } = payload.values;
 
             const ymbbh = payload.ymbbh;
-
-            yield call(request, `/sep/SmsServlet/saveUpdateSmsTemplate?mbbh=${mbbh}&ymbbh=${ymbbh}&mbmc=${mbmc}&mbnr=${mbnr}
+            yield request(`/sep/SmsServlet/saveUpdateSmsTemplate?mbbh=${mbbh}&ymbbh=${ymbbh}&mbmc=${mbmc}&mbnr=${mbnr}
                 &sql=${sql}&tfbz=${tfbz}&appid=${appid}`);
-
             MsgBox.show("修改成功");
-
-            // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         }
     },
     reducers:{
