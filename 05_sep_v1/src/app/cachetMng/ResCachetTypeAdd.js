@@ -6,7 +6,7 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect，
+    connect,
     Rui,
 } from "../../framework/core";
 
@@ -56,12 +56,9 @@ export default class ResCachetTypeAdd extends Rui {
             if (!err) {
                 const {zlbbh, zlbmc} = values;
 
-                this.props.dispatch({
-                    type: "resCachetTypeAdd/saveCachetTypeInfoAdd",
-                    payload: {
-                        zlbbh,
-                        zlbmc,
-                    }
+                this.invoke("resCachetTypeAdd/saveCachetTypeInfoAdd", {
+                    zlbbh,
+                    zlbmc,
                 });
             }
         });
@@ -86,17 +83,14 @@ export const modelResCachetTypeAdd = {
     },
 
     effects: {
-        * saveCachetTypeInfoAdd({payload}, {call, put}) {
+        * saveCachetTypeInfoAdd({payload}, {closeRES}) {
             const {zlbbh, zlbmc} = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+            yield request(`/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
 
-            yield call(MsgBox.show, "保存成功!")
+            yield MsgBox.show("保存成功!");
 
-            // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         },
     },
 };

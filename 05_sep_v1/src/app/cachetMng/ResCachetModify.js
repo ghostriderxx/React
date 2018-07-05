@@ -52,10 +52,7 @@ export default class ResCachetModify extends Rui {
     componentDidMount() {
         const zbh = this.props.params.zbh;
 
-        this.props.dispatch({
-            type: "resCachetModify/queryCachetInfo",
-            payload: zbh,
-        });
+        this.invoke("resCachetModify/queryCachetInfo", zbh);
     }
 
     saveCachetInfoModify = () => {
@@ -68,17 +65,14 @@ export default class ResCachetModify extends Rui {
                     zgd,
                     zkd} = values;
 
-                this.props.dispatch({
-                    type: "resCachetModify/saveCachetInfoModify",
-                    payload: {
-                        zbh,
-                        zmc,
-                        zlbbh,
-                        sigzbh,
-                        zgd,
-                        zkd,
-                        yzbh: zbh,
-                    }
+                this.invoke("resCachetModify/saveCachetInfoModify", {
+                    zbh,
+                    zmc,
+                    zlbbh,
+                    sigzbh,
+                    zgd,
+                    zkd,
+                    yzbh: zbh,
                 });
             }
         });
@@ -109,15 +103,13 @@ export const modelResCachetModify = {
     },
 
     effects: {
-        * queryCachetInfo({payload}, {call, put}) {
-            const data = yield call(request, `/sep/CachetServlet/queryCachetInfo?zbh=${payload}`);
-            yield put({
-                type: "queryCachetInfoSuccess",
-                payload: data.cachetds
-            });
+        * queryCachetInfo({payload}, {invoke}) {
+            const data = yield request(`/sep/CachetServlet/queryCachetInfo?zbh=${payload}`);
+
+            yield invoke("queryCachetInfoSuccess", data.cachetds);
         },
 
-        * saveCachetInfoModify({payload}, {call, put}) {
+        * saveCachetInfoModify({payload}, {closeRES}) {
             const {
                 zbh,
                 zmc,
@@ -128,12 +120,10 @@ export const modelResCachetModify = {
                 yzbh,
             } = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetInfoModify?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}&yzbh=${yzbh}`);
+            yield request(`/sep/CachetServlet/saveCachetInfoModify?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}&yzbh=${yzbh}`);
 
             // 关闭RES
-            yield put({
-                type: "lane/closeRes",
-            });
+            yield closeRES();
         },
     },
 };

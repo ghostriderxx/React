@@ -18,8 +18,6 @@ import {
     Form,
 } from "../../framework/taglib";
 
-
-
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
@@ -49,10 +47,7 @@ export default class ResCachetTypeModify extends Rui {
     componentDidMount() {
         const zlbbh = this.props.params.zlbbh;
 
-        this.props.dispatch({
-            type: "resCachetTypeModify/queryCachetTypeInfo",
-            payload: zlbbh,
-        });
+        this.invoke("resCachetTypeModify/queryCachetTypeInfo", zlbbh);
     }
 
     saveCachetTypeInfoModify = () => {
@@ -60,12 +55,9 @@ export default class ResCachetTypeModify extends Rui {
             if (!err) {
                 const {zlbbh, zlbmc} = values;
 
-                this.props.dispatch({
-                    type: "resCachetTypeModify/saveCachetTypeInfoModify",
-                    payload: {
-                        zlbbh,
-                        zlbmc,
-                    }
+                this.invoke("resCachetTypeModify/saveCachetTypeInfoModify", {
+                    zlbbh,
+                    zlbmc,
                 });
             }
         });
@@ -96,23 +88,17 @@ export const modelResCachetTypeModify = {
     },
 
     effects: {
-        * queryCachetTypeInfo({payload}, {call, put}) {
-            const data = yield call(request, `/sep/CachetServlet/queryCachetTypeInfo?zlbbh=${payload}`);
-            yield put({
-                type: "queryCachetTypeInfoSuccess",
-                payload: data.cachettypeds
-            });
+        * queryCachetTypeInfo({payload}, {invoke}) {
+            const data = yield request(`/sep/CachetServlet/queryCachetTypeInfo?zlbbh=${payload}`);
+            yield invoke("queryCachetTypeInfoSuccess", data.cachettypeds);
         },
 
-        * saveCachetTypeInfoModify({payload}, {call, put}) {
+        * saveCachetTypeInfoModify({payload}, {invoke, closeRES}) {
             const {zlbbh, zlbmc} = payload;
 
-            yield call(request, `/sep/CachetServlet/saveCachetTypeInfoModify?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+            yield request(`/sep/CachetServlet/saveCachetTypeInfoModify?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
 
-            yield put({
-                type: "lane/closeRes",
-            });
-
+            yield closeRES();
         },
     },
 };
