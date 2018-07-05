@@ -78,7 +78,7 @@ export default class ResCachetTypeModify extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelResCachetTypeModify = {
+export const modelResCachetTypeModify = {
     namespace: 'resCachetTypeModify',
 
     state: {
@@ -115,4 +115,3 @@ const modelResCachetTypeModify = {
         },
     },
 };
-export {modelResCachetTypeModify};

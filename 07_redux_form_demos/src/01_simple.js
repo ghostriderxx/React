@@ -39,99 +39,88 @@ class SimpleForm extends React.Component {
         super(props);
     }
 
-    render() {
+    render() {const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+        const labelStyle = {width:120, textAlign:"right"};
+
+
         const {handleSubmit, pristine, reset, submitting} = this.props;
 
         return (
-            <div style={{display: "flex", justifyContent:"center"}}>
+            <div style={{display: "flex", justifyContent: "center"}}>
                 <Spin spinning={submitting}>
                     <form onSubmit={handleSubmit}>
 
+                        <div style={rowStyle}>
+                            <label style={labelStyle}>First Name：</label>
+                            <Field
+                                name={"firstName"}
+                                component={"input"}
+                                type={"text"}
+                                placeholder="First Name"/>
+                        </div>
 
-                        <div>
-                            <label>First Name</label>
-                            <div>
-                                <Field
-                                    name="firstName"
-                                    component="input"
-                                    type="text"
-                                    placeholder="First Name"
-                                />
-                            </div>
+                        <div style={rowStyle}>
+                            <label style={labelStyle}>Last Name：</label>
+                            <Field
+                                name="lastName"
+                                component="input"
+                                type="text"
+                                placeholder="Last Name"/>
                         </div>
-                        <div>
-                            <label>Last Name</label>
-                            <div>
-                                <Field
-                                    name="lastName"
-                                    component="input"
-                                    type="text"
-                                    placeholder="Last Name"
-                                />
-                            </div>
+
+                        <div style={rowStyle}>
+                            <label style={labelStyle}>Email：</label>
+                            <Field
+                                name="email"
+                                component="input"
+                                type="email"
+                                placeholder="Email"/>
                         </div>
-                        <div>
-                            <label>Email</label>
-                            <div>
-                                <Field
-                                    name="email"
-                                    component="input"
-                                    type="email"
-                                    placeholder="Email"
-                                />
-                            </div>
+
+                        <div style={rowStyle}>
+                            <label style={labelStyle}>Sex：</label>
+
+                            <Field
+                                name="sex"
+                                component="input"
+                                type="radio"
+                                value="male"/>
+                            Male
+                            <Field
+                                name="sex"
+                                component="input"
+                                type="radio"
+                                value="female"/>
+                            Female
+
                         </div>
-                        <div>
-                            <label>Sex</label>
-                            <div>
-                                <label>
-                                    <Field
-                                        name="sex"
-                                        component="input"
-                                        type="radio"
-                                        value="male"
-                                    />{' '}
-                                    Male
-                                </label>
-                                <label>
-                                    <Field
-                                        name="sex"
-                                        component="input"
-                                        type="radio"
-                                        value="female"
-                                    />{' '}
-                                    Female
-                                </label>
-                            </div>
+
+                        <div style={rowStyle}>
+                            <label style={labelStyle}>Favorite Color：</label>
+                            <Field name="favoriteColor" component="select">
+                                <option/>
+                                <option value="ff0000">Red</option>
+                                <option value="00ff00">Green</option>
+                                <option value="0000ff">Blue</option>
+                            </Field>
                         </div>
-                        <div>
-                            <label>Favorite Color</label>
-                            <div>
-                                <Field name="favoriteColor" component="select">
-                                    <option/>
-                                    <option value="ff0000">Red</option>
-                                    <option value="00ff00">Green</option>
-                                    <option value="0000ff">Blue</option>
-                                </Field>
-                            </div>
+
+
+                        <div style={rowStyle}>
+                            <label style={labelStyle}>Employed：</label>
+                            <Field
+                                name="employed"
+                                id="employed"
+                                component="input"
+                                type="checkbox"/>
                         </div>
-                        <div>
-                            <label htmlFor="employed">Employed</label>
-                            <div>
-                                <Field
-                                    name="employed"
-                                    id="employed"
-                                    component="input"
-                                    type="checkbox"
-                                />
-                            </div>
+
+
+                        <div style={rowStyle}>
+                            <label style={labelStyle}>Notes：</label>
+                            <Field name="notes" component="textarea"/>
                         </div>
-                        <div>
-                            <label>Notes</label>
-                            <div>
-                                <Field name="notes" component="textarea"/>
-                            </div>
-                        </div>
+
                         <div>
                             <button type="submit" disabled={pristine || submitting}>
                                 Submit
@@ -141,7 +130,6 @@ class SimpleForm extends React.Component {
                             </button>
                         </div>
                     </form>
-
                 </Spin>
             </div>
         )

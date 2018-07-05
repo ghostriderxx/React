@@ -58,7 +58,6 @@ export const modelResAddSms = {
     },
     effects:{
         *saveAddTemplate({payload}, {call,put}){
-            console.dir(payload);
             const {
                 mbbh,
                 mbmc,

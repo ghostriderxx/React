@@ -91,7 +91,7 @@ export default class ResCachetModify extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelResCachetModify = {
+export const modelResCachetModify = {
     namespace: 'resCachetModify',
 
     state: {
@@ -136,4 +136,3 @@ const modelResCachetModify = {
         },
     },
 };
-export {modelResCachetModify};

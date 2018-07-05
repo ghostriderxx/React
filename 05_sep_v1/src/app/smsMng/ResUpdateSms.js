@@ -49,7 +49,7 @@ export  default  class  ResUpdateSms extends  React.Component{
 
         this.formObj.checkFormValues((err, values) => {
             if (!err) {
-                const ymbbh1 = this.props.resUpdateSms.smsds[0].ymbbh;
+                const ymbbh = this.props.resUpdateSms.smsds[0].ymbbh;
                 this.props.dispatch({
                     type: "resUpdateSms/saveAddTemplate",
                     payload: {

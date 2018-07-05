@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
-    "01_simple": "webpack-dev-server --open-page 01_simple.html"
+    "01_simple": "webpack-dev-server --open-page 01_simple.html",
+    "02_syncValidation": "webpack-dev-server --open-page 02_syncValidation.html",
+    "03_fieldLevelValidation": "webpack-dev-server --open-page 03_fieldLevelValidation.html",
+    "build": "webpack"
+
   },
   "author": "",
   "license": "ISC",

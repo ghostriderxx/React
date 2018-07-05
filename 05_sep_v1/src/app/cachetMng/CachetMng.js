@@ -145,7 +145,7 @@ export default class CachetMng extends React.Component {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-const modelCachetMng = {
+export const modelCachetMng = {
     namespace: 'cachetMng',
     state: {
         cachettypeds: [],
@@ -512,5 +512,3 @@ const modelCachetMng = {
         },
     },
 };
-export {modelCachetMng};
-
