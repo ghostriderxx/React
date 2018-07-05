@@ -73,7 +73,7 @@ export default class ResCachetAdd extends Rui {
     }
 
     cancel = () => {
-        this.props.closeRES();
+        this.closeRES();
     }
 }
 

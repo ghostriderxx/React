@@ -27,4 +27,8 @@ export default class Rui extends React.Component {
             params
         });
     }
+
+    closeRES(params) {
+        return this.invoke("lane/closeRes", params);
+    }
 }
