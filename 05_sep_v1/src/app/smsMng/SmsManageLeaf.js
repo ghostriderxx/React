@@ -10,7 +10,7 @@ import {
 
 import {MsgBox, request} from "../../framework/util";
 
-@connect(({smsManageLeaf})=>({smsManageLeaf}))
+@connect("smsManageLeaf")
 export default class SmsManageLeaf extends Rui{
     constructor(props){
         super(props);
@@ -47,7 +47,11 @@ export default class SmsManageLeaf extends Rui{
         );
     }
 
-    querySmsInfo = () =>{
+
+    synchFormData =()=>{
+        //没有getVlaue
+        //同步数据，之后要删除！！！！！！
+
         this.formCachetType.checkFormValues((err, values) => {
             if (!err) {
                 let {mbbh,mbmc} = values;
@@ -59,7 +63,28 @@ export default class SmsManageLeaf extends Rui{
                     mbmc = "";
                 }
 
-                this.invoke("smsManageLeaf/querySmsInfo",{
+                this.props.invoke("syncFormData",{
+                    mbbh,
+                    mbmc
+                })
+            }
+        });
+    }
+
+    querySmsInfo = () =>{
+        this.synchFormData();
+        this.formCachetType.checkFormValues((err, values) => {
+            if (!err) {
+                let {mbbh,mbmc} = values;
+                if (mbbh === undefined){
+                    mbbh = "";
+                }
+
+                if (mbmc === undefined){
+                    mbmc = "";
+                }
+
+                this.props.invoke("querySmsInfo",{
                     mbbh,
                     mbmc
                 })
@@ -68,15 +93,18 @@ export default class SmsManageLeaf extends Rui{
     }
 
     clear = () =>{
-        this.invoke("smsManageLeaf/clearSuccess");
+        this.props.invoke("clearSuccess");
 
     }
 
     xzSms = ()=>{
+
+        this.synchFormData();
+
         //为了获取当前form的value
         this.formCachetType.checkFormValues((err, values) => {
             const {mbbh,mbmc} = values;
-            this.invoke("smsManageLeaf/resAddSms",{
+            this.props.invoke("resAddSms",{
                 mbbh,
                 mbmc
             });
@@ -84,9 +112,11 @@ export default class SmsManageLeaf extends Rui{
     }
 
     xgSms = ()=>{
+        this.synchFormData();
+
         this.formCachetType.checkFormValues((err, values) => {
             const {mbbh,mbmc} = values;
-            this.invoke("smsManageLeaf/resUpdateSms",{
+            this.props.invoke("resUpdateSms",{
                 mbbh,
                 mbmc
             });
@@ -94,7 +124,10 @@ export default class SmsManageLeaf extends Rui{
     }
 
     scSms = ()=>{
-        this.invoke("smsManageLeaf/deleteSms");
+
+        this.synchFormData();
+
+        this.props.invoke("deleteSms");
     }
 }
 
@@ -106,137 +139,79 @@ export const modelSmsManageLeaf = {
         mbmc:'',
     },
     effects:{
-        * querySmsInfo({payload}, {call,put}){
-            const {mbbh,mbmc} = payload;
-            const vdo = yield call(request, `/sep/SmsServlet/querySmsInfo?mbbh=${mbbh}&mbmc=${mbmc}`);
+        * querySmsInfo({payload}, {invoke,select}){
+
+            const mbbh = yield select(state => state["smsManageLeaf"].mbbh);
+            const mbmc = yield select(state => state["smsManageLeaf"].mbmc);
+            const vdo = yield request(`/sep/SmsServlet/querySmsInfo?mbbh=${mbbh}&mbmc=${mbmc}`);
             const {vds} = vdo;
-            yield put({
-                type: "querySmsInfoSuccess",
-                payload:{
-                    vds,
-                    mbbh,
-                    mbmc
-                }
+            yield invoke("querySmsInfoSuccess",{
+                vds
             });
         },
 
-        *resAddSms({payload}, {call,put}){
-            // openRES
-            yield yield put({
-                type: "lane/openRes",
-                payload: {
-                    componentPath: "app/smsMng/ResAddSms.js",
-                    width: 600,
-                    title: "新增短信模板"
-                }
-            });
-
+        *resAddSms({payload}, {invoke,openRES}){
+            yield yield openRES("新增短信模板","app/smsMng/ResAddSms.js",600);// openRES
             const {mbbh} = payload;
-            // RES关闭后的回调函数; 平面化代码结构
-            yield put({
-                type: "smsManageLeaf/querySmsInfo",
-                payload :{
-                    mbbh
-                }
-            });
+            yield invoke("querySmsInfo",{mbbh});// RES关闭后的回调函数; 平面化代码结构
         },
 
         // 修改章类别信息
-        * resUpdateSms({payload}, {call, put, select}) {
-            const rowNum = yield yield put({
-                type: "smsinfo/gridGetCurrentRowNumber"
-            });
+        * resUpdateSms({payload}, {invoke,openRES}) {
+            const rowNum = yield yield invoke("smsinfo/gridGetCurrentRowNumber");
             if(rowNum == 0){
                 alert("请先选中一行！");
                 return;
             }
-
-
-            // mbbh
-            const mbbhResult = yield yield put({ // 用消息手段操作Grid;
-                type: "smsinfo/gridGetCellValue",
-                payload: {
+            const mbbh = yield yield invoke("smsinfo/gridGetCellValue",{ // 用消息手段操作Grid;
                     rowNumber: rowNum,
                     columnName: "mbbh",
-                }
+            });
+            yield yield openRES("修改短信模板","app/smsMng/ResUpdateSms.js",600,600,{
+                "mbbh":mbbh
             });
 
-            // openRES
-            yield yield put({
-                type: "lane/openRes",
-                payload: {
-                    componentPath: "app/smsMng/ResUpdateSms.js",
-                    width: 600,
-                    title: "修改短信模板",
-                    params:{
-                        "mbbh":mbbhResult
-                    }
-                }
-            });
-
-            const {mbbh,mbmc} = payload;
-            // RES关闭后的回调函数; 平面化代码结构
-            yield put({
-                type: "querySmsInfo",
-                payload:{
-                    mbbh,
-                    mbmc
-                }
-            });
+            yield invoke("querySmsInfo");
         },
 
-        * deleteSms({payload}, {call, put, select}){
-            const rowNum = yield yield put({
-                type: "smsinfo/gridGetCurrentRowNumber"
-            });
+        * deleteSms({payload}, {invoke,openRES}){
+            const rowNum = yield yield invoke("smsinfo/gridGetCurrentRowNumber");
             if(rowNum == 0){
                 alert("请先选中一行！");
                 return;
             }
-
-            // mbbh
-            const mbbhResult = yield yield put({ // 用消息手段操作Grid;
-                type: "smsinfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNum,
-                    columnName: "mbbh",
-                }
+            const mbbhResult = yield yield invoke("smsinfo/gridGetCellValue",{ // 用消息手段操作Grid;
+                rowNumber: rowNum,
+                columnName: "mbbh",
             });
-
-            const mbmcResult = yield yield put({ // 用消息手段操作Grid;
-                type: "smsinfo/gridGetCellValue",
-                payload: {
-                    rowNumber: rowNum,
-                    columnName: "mbmc",
-                }
+            const mbmcResult = yield yield invoke("smsinfo/gridGetCellValue",{ // 用消息手段操作Grid;
+                rowNumber: rowNum,
+                columnName: "mbmc",
             });
-
             if(!confirm("您确认要删除【"+mbmcResult+"】吗？")){
                 return;
             }
-
-            // 删除
-            yield call(request, `/sep/SmsServlet/delSmsInfo?mbbh=${mbbhResult}`);
+            yield request(`/sep/SmsServlet/delSmsInfo?mbbh=${mbbhResult}`);
             MsgBox.show("删除成功!");
 
-            // 重新查询
-            const  mbbh = yield select(state => state["smsManageLeaf"].mbbh);
 
-            yield put({
-                type: "querySmsInfo",
-                payload: {
-                    mbbh
-                }
-            });
+            yield invoke("querySmsInfo");
         }
     },
     reducers:{
+
+        syncFormData(state, {payload}){
+            return{
+                ...state,
+                mbbh:payload.mbbh,
+                mbmc:payload.mbmc,
+            }
+        },
+
         querySmsInfoSuccess(state, {payload}) {
             return {
                 ...state,
-                smsds: payload.vds,
-                mbbh: payload.mbbh,
-                mbmc : payload.mbmc
+                smsds: payload.vds
             };
         },
         clearSuccess(state, {payload}){
