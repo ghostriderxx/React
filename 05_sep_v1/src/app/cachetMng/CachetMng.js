@@ -90,7 +90,12 @@ export default class CachetMng extends Rui {
         )
     }
 
-    // onXXX
+    // 查询章类别信息
+    queryCachetTypeList = () => {
+        this.props.invoke("queryCachetTypeList");
+    }
+
+    // 点击章类别信息
     cachetTypeGridClick = (record) =>{
         this.props.invoke("cachetTypeGridClick", record.zlbbh);
     }

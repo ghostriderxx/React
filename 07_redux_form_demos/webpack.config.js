@@ -74,7 +74,7 @@ module.exports = {
             appMountId: 'app'
         }),
         new HtmlWebpackPlugin({
-            filename: '03_fieldLevelValidation.html',
+            filename: '07_initializeFromState.html',
             chunks: ['07_initializeFromState'],
             inject: false,
             template: require('html-webpack-template'),
