@@ -98,7 +98,7 @@ export default class SmsManageLeaf extends Rui{
     }
 }
 
-const modelSmsManageLeaf = {
+export const modelSmsManageLeaf = {
     namespace : "smsManageLeaf",
     state: {
         smsds: [],
@@ -248,4 +248,3 @@ const modelSmsManageLeaf = {
         },
     },
 };
-export {modelSmsManageLeaf};
