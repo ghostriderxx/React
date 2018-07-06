@@ -34,6 +34,8 @@ import {modelResCachetModify} from "./app/cachetMng/ResCachetModify"
 import {modelResCachetTypeAdd} from "./app/cachetMng/ResCachetTypeAdd"
 import {modelResCachetTypeModify} from "./app/cachetMng/ResCachetTypeModify"
 // ##sms
+import {modelSmsMng} from "./app/smsMng/SmsMng";
+
 import {modelSmsManageLeaf} from "./app/smsMng/SmsManageLeaf"
 import {modelResAddSms} from "./app/smsMng/ResAddSms"
 import {modelResUpdateSms} from  "./app/smsMng/ResUpdateSms"
@@ -81,6 +83,7 @@ app.model(modelResCachetTypeAdd);
 app.model(modelResCachetTypeModify);
 
 //短信模板
+app.model(modelSmsMng);
 app.model(modelSmsManageLeaf);
 app.model(modelResAddSms);
 app.model(modelResUpdateSms);
