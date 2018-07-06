@@ -19,6 +19,9 @@ import {Field, reduxForm, submit, SubmissionError} from 'redux-form'
 // ## util
 import {delay} from "./utils";
 
+// ## antd
+import 'antd/dist/antd.css';
+import {Spin, Input} from 'antd';
 
 /////////////////////////////////////////////////////////////////////////////
 // Form Field
@@ -28,9 +31,9 @@ const labelStyle = {width: 120, textAlign: "right"};
 
 const renderField = ({input, label, type, meta: {touched, error}}) => (
     <div style={rowStyle}>
-        <label style={labelStyle}>{label}</label>
+        <label style={labelStyle}>{label}：</label>
         <div>
-            <input {...input} placeholder={label} type={type}/>
+            <Input {...input} placeholder={label} type={type}/>
             {touched && error && <span>{error}</span>}
         </div>
     </div>
@@ -47,15 +50,15 @@ const renderField = ({input, label, type, meta: {touched, error}}) => (
             if (!['john', 'paul', 'george', 'ringo'].includes(values.username)) {
                 throw new SubmissionError({
                     username: 'User does not exist',
-                    _error: 'Login failed!'
+                    _error: '登录失败!'
                 })
             } else if (values.password !== 'redux-form') {
                 throw new SubmissionError({
                     password: 'Wrong password',
-                    _error: 'Login failed!'
+                    _error: '登录失败!'
                 })
             } else {
-                window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+                alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
             }
         })
     }
@@ -66,27 +69,27 @@ class RemoteSubmitForm extends React.Component {
     }
 
     render() {
-        const {error, handleSubmit} = this.props;
+        const {error, handleSubmit, submitting} = this.props;
         return (
-            <form onSubmit={handleSubmit}>
-                <Field
-                    name="username"
-                    type="text"
-                    component={renderField}
-                    label="Username"
-                />
-                <Field
-                    name="password"
-                    type="password"
-                    component={renderField}
-                    label="Password"
-                />
-                {error && <strong>{error}</strong>}
-                <div>
-                    No submit button in the form. The submit button below is a separate
-                    unlinked component.
-                </div>
-            </form>
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <Spin spinning={submitting}>
+                    <form onSubmit={handleSubmit}>
+                        <Field
+                            name="username"
+                            type="text"
+                            component={renderField}
+                            label="Username"
+                        />
+                        <Field
+                            name="password"
+                            type="password"
+                            component={renderField}
+                            label="Password"
+                        />
+                        {error && <div style={{textAlign:"center"}}>{error}</div>}
+                    </form>
+                </Spin>
+            </div>
         )
     }
 }

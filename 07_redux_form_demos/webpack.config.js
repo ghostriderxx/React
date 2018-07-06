@@ -9,6 +9,8 @@ module.exports = {
         "02_syncValidation": './src/02_syncValidation.js',
         "03_fieldLevelValidation": './src/03_fieldLevelValidation.js',
         "07_initializeFromState": "./src/07_initializeFromState.js",
+        "09_remoteSubmit": "./src/09_remoteSubmit.js",
+        "10_normalizing": "./src/10_normalizing.js",
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -76,6 +78,20 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: '07_initializeFromState.html',
             chunks: ['07_initializeFromState'],
+            inject: false,
+            template: require('html-webpack-template'),
+            appMountId: 'app'
+        }),
+        new HtmlWebpackPlugin({
+            filename: '09_remoteSubmit.html',
+            chunks: ['09_remoteSubmit'],
+            inject: false,
+            template: require('html-webpack-template'),
+            appMountId: 'app'
+        }),
+        new HtmlWebpackPlugin({
+            filename: '10_normalizing.html',
+            chunks: ['10_normalizing'],
             inject: false,
             template: require('html-webpack-template'),
             appMountId: 'app'
