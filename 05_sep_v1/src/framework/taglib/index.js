@@ -6,8 +6,8 @@ import LaneContainer from "./lane/LaneContainer";
 import Grid from "./grid/Grid";
 
 import Tab from "./tab/Tab";
-import Buttons from "./button/Buttons"
-import Form from "./form/Form"
+import Buttons from "./button/Buttons";
+import Form from "./form/Form";
 
 export {
     Grid,
