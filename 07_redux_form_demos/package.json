@@ -9,6 +9,7 @@
     "07_initializeFromState": "webpack-dev-server --open-page 07_initializeFromState.html",
     "09_remoteSubmit": "webpack-dev-server --open-page 09_remoteSubmit.html",
     "10_normalizing": "webpack-dev-server --open-page 10_normalizing.html",
+    "12_selectingFormValues": "webpack-dev-server --open-page 12_selectingFormValues.html",
     "build": "webpack"
   },
   "author": "",

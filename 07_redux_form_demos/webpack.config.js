@@ -11,6 +11,7 @@ module.exports = {
         "07_initializeFromState": "./src/07_initializeFromState.js",
         "09_remoteSubmit": "./src/09_remoteSubmit.js",
         "10_normalizing": "./src/10_normalizing.js",
+        "12_selectingFormValues": "./src/12_selectingFormValues.js",
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -92,6 +93,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: '10_normalizing.html',
             chunks: ['10_normalizing'],
+            inject: false,
+            template: require('html-webpack-template'),
+            appMountId: 'app'
+        }),
+        new HtmlWebpackPlugin({
+            filename: '12_selectingFormValues.html',
+            chunks: ['12_selectingFormValues'],
             inject: false,
             template: require('html-webpack-template'),
             appMountId: 'app'
