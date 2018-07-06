@@ -58,7 +58,7 @@ const modelApp = {
             id: "smsMng",
             text: "短信模板管理",
             routePath: "/smsMng",
-            componentPath: "app/smsMng/SmsManageLeaf.js"
+            componentPath: "app/smsMng/SmsMng.js"
         },{
             id: "cacheMng",
             text: "章管理",

@@ -8,6 +8,7 @@ import Grid from "./grid/Grid";
 import Tab from "./tab/Tab";
 import Buttons from "./button/Buttons";
 import Form from "./form/Form";
+import Tree from "./tree/Tree";
 
 export {
     Grid,
@@ -20,4 +21,5 @@ export {
     Tab,
     Buttons,
     Form,
+    Tree
 }
