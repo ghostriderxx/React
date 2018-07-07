@@ -10,7 +10,9 @@ import {
     Rui,
 } from "../../framework/core";
 import {
+    MsgBox,
     request,
+    URL,
 } from "../../framework/util";
 import {
     Panel,
@@ -30,7 +32,7 @@ export default class ResCachetTypeModify extends Rui {
     render(){
         return (
             <Panel>
-                <Form wrappedComponentRef={(inst) => this.formCachetType = inst}
+                <Form name={"formCachetTypeModify"}
                       dataSource={this.props.resCachetTypeModify.cachettypeds}>
                     <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
                     <Form.StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"请填写章类别名称!"}/>
@@ -46,25 +48,15 @@ export default class ResCachetTypeModify extends Rui {
 
     componentDidMount() {
         const zlbbh = this.props.params.zlbbh;
-
         this.props.invoke("queryCachetTypeInfo", zlbbh);
     }
 
     saveCachetTypeInfoModify = () => {
-        this.formCachetType.checkFormValues((err, values) => {
-            if (!err) {
-                const {zlbbh, zlbmc} = values;
-
-                this.props.invoke("saveCachetTypeInfoModify", {
-                    zlbbh,
-                    zlbmc,
-                });
-            }
-        });
+        this.props.invoke("saveCachetTypeInfoModify");
     }
 
     cancel = () => {
-        this.props.closeRES();
+        this.props.invoke("cancel");
     }
 }
 
@@ -88,17 +80,40 @@ export const modelResCachetTypeModify = {
     },
 
     effects: {
-        * queryCachetTypeInfo({payload}, {invoke}) {
-            const data = yield request(`/sep/CachetServlet/queryCachetTypeInfo?zlbbh=${payload}`);
-            yield invoke("queryCachetTypeInfoSuccess", data.cachettypeds);
+        * queryCachetTypeInfo({payload}, RUI) {
+
+            const url = new URL("/sep/CachetServlet/queryCachetTypeInfo");
+
+            url.addPara("zlbbh", payload);
+
+            const data = yield request(url.getURLString());
+
+            yield RUI.invoke("queryCachetTypeInfoSuccess", data.cachettypeds);
         },
 
-        * saveCachetTypeInfoModify({payload}, {invoke, closeRES}) {
-            const {zlbbh, zlbmc} = payload;
+        * saveCachetTypeInfoModify({payload}, RUI) {
 
-            yield request(`/sep/CachetServlet/saveCachetTypeInfoModify?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+            const form = RUI.getObject("formCachetTypeModify");
 
-            yield closeRES();
+            const result = yield form.checkFormValues();
+
+            if(result){
+                const url = new URL("/sep/CachetServlet/saveCachetTypeInfoModify");
+
+                const formValues = yield form.getFormValues();
+
+                url.addForm(formValues);
+
+                yield request(url.getURLString());
+
+                MsgBox.show("保存成功!");
+
+                yield RUI.closeRES();
+            }
+        },
+
+        * cancel({payload}, RUI) {
+            yield RUI.closeRES();
         },
     },
 };

@@ -35,7 +35,7 @@ export default class ResCachetTypeAdd extends Rui {
     render(){
         return (
             <Panel>
-                <Form name={"formCachetType"}>
+                <Form name={"formCachetTypeAdd"}>
                     <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
                     <Form.StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"章类别名称!"}/>
                 </Form>
@@ -76,7 +76,7 @@ export const modelResCachetTypeAdd = {
     effects: {
         * saveCachetTypeInfoAdd({payload}, RUI) {
 
-            const form = RUI.getObject("formCachetType");
+            const form = RUI.getObject("formCachetTypeAdd");
 
             const result = yield form.checkFormValues();
 

@@ -56,6 +56,9 @@ export default class FormWrapper extends React.Component{
     render(){
         const WrappedForm = reduxForm({
             form: `${this.props.name}`,
+            // initialValues: this.props.dataSource && this.props.dataSource.length ? this.props.dataSource[0] : undefined,
+            // enableReinitialize: true,
+            // keepDirtyOnReinitialize: true,
             onSubmit: (values) => {
                 return delay(2000).then(() => {
                     alert(JSON.stringify(values))
@@ -65,7 +68,7 @@ export default class FormWrapper extends React.Component{
 
         return (
             <div>
-                <WrappedForm {...this.props}/>
+                <WrappedForm initialValues={{zlbbh: "123", zlbmc:"123"}} {...this.props}/>
             </div>
         );
     }
