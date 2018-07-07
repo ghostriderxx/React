@@ -11,6 +11,9 @@ import {
     reaperLoading
 } from './framework/core';
 
+// 使用redux-form管理form表单；
+import {reducer as reduxFormReducer} from 'redux-form'
+
 import {
     LaneContainer
 } from "./framework/taglib";
@@ -42,8 +45,13 @@ import {modelResUpdateSms} from  "./app/smsMng/ResUpdateSms"
 
 
 
+const {extraReducers, onEffect} = reaperLoading();
 const app = reaper({
-    ...reaperLoading(),
+    extraReducers: {
+        form: reduxFormReducer,
+        ...extraReducers
+    },
+    onEffect,
     onError(e) {
         if(e instanceof BusinessException){ // BusinessExcetpion
             alert(e.message);

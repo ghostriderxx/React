@@ -263,7 +263,7 @@ export const modelCachetMng = {
         // 新增章类别信息
         * cachetTypeAdd({payload}, {invoke, openRES}) {
             // openRES
-            yield yield openRES("新增章类别信息", "app/cachetMng/ResCachetTypeAdd.js", 600);
+            const params = yield openRES("新增章类别信息", "app/cachetMng/ResCachetTypeAdd.js", 600);
 
             // RES关闭后的回调函数;
             yield invoke("queryCachetTypeList");
@@ -284,7 +284,7 @@ export const modelCachetMng = {
             });
 
             // openRES
-            yield yield openRES("修改章类别信息", "app/cachetMng/ResCachetTypeModify.js", 600, 600, {
+            yield openRES("修改章类别信息", "app/cachetMng/ResCachetTypeModify.js", 600, 600, {
                 zlbbh,
             });
 
@@ -348,7 +348,7 @@ export const modelCachetMng = {
                 columnName: "zlbbh",
             });
 
-            yield yield openRES("新增章信息", "app/cachetMng/ResCachetAdd.js", 600, 600, {
+            yield openRES("新增章信息", "app/cachetMng/ResCachetAdd.js", 600, 600, {
                 zlbbh
             });
 
@@ -371,7 +371,7 @@ export const modelCachetMng = {
             });
 
             // openRES
-            yield yield openRES("修改章信息", "app/cachetMng/ResCachetModify.js", 600, 600, {
+            yield openRES("修改章信息", "app/cachetMng/ResCachetModify.js", 600, 600, {
                 zbh
             });
 

@@ -6,7 +6,7 @@ import React from 'react';
 
 // ## PropTypes
 import PropTypes from 'prop-types';
-
+import {Field, reduxForm} from 'redux-form'
 // ## Antd
 import { Input } from 'antd';
 
@@ -16,9 +16,13 @@ export default class NumberInput extends React.Component{
     }
 
     render(){
-        const {name, labelValue, required, requiredMessage, initialValue, ...rest} = this.props;
+        const {name, initialValue} = this.props;
 
-        return <Input {...rest} type="number" />;
+        return <Field
+            name={name}
+            type="number"
+            component={"input"}
+        />
     }
 }
 

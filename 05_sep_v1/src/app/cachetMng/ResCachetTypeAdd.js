@@ -18,9 +18,9 @@ import {
 
 import {
     request,
-    MsgBox
+    MsgBox,
+    URL,
 } from "../../framework/util";
-
 
 /////////////////////////////////////////////////////////////////////////////
 // UI
@@ -35,7 +35,7 @@ export default class ResCachetTypeAdd extends Rui {
     render(){
         return (
             <Panel>
-                <Form wrappedComponentRef={(inst) => this.formCachetType = inst}>
+                <Form name={"formCachetType"}>
                     <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
                     <Form.StringInput name={"zlbmc"} labelValue={"章类别名称"} required={true} requiredMessage={"章类别名称!"}/>
                 </Form>
@@ -52,20 +52,11 @@ export default class ResCachetTypeAdd extends Rui {
     }
 
     saveCachetTypeInfoAdd = () => {
-        this.formCachetType.checkFormValues((err, values) => {
-            if (!err) {
-                const {zlbbh, zlbmc} = values;
-
-                this.props.invoke("saveCachetTypeInfoAdd", {
-                    zlbbh,
-                    zlbmc,
-                });
-            }
-        });
+        this.props.invoke("saveCachetTypeInfoAdd");
     }
 
     cancel = () => {
-        this.props.closeRES();
+        this.props.invoke("cancel");
     }
 }
 
@@ -83,14 +74,29 @@ export const modelResCachetTypeAdd = {
     },
 
     effects: {
-        * saveCachetTypeInfoAdd({payload}, {closeRES}) {
-            const {zlbbh, zlbmc} = payload;
+        * saveCachetTypeInfoAdd({payload}, RUI) {
 
-            yield request(`/sep/CachetServlet/saveCachetTypeInfoAdd?zlbbh=${zlbbh}&zlbmc=${zlbmc}`);
+            const form = RUI.getObject("formCachetType");
 
-            yield MsgBox.show("保存成功!");
+            const result = yield form.checkFormValues();
 
-            yield closeRES();
+            if(result){
+                const url = new URL("/sep/CachetServlet/saveCachetTypeInfoAdd");
+
+                const formValues = yield form.getFormValues();
+
+                url.addForm(formValues);
+
+                yield request(url.getURLString());
+
+                MsgBox.show("保存成功!");
+
+                yield RUI.closeRES(formValues.zlbbh);
+            }
+        },
+
+        * cancel({payload}, RUI) {
+            yield RUI.closeRES();
         },
     },
 };

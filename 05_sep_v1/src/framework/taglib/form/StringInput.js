@@ -7,8 +7,15 @@ import React from 'react';
 // ## PropTypes
 import PropTypes from 'prop-types';
 
+import {Field, reduxForm} from 'redux-form'
+
 // ## Antd
 import { Input } from 'antd';
+
+
+
+const required = value => (value || typeof value === 'number' ? undefined : 'Required');
+
 
 export default class StringInput extends React.Component{
     constructor(props){
@@ -16,9 +23,27 @@ export default class StringInput extends React.Component{
     }
 
     render(){
-        const {name, labelValue, required, requiredMessage, initialValue, ...rest} = this.props;
 
-        return <Input {...rest} type="text" />;
+        const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+        const labelStyle = {width:120, textAlign:"right"};
+
+        const renderField = ({input, labelValue, type, meta: {touched, error, warning}}) => (
+            <div style={rowStyle}>
+                <label style={labelStyle}>{labelValue}：</label>
+                <Input {...input} placeholder={labelValue} type={type}/>
+            </div>
+        );
+
+
+        const {name, labelValue, initialValue} = this.props;
+
+        return <Field
+            name={name}
+            type="text"
+            component={renderField}
+            labelValue={labelValue}
+            validate={[required]}
+        />
     }
 }
 
