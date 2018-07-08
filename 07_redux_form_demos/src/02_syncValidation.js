@@ -61,24 +61,6 @@ const warn = values => {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Form Field
-//
-const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
-const labelStyle = {width:120, textAlign:"right"};
-
-const renderField = ({input, label, type, meta: {touched, error, warning}}) => (
-    <div style={rowStyle}>
-        <label style={labelStyle}>{label}：</label>
-        <div>
-            <Input {...input} placeholder={label} type={type}/>
-            {touched &&
-            ((error && <span>{error}</span>) ||
-                (warning && <span>{warning}</span>))}
-        </div>
-    </div>
-);
-
-/////////////////////////////////////////////////////////////////////////////
 // Form
 //
 @reduxForm({
@@ -108,10 +90,16 @@ class SyncValidationForm extends React.Component {
                             component={renderField}
                             label="Username"
                         />
+
                         <Field name="age" type="number" component={renderField} label="Age"/>
-                        <div>
-                            <button type="submit" disabled={submitting}>Submit</button>
-                            <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+
+                        <div style={{textAlign: "center"}}>
+                            <button type="submit" disabled={submitting}>
+                                Submit
+                            </button>
+                            <button type="button" disabled={pristine || submitting} onClick={reset}>
+                                Clear Values
+                            </button>
                         </div>
                     </form>
                 </Spin>
@@ -119,6 +107,24 @@ class SyncValidationForm extends React.Component {
         )
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// Form Field
+//
+const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+const labelStyle = {width:120, textAlign:"right"};
+
+const renderField = ({input, label, type, meta: {touched, error, warning}}) => (
+    <div style={rowStyle}>
+        <label style={labelStyle}>{label}：</label>
+        <div>
+            <Input {...input} placeholder={label} type={type} style={{width: 250}}/>
+            {touched &&
+            ((error && <div>{error}</div>) ||
+                (warning && <div>{warning}</div>))}
+        </div>
+    </div>
+);
 
 /////////////////////////////////////////////////////////////////////////////
 // Start

@@ -39,9 +39,9 @@ class SimpleForm extends React.Component {
         super(props);
     }
 
-    render() {const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+    render() {
+        const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
         const labelStyle = {width:120, textAlign:"right"};
-
 
         const {handleSubmit, pristine, reset, submitting} = this.props;
 
@@ -122,8 +122,12 @@ class SimpleForm extends React.Component {
                         </div>
 
                         <div>
-                            <button type="submit" disabled={pristine || submitting}>Submit</button>
-                            <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+                            <button type="submit" disabled={pristine || submitting}>
+                                Submit
+                            </button>
+                            <button type="button" disabled={pristine || submitting} onClick={reset}>
+                                Clear Values
+                            </button>
                         </div>
                     </form>
                 </Spin>
