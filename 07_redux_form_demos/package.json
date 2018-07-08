@@ -6,6 +6,7 @@
     "01_simple": "webpack-dev-server --open-page 01_simple.html",
     "02_syncValidation": "webpack-dev-server --open-page 02_syncValidation.html",
     "03_fieldLevelValidation": "webpack-dev-server --open-page 03_fieldLevelValidation.html",
+    "04_submitValidation": "webpack-dev-server --open-page 04_submitValidation.html",
     "07_initializeFromState": "webpack-dev-server --open-page 07_initializeFromState.html",
     "09_remoteSubmit": "webpack-dev-server --open-page 09_remoteSubmit.html",
     "10_normalizing": "webpack-dev-server --open-page 10_normalizing.html",

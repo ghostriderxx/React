@@ -8,6 +8,7 @@ module.exports = {
         "01_simple": './src/01_simple.js',
         "02_syncValidation": './src/02_syncValidation.js',
         "03_fieldLevelValidation": './src/03_fieldLevelValidation.js',
+        "04_submitValidation": './src/04_submitValidation.js',
         "07_initializeFromState": "./src/07_initializeFromState.js",
         "09_remoteSubmit": "./src/09_remoteSubmit.js",
         "10_normalizing": "./src/10_normalizing.js",
@@ -72,6 +73,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: '03_fieldLevelValidation.html',
             chunks: ['03_fieldLevelValidation'],
+            inject: false,
+            template: require('html-webpack-template'),
+            appMountId: 'app'
+        }),
+        new HtmlWebpackPlugin({
+            filename: '04_submitValidation.html',
+            chunks: ['04_submitValidation'],
             inject: false,
             template: require('html-webpack-template'),
             appMountId: 'app'
