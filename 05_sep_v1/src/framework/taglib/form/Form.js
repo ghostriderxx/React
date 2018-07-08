@@ -29,18 +29,7 @@ class Form extends React.Component{
         const {handleSubmit, pristine, reset, submitting} = this.props;
 
         return (
-            <form>
-                {console.log(this.props.children.length)}
-                {
-                    React.Children.map(this.props.children, (formItem, i) => {
-
-                        const {name, labelValue, required, requiredMessage, initialValue} = formItem.props;
-
-                        return (
-                            formItem
-                        );
-                    })
-                }
+            <form {...this.props}>
             </form>
         );
     }
@@ -53,22 +42,20 @@ export default class FormWrapper extends React.Component{
         super(props);
     }
 
-    render(){
-        const WrappedForm = reduxForm({
+    componentWillMount(){
+        this.WrappedForm = reduxForm({
             form: `${this.props.name}`,
-            // initialValues: this.props.dataSource && this.props.dataSource.length ? this.props.dataSource[0] : undefined,
-            // enableReinitialize: true,
-            // keepDirtyOnReinitialize: true,
-            onSubmit: (values) => {
-                return delay(2000).then(() => {
-                    alert(JSON.stringify(values))
-                });
-            }
         })(Form);
+    }
+
+    render(){
+        const WrappedForm = this.WrappedForm;
 
         return (
             <div>
-                <WrappedForm initialValues={{zlbbh: "123", zlbmc:"123"}} {...this.props}/>
+                <WrappedForm initialValues={
+                    this.props.dataSource && this.props.dataSource.length ? this.props.dataSource[0] : undefined
+                } {...this.props}/>
             </div>
         );
     }
