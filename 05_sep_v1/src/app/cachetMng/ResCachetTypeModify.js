@@ -108,7 +108,7 @@ export const modelResCachetTypeModify = {
 
                 MsgBox.show("保存成功!");
 
-                yield RUI.closeRES();
+                yield RUI.closeRES(formValues.zlbbh);
             }
         },
 

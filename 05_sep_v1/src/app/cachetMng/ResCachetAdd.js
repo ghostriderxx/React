@@ -32,7 +32,6 @@ export default class ResCachetAdd extends Rui {
     render(){
         return (
             <Panel>
-                {console.log("yyy",this.props.resCachetAdd.cachetds)}
                 <Form name="formCachetAdd" dataSource={this.props.resCachetAdd.cachetds}>
                     <Form.StringInput name={"zbh"} labelValue={"章编号"} required={true} requiredMessage={"请填写章编号!"}/>
                     <Form.StringInput name={"zmc"} labelValue={"章名称"} required={true} requiredMessage={"请填写章名称!"}/>
