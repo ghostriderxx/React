@@ -27,10 +27,10 @@ export default class StringInput extends React.Component{
         const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
         const labelStyle = {width:120, textAlign:"right"};
 
-        const renderField = ({input, labelValue, type, meta: {touched, error, warning}}) => (
+        const renderField = ({input, labelValue, meta: {touched, error, warning}}) => (
             <div style={rowStyle}>
                 <label style={labelStyle}>{labelValue}：</label>
-                <Input {...input} placeholder={labelValue} type={type}/>
+                <Input {...input} placeholder={labelValue}/>
             </div>
         );
 

@@ -15,7 +15,9 @@ import {
     Panel,
 } from "../../framework/taglib";
 import {
+    MsgBox,
     request,
+    URL,
 } from "../../framework/util";
 
 /////////////////////////////////////////////////////////////////////////////
@@ -30,10 +32,11 @@ export default class ResCachetAdd extends Rui {
     render(){
         return (
             <Panel>
-                <Form wrappedComponentRef={(inst) => this.formCachet = inst}>
+                {console.log("yyy",this.props.resCachetAdd.cachetds)}
+                <Form name="formCachetAdd" dataSource={this.props.resCachetAdd.cachetds}>
                     <Form.StringInput name={"zbh"} labelValue={"章编号"} required={true} requiredMessage={"请填写章编号!"}/>
                     <Form.StringInput name={"zmc"} labelValue={"章名称"} required={true} requiredMessage={"请填写章名称!"}/>
-                    <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"} initialValue={this.props.params.zlbbh}/>
+                    <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
                     <Form.StringInput name={"sigzbh"} labelValue={"数字签章名称"} required={true} requiredMessage={"数字签章名称!"}/>
                     <Form.NumberInput name={"zgd"} labelValue={"章高度"} required={true} requiredMessage={"请填写章高度!"}/>
                     <Form.NumberInput name={"zkd"} labelValue={"章宽度"} required={true} requiredMessage={"请填写章宽度!"}/>
@@ -47,33 +50,25 @@ export default class ResCachetAdd extends Rui {
         )
     }
 
+    // defer = defer
     componentDidMount() {
+        this.fwdPageCachetAdd();
     }
 
+    // 跳转到新增章信息页面[只保留取数据逻辑]
+    fwdPageCachetAdd = () => {
+        const zlbbh = this.props.params.zlbbh;
+        this.props.invoke("fwdPageCachetAdd", zlbbh);
+    }
+
+    // 保存增加的章信息
     saveCachetInfoAdd = () => {
-        this.formCachet.checkFormValues((err, values) => {
-            if (!err) {
-                const {zbh,
-                    zmc,
-                    zlbbh,
-                    sigzbh,
-                    zgd,
-                    zkd} = values;
-
-                this.props.invoke("saveCachetInfoAdd",{
-                        zbh,
-                        zmc,
-                        zlbbh,
-                        sigzbh,
-                        zgd,
-                        zkd,
-                });
-            }
-        });
+        this.props.invoke("saveCachetInfoAdd");
     }
 
+    // 关闭response
     cancel = () => {
-        this.props.closeRES();
+        this.props.invoke("cancel");
     }
 }
 
@@ -85,27 +80,55 @@ export const modelResCachetAdd = {
     namespace: 'resCachetAdd',
 
     state: {
+        cachetds: null,
     },
 
     reducers: {
+        fwdPageCachetAddSuccess(state, {payload}) {
+            return {
+                ...state,
+                cachetds: payload,
+            };
+        },
     },
 
     effects: {
+        * fwdPageCachetAdd({payload}, RUI) {
+            const url = new URL("/sep/CachetServlet/fwdPageCachetAdd");
+
+            url.addPara("zlbbh", payload);
+
+            const vdo = yield request(url.getURLString());
+
+            yield RUI.invoke("fwdPageCachetAddSuccess", vdo.cachetds);
+        },
+
         // 保存增加的章信息
-        * saveCachetInfoAdd({payload}, {invoke, closeRES}) {
-            const {
-                zbh,
-                zmc,
-                zlbbh,
-                sigzbh,
-                zgd,
-                zkd
-            } = payload;
+        * saveCachetInfoAdd({payload}, RUI) {
 
-            yield request(`/sep/CachetServlet/saveCachetInfoAdd?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}`);
+            const form = RUI.getObject("formCachetAdd");
 
-            // 关闭RES
-            yield closeRES();
+            const result = yield form.checkFormValues();
+
+            if(result){
+                const url = new URL("/sep/CachetServlet/saveCachetInfoAdd");
+
+                const formValues = yield form.getFormValues();
+
+                url.addForm(formValues);
+
+                yield request(url.getURLString());
+
+                MsgBox.show("新增成功!");
+
+                yield RUI.closeRES(formValues.zlbbh);
+            }
+        },
+
+
+        // 关闭response
+        * cancel({payload}, RUI) {
+            yield RUI.closeRES();
         },
     },
 };

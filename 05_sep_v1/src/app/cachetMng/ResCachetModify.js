@@ -10,7 +10,8 @@ import {
     Rui,
 } from "../../framework/core";
 import {
-    request,
+    MsgBox,
+    request, URL,
 } from "../../framework/util";
 import {
     Buttons,
@@ -31,8 +32,8 @@ export default class ResCachetModify extends Rui {
     render(){
         return (
             <Panel>
-                <Form wrappedComponentRef={(inst) => this.formCachet = inst}
-                      dataSource={this.props.resCachetModify.cachetds}>
+                <Form name="formCachetModify" dataSource={this.props.resCachetModify.cachetds}>
+                    <Form.StringInput name={"yzbh"} labelValue={"原章编号"} required={true} requiredMessage={"请填写章编号!"}/>
                     <Form.StringInput name={"zbh"} labelValue={"章编号"} required={true} requiredMessage={"请填写章编号!"}/>
                     <Form.StringInput name={"zmc"} labelValue={"章名称"} required={true} requiredMessage={"请填写章名称!"}/>
                     <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
@@ -51,35 +52,15 @@ export default class ResCachetModify extends Rui {
 
     componentDidMount() {
         const zbh = this.props.params.zbh;
-
         this.props.invoke("queryCachetInfo", zbh);
     }
 
     saveCachetInfoModify = () => {
-        this.formCachet.checkFormValues((err, values) => {
-            if (!err) {
-                const {zbh,
-                    zmc,
-                    zlbbh,
-                    sigzbh,
-                    zgd,
-                    zkd} = values;
-
-                this.props.invoke("saveCachetInfoModify", {
-                    zbh,
-                    zmc,
-                    zlbbh,
-                    sigzbh,
-                    zgd,
-                    zkd,
-                    yzbh: zbh,
-                });
-            }
-        });
+        this.props.invoke("saveCachetInfoModify");
     }
 
     cancel = () => {
-        this.props.closeRES();
+        this.props.invoke("cancel");
     }
 }
 
@@ -103,27 +84,38 @@ export const modelResCachetModify = {
     },
 
     effects: {
-        * queryCachetInfo({payload}, {invoke}) {
-            const data = yield request(`/sep/CachetServlet/queryCachetInfo?zbh=${payload}`);
+        * queryCachetInfo({payload}, RUI) {
+            const url = new URL("/sep/CachetServlet/queryCachetInfo");
 
-            yield invoke("queryCachetInfoSuccess", data.cachetds);
+            url.addPara("zbh", payload);
+
+            const vdo = yield request(url.getURLString());
+
+            yield RUI.invoke("queryCachetInfoSuccess", vdo.cachetds);
         },
 
-        * saveCachetInfoModify({payload}, {closeRES}) {
-            const {
-                zbh,
-                zmc,
-                zlbbh,
-                sigzbh,
-                zgd,
-                zkd,
-                yzbh,
-            } = payload;
+        * saveCachetInfoModify({payload}, RUI) {
+            const form = RUI.getObject("formCachetModify");
 
-            yield request(`/sep/CachetServlet/saveCachetInfoModify?zbh=${zbh}&zmc=${zmc}&zlbbh=${zlbbh}&sigzbh=${sigzbh}&zgd=${zgd}&zkd=${zkd}&yzbh=${yzbh}`);
+            const result = yield form.checkFormValues();
 
-            // 关闭RES
-            yield closeRES();
+            if(result){
+                const url = new URL("/sep/CachetServlet/saveCachetInfoModify");
+
+                const formValues = yield form.getFormValues();
+
+                url.addForm(formValues);
+
+                yield request(url.getURLString());
+
+                MsgBox.show("修改成功!");
+
+                yield RUI.closeRES();
+            }
+        },
+
+        * cancel({payload}, RUI) {
+            yield RUI.closeRES();
         },
     },
 };
