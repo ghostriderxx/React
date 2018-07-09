@@ -24,7 +24,7 @@ import {Spin, Input} from 'antd';
 import {delay} from "./utils";
 
 /////////////////////////////////////////////////////////////////////////////
-// Account
+// 模拟 Form 数据加载，示例会将 LOAD_ACCOUNT_DATA 中的数据初始化到 Form 表单中；
 //
 const accountReducer = (state = {}, action) => {
 
@@ -41,73 +41,7 @@ const accountReducer = (state = {}, action) => {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// Form Field Render Function
-//
-const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
-const labelStyle = {width: 120, textAlign: "right"};
-
-const renderInputField = ({input, label, type, meta: {touched, error, warning}}) => (
-    <div style={rowStyle}>
-        <label style={labelStyle}>{label}：</label>
-        <div>
-            <Input {...input} placeholder={label} type={type}/>
-            {touched &&
-            ((error && <span>{error}</span>) ||
-                (warning && <span>{warning}</span>))}
-        </div>
-    </div>
-);
-
-const renderTextAreaField = ({input, label, type, meta: {touched, error, warning}}) => (
-    <div style={rowStyle}>
-        <label style={labelStyle}>{label}：</label>
-        <div>
-            <textarea {...input}/>
-            {touched &&
-            ((error && <span>{error}</span>) ||
-                (warning && <span>{warning}</span>))}
-        </div>
-    </div>
-);
-
-const renderSelectAreaField = ({input, label, code, meta: {touched, error, warning}}) => (
-    <div style={rowStyle}>
-        <label style={labelStyle}>{label}：</label>
-        <div>
-            <select {...input}>
-                <option value="">请选择...</option>
-                {code.map(colorOption => (
-                    <option value={colorOption} key={colorOption}>
-                        {colorOption}
-                    </option>
-                ))}
-            </select>
-            {touched &&
-            ((error && <span>{error}</span>) ||
-                (warning && <span>{warning}</span>))}
-        </div>
-    </div>
-);
-
-const renderRadioAreaField = ({input, label, name,  code, meta: {touched, error, warning}}) => (
-    <div style={rowStyle}>
-        <label style={labelStyle}>{label}：</label>
-        <div>
-            {code.map(([codeValue,codeContent]) => (
-                <span>
-                    <input {...input} type={"radio"} name={name} value={codeValue}/>
-                    {codeContent}
-                </span>
-            ))}
-            {touched &&
-            ((error && <span>{error}</span>) ||
-                (warning && <span>{warning}</span>))}
-        </div>
-    </div>
-);
-
-/////////////////////////////////////////////////////////////////////////////
-// Dependency
+// Form
 //
 // reduxForm 会自动根据 this.props.initialValus 字段值给 Form 表单赋初值
 @connect(
@@ -210,6 +144,73 @@ class InitializeFromStateForm extends React.Component {
         )
     }
 }
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Form Field Render Function
+//
+const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+const labelStyle = {width: 120, textAlign: "right"};
+
+const renderInputField = ({input, label, type, meta: {touched, error, warning}}) => (
+    <div style={rowStyle}>
+        <label style={labelStyle}>{label}：</label>
+        <div>
+            <Input {...input} placeholder={label} type={type}/>
+            {touched &&
+            ((error && <span>{error}</span>) ||
+                (warning && <span>{warning}</span>))}
+        </div>
+    </div>
+);
+
+const renderTextAreaField = ({input, label, type, meta: {touched, error, warning}}) => (
+    <div style={rowStyle}>
+        <label style={labelStyle}>{label}：</label>
+        <div>
+            <textarea {...input}/>
+            {touched &&
+            ((error && <span>{error}</span>) ||
+                (warning && <span>{warning}</span>))}
+        </div>
+    </div>
+);
+
+const renderSelectAreaField = ({input, label, code, meta: {touched, error, warning}}) => (
+    <div style={rowStyle}>
+        <label style={labelStyle}>{label}：</label>
+        <div>
+            <select {...input}>
+                <option value="">请选择...</option>
+                {code.map(colorOption => (
+                    <option value={colorOption} key={colorOption}>
+                        {colorOption}
+                    </option>
+                ))}
+            </select>
+            {touched &&
+            ((error && <span>{error}</span>) ||
+                (warning && <span>{warning}</span>))}
+        </div>
+    </div>
+);
+
+const renderRadioAreaField = ({input, label, name,  code, meta: {touched, error, warning}}) => (
+    <div style={rowStyle}>
+        <label style={labelStyle}>{label}：</label>
+        <div>
+            {code.map(([codeValue,codeContent]) => (
+                <span>
+                    <input {...input} type={"radio"} name={name} value={codeValue}/>
+                    {codeContent}
+                </span>
+            ))}
+            {touched &&
+            ((error && <span>{error}</span>) ||
+                (warning && <span>{warning}</span>))}
+        </div>
+    </div>
+);
 
 /////////////////////////////////////////////////////////////////////////////
 // Start
