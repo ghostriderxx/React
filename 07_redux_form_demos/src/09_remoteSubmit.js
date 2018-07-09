@@ -23,21 +23,30 @@ import {delay} from "./utils";
 import 'antd/dist/antd.css';
 import {Spin, Input} from 'antd';
 
-/////////////////////////////////////////////////////////////////////////////
-// Form Field
-//
-const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
-const labelStyle = {width: 120, textAlign: "right"};
 
-const renderField = ({input, label, type, meta: {touched, error}}) => (
-    <div style={rowStyle}>
-        <label style={labelStyle}>{label}：</label>
-        <div>
-            <Input {...input} placeholder={label} type={type}/>
-            {touched && error && <span>{error}</span>}
-        </div>
-    </div>
-);
+/////////////////////////////////////////////////////////////////////////////
+// RemoteSubmitButton
+//
+@connect()
+class RemoteSubmitButton extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <button type="button"
+                    style={{
+                        padding: '10px 20px',
+                        width: 140,
+                        display: 'block',
+                        margin: '20px auto',
+                        fontSize: '16px'
+                    }}
+                    onClick={() => this.props.dispatch(submit('remoteSubmit'))}>Submit</button>
+        )
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // Form
@@ -94,30 +103,21 @@ class RemoteSubmitForm extends React.Component {
     }
 }
 
-
 /////////////////////////////////////////////////////////////////////////////
-// Start
+// Form Field
 //
-@connect()
-class RemoteSubmitButton extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+const labelStyle = {width: 120, textAlign: "right"};
 
-    render() {
-        return (
-            <button type="button"
-                style={{
-                    padding: '10px 20px',
-                    width: 140,
-                    display: 'block',
-                    margin: '20px auto',
-                    fontSize: '16px'
-                }}
-                onClick={() => this.props.dispatch(submit('remoteSubmit'))}>Submit</button>
-        )
-    }
-}
+const renderField = ({input, label, type, meta: {touched, error}}) => (
+    <div style={rowStyle}>
+        <label style={labelStyle}>{label}：</label>
+        <div>
+            <Input {...input} placeholder={label} type={type}/>
+            {touched && error && <span>{error}</span>}
+        </div>
+    </div>
+);
 
 /////////////////////////////////////////////////////////////////////////////
 // Start
