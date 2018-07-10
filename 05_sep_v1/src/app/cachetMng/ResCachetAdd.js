@@ -32,7 +32,7 @@ export default class ResCachetAdd extends Rui {
     render(){
         return (
             <Panel>
-                <Form name="formCachetAdd" dataSource={this.props.resCachetAdd.cachetds}>
+                <Form name="formCachetAdd">
                     <Form.StringInput name={"zbh"} labelValue={"章编号"} required={true} requiredMessage={"请填写章编号!"}/>
                     <Form.StringInput name={"zmc"} labelValue={"章名称"} required={true} requiredMessage={"请填写章名称!"}/>
                     <Form.StringInput name={"zlbbh"} labelValue={"章类别编号"} required={true} requiredMessage={"请填写章类别编号!"}/>
@@ -79,16 +79,9 @@ export const modelResCachetAdd = {
     namespace: 'resCachetAdd',
 
     state: {
-        cachetds: null,
     },
 
     reducers: {
-        fwdPageCachetAddSuccess(state, {payload}) {
-            return {
-                ...state,
-                cachetds: payload,
-            };
-        },
     },
 
     effects: {
@@ -99,7 +92,9 @@ export const modelResCachetAdd = {
 
             const vdo = yield request(url.getURLString());
 
-            yield RUI.invoke("fwdPageCachetAddSuccess", vdo.cachetds);
+            const form = RUI.getObject("formCachetAdd");
+
+            yield form.fillData(vdo.cachetds);
         },
 
         // 保存增加的章信息

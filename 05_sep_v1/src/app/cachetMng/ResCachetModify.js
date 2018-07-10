@@ -32,7 +32,7 @@ export default class ResCachetModify extends Rui {
     render(){
         return (
             <Panel>
-                <Form name="formCachetModify" dataSource={this.props.resCachetModify.cachetds}>
+                <Form name="formCachetModify">
                     <Form.StringInput name={"yzbh"} labelValue={"原章编号"} required={true} requiredMessage={"请填写章编号!"}/>
                     <Form.StringInput name={"zbh"} labelValue={"章编号"} required={true} requiredMessage={"请填写章编号!"}/>
                     <Form.StringInput name={"zmc"} labelValue={"章名称"} required={true} requiredMessage={"请填写章名称!"}/>
@@ -71,16 +71,9 @@ export const modelResCachetModify = {
     namespace: 'resCachetModify',
 
     state: {
-        cachetds: null,
     },
 
     reducers: {
-        queryCachetInfoSuccess(state, {payload}) {
-            return {
-                ...state,
-                cachetds: payload,
-            };
-        },
     },
 
     effects: {
@@ -91,7 +84,9 @@ export const modelResCachetModify = {
 
             const vdo = yield request(url.getURLString());
 
-            yield RUI.invoke("queryCachetInfoSuccess", vdo.cachetds);
+            const form = RUI.getObject("formCachetModify");
+
+            yield form.fillData(vdo.cachetds)
         },
 
         * saveCachetInfoModify({payload}, RUI) {

@@ -16,6 +16,11 @@ import {delay} from "redux-saga";
 
 import Column from "./Column"
 
+
+
+import deepEqual from "./structure/plain/deepEqual"
+
+
 /////////////////////////////////////////////////////////////////////////////
 // ModelFactory
 //
@@ -25,67 +30,51 @@ function _modelGridFactory(namespace){
 
         state: {
             data: [],
-            filterCondition: null,
             currentRowNumber: 0,
         },
 
-        subscriptions: {
-            setup({dispatch, history}) {
-            },
-        },
-
         effects: {
-            * gridSort({payload}, {call, put}) {
-                yield delay(1000);
-
+            * fillData({payload}, {call, put, select}) {
                 yield put({
-                    type: `gridSortSuccess`,
-                });
-            },
-
-            * gridFillData({payload}, {call, put, select}) {
-                yield put({
-                    type: `gridFillDataSuccess`,
+                    type: `fillDataSuccess`,
                     payload
                 });
-                // if(payload.length > 0){
-                //     yield put({
-                //         type: `setCurrentRowNumber`,
-                //         payload: 1,
-                //     });
-                // }else{
-                //     yield put({
-                //         type: `setCurrentRowNumber`,
-                //         payload: 0,
-                //     });
-                // }
+                if(payload.length > 0){
+                    yield put({
+                        type: `setCurrentRowNumberSuccess`,
+                        payload: 1,
+                    });
+                }else{
+                    yield put({
+                        type: `setCurrentRowNumberSuccess`,
+                        payload: 0,
+                    });
+                }
             },
 
-            * gridGetCurrentRowNumber({payload}, {call, put, select}) {
+            * getCurrentRow({payload}, {call, put, select}) {
                 return yield select(state => state[namespace].currentRowNumber);
             },
 
-            * gridGetCellValue({payload}, {call, put, select}) {
+            * getRowCount({payload}, {call, put, select}) {
+                return yield select(state => state[namespace].data.length);
+            },
+
+            * getCellValue({payload}, {call, put, select}) {
                 const {rowNumber, columnName} = payload;
                 return yield select(state => state[namespace].data[rowNumber-1][columnName]);
             },
         },
 
         reducers: {
-            gridFillDataSuccess(state, {payload}) {
+            fillDataSuccess(state, {payload}) {
                 return {
                     ...state,
                     data: payload,
                 };
             },
-            gridSortSuccess(state, {payload}) {
-                return {
-                    ...state,
-                    data: state.data.slice().reverse(),
-                };
 
-            },
-            setCurrentRowNumber(state, {payload}) {
+            setCurrentRowNumberSuccess(state, {payload}) {
                 return {
                     ...state,
                     currentRowNumber: payload,
@@ -95,13 +84,26 @@ function _modelGridFactory(namespace){
     };
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// Component
-//
+
 class Grid extends React.Component{
     constructor(props) {
         super(props);
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    componentWillMount(){
+
+    }
+
+    componentDidMount(){
+    }
+
+    componentWillReceiveProps(nextProps){
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////
+
 
     render(){
         const namespace = this.props.namespace;
@@ -115,7 +117,7 @@ class Grid extends React.Component{
                     return {
                         onClick: () => { // 点击行
                             this.props.dispatch({
-                                type: `${namespace}/setCurrentRowNumber`,
+                                type: `${namespace}/setCurrentRowNumberSuccess`,
                                 payload: (index+1)
                             });
                             onRowClick(record);
@@ -127,60 +129,43 @@ class Grid extends React.Component{
     }
 }
 
+Grid.displayName = "不知道这个displayName能干啥用...";
+
 /////////////////////////////////////////////////////////////////////////////
 // Component Warpper
 //
-@connect(
-    null,
-    (dispatch) => ({dispatch}),
-    null,
-    {withRef:true}
-)
 export default class GridWarpper extends React.Component{
     constructor(props){
         super(props);
 
         // 给Grid分配唯一命名空间
-        var namespace = this.props.name;
+        this.namespace = this.props.name;
+        this.model = _modelGridFactory(this.namespace);
+    }
 
-        this.state = {
-            namespace
-        }
+    //////////////////////////////////////////////////////////////////////////////////////
 
-        // 给Grid分配Store空间
-        Frame.addModel(_modelGridFactory(namespace));
+    componentWillMount(){
+        Frame.addModel(this.model);
 
-        // 给Table分配实例
-        this.Instance = connect(
-            (store)=>({grid: store[namespace], namespace, loading: store.loading.global}),
+        const connector = connect(
+            (store)=>({
+                grid: store[this.namespace],
+                namespace: this.namespace,
+                loading: store.loading.global
+            }),
             (dispatch) => ({dispatch}),
             null,
             {withRef:true}
-        )(Grid)
+        );
+
+        const ConnectedGrid = connector(Grid);
+
+        this.ConnectedGrid = ConnectedGrid;
     }
 
-    componentWillMount(){
-        this.props.dispatch({
-            type: this.state.namespace+"/gridFillData",
-            payload: this.props.dataSource
-        });
-    }
-
-    componentWillReceiveProps(nextProps){
-        // 给GRID填充数据
-        this.props.dispatch({
-            type: this.state.namespace+"/gridFillData",
-            payload: nextProps.dataSource
-        });
-    }
-
-    sort(sortby){
-        this.props.dispatch({
-            type: this.state.namespace+"/gridSort",
-            payload:{
-                sortby
-            }
-        });
+    componentWillUnmount(){
+        Frame.deleteModel(this.model.namespace);
     }
 
     render(){
@@ -192,7 +177,7 @@ export default class GridWarpper extends React.Component{
         });
 
         return (
-            <this.Instance {...this.props} columns={columns}></this.Instance>
+            <this.ConnectedGrid {...this.props} columns={columns}/>
         );
     }
 }

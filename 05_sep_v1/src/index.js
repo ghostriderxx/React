@@ -66,7 +66,7 @@ const app = reaper({
 // 框架级模型
 app.model(require('./framework/taglib/lane/_modelLane').default);
 
-const cached = {}; // 避免模型的多次注入，为什么会多次注入。。。我还不太明白。。参考的是dynamic.js
+// const cached = {}; // 避免模型的多次注入，为什么会多次注入。。。我还不太明白。。参考的是dynamic.js
 export default {
     getComponent: (biz, zjm) => {
         return dynamic({
@@ -75,11 +75,14 @@ export default {
         });
     },
     addModel: (model)=>{
-        if (!cached[model.namespace]) {
+        // if (!cached[model.namespace]) {
             app.model(model);
-            cached[model.namespace] = 1;
-        }
+            // cached[model.namespace] = 1;
+        // }
     },
+    deleteModel: (model) => {
+        app.unmodel(model);
+    }
 };
 
 // 业务级模型

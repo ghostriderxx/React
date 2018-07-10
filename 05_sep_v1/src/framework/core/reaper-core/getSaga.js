@@ -8,7 +8,7 @@ import {
 } from 'redux-saga/lib/internal/sagaHelpers';
 import {NAMESPACE_SEP} from './constants';
 import prefixType from './prefixType';
-import {formValueSelector, getFormSyncErrors, getFormValues} from 'redux-form'
+import {formValueSelector, getFormSyncErrors, getFormValues, initialize} from 'redux-form'
 
 export default function getSaga(effects, model, onError, onEffect) {
     return function* () {
@@ -162,6 +162,12 @@ function createEffects(model) {
                 });
 
                 return values;
+            },
+
+            fillData: function*(ds) {
+                if(ds.length){
+                    yield sagaEffects.put(initialize(name, ds[0]));
+                }
             },
         };
     }
