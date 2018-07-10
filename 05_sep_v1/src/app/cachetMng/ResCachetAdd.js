@@ -92,7 +92,7 @@ export const modelResCachetAdd = {
 
             const vdo = yield request(url.getURLString());
 
-            const form = RUI.getObject("formCachetAdd");
+            const form = yield RUI.getObject("formCachetAdd");
 
             yield form.fillData(vdo.cachetds);
         },
@@ -100,7 +100,7 @@ export const modelResCachetAdd = {
         // 保存增加的章信息
         * saveCachetInfoAdd({payload}, RUI) {
 
-            const form = RUI.getObject("formCachetAdd");
+            const form = yield RUI.getObject("formCachetAdd");
 
             const result = yield form.checkFormValues();
 

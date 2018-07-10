@@ -16,7 +16,7 @@ export default class PrintTplMng extends Rui {
 
     render(){
         return (
-            <Panel></Panel>
+            <Panel>这是打印管理</Panel>
         )
     }
 

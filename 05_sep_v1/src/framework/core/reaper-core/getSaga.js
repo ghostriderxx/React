@@ -138,38 +138,76 @@ function createEffects(model) {
         return invoke("lane/closeRes", params);
     }
 
-    function getObject(name) {
-        return {
-            checkFormValues: function*() {
-                const errors = yield sagaEffects.select((state)=>{
-                    return getFormSyncErrors(name)(state);
-                });
+    function* getObject(name) {
 
-                let valid = true;
-                for(const o in errors){
-                    alert(errors[o]);
-                    valid = false;
-                    break;
+        const o = yield sagaEffects.select((state)=>{
+            return state[name];
+        });
+
+        if(o){
+            return {
+                getRowCount: function*(){
+                    return yield yield sagaEffects.put({
+                        type: `${name}/getRowCount`
+                    });
+                },
+
+                getCurrentRow: function*(){
+                    return yield yield sagaEffects.put({
+                        type: `${name}/getCurrentRow`
+                    });
+                },
+
+                getCellValue: function*(rowNumber, columnName){
+                    return yield yield sagaEffects.put({
+                        type: `${name}/getCellValue`,
+                        payload: {
+                            rowNumber: rowNumber,
+                            columnName: columnName,
+                        }
+                    });
+                },
+
+                fillData: function*(vds){
+                    yield yield sagaEffects.put({
+                        type: `${name}/fillData`,
+                        payload: vds
+                    });
                 }
+            }
+        }else{
+            return {
+                checkFormValues: function*() {
+                    const errors = yield sagaEffects.select((state)=>{
+                        return getFormSyncErrors(name)(state);
+                    });
 
-                return valid;
-            },
+                    let valid = true;
+                    for(const o in errors){
+                        alert(errors[o]);
+                        valid = false;
+                        break;
+                    }
+
+                    return valid;
+                },
 
 
-            getFormValues: function*() {
-                const values = yield sagaEffects.select((state)=>{
-                    return getFormValues(name)(state);
-                });
+                getFormValues: function*() {
+                    const values = yield sagaEffects.select((state)=>{
+                        return getFormValues(name)(state);
+                    });
 
-                return values;
-            },
+                    return values;
+                },
 
-            fillData: function*(ds) {
-                if(ds.length){
-                    yield sagaEffects.put(initialize(name, ds[0]));
-                }
-            },
-        };
+                fillData: function*(ds) {
+                    if(ds.length){
+                        yield sagaEffects.put(initialize(name, ds[0]));
+                    }
+                },
+            };
+        }
     }
     //
     // 自定义函数 - end

@@ -67,6 +67,7 @@ export default {
                 type: `openResSuccess`,
                 payload: {
                     component: Frame.getComponent(null, componentPath),
+                    deferFnCalled: false,
                     __framework__resolve,
                     ...rest
                 },

@@ -76,7 +76,7 @@ export const modelResCachetTypeAdd = {
     effects: {
         * saveCachetTypeInfoAdd({payload}, RUI) {
 
-            const form = RUI.getObject("formCachetTypeAdd");
+            const form = yield RUI.getObject("formCachetTypeAdd");
 
             const result = yield form.checkFormValues();
 

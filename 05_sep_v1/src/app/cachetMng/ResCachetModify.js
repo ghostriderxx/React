@@ -84,13 +84,13 @@ export const modelResCachetModify = {
 
             const vdo = yield request(url.getURLString());
 
-            const form = RUI.getObject("formCachetModify");
+            const form = yield RUI.getObject("formCachetModify");
 
             yield form.fillData(vdo.cachetds)
         },
 
         * saveCachetInfoModify({payload}, RUI) {
-            const form = RUI.getObject("formCachetModify");
+            const form = yield RUI.getObject("formCachetModify");
 
             const result = yield form.checkFormValues();
 

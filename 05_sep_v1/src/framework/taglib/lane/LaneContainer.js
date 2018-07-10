@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 //
 import Res from "../res/Res";
 import LaneSwitcher from "./LaneSwitcher";
+import Beacon from "../beacon/Beacon";
 
 @connect(({lane}) => ({lane}))
 export default class LaneContainer extends React.Component {
@@ -51,12 +52,16 @@ export default class LaneContainer extends React.Component {
                             return <div key={lane.id}
                                         style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
                                 {
-                                    lane.bcn.map((Beacon ,key) => <Beacon key={key} {...this.props}/>)
+                                    lane.bcn.map((Content ,key) => (
+                                        <Beacon key={key}>
+                                            <Content {...this.props}/>
+                                        </Beacon>
+                                    ))
                                 }
                                 {
-                                    lane.res.map(({component: Response, width, height, title, params, actionAfterClose}, key) => (
+                                    lane.res.map(({component: Content, width, height, title, params, actionAfterClose}, key) => (
                                         <Res key={key} {...this.props} title={title} width={width} height={height}>
-                                            <Response
+                                            <Content
                                                 params={params}
                                                 closeRES={(params)=>{
                                                     this.props.dispatch({
@@ -64,7 +69,7 @@ export default class LaneContainer extends React.Component {
                                                         payload: params,
                                                     });
                                                 }}
-                                            ></Response>
+                                            ></Content>
                                         </Res>)
                                     )
                                 }

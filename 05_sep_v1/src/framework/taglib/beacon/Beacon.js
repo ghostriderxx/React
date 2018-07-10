@@ -10,22 +10,18 @@ import { Modal, Button } from 'antd';
 /////////////////////////////////////////////////////////////////////////////
 // FrameWork
 //
-
-export default class Res extends React.Component {
+export default class Beacon extends React.Component {
     constructor(props){
         super(props);
     }
-    
+
+    componentDidMount(){
+    }
+
     render(){
         return (
-            <Modal
-                title={this.props.title}
-                width={this.props.width}
-                visible={true}
-                footer={null}
-                {...this.props}
-            >
-            </Modal>
+            <div{...this.props}>
+            </div>
         )
     }
 }

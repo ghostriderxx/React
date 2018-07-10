@@ -17,10 +17,6 @@ import {delay} from "redux-saga";
 import Column from "./Column"
 
 
-
-import deepEqual from "./structure/plain/deepEqual"
-
-
 /////////////////////////////////////////////////////////////////////////////
 // ModelFactory
 //
