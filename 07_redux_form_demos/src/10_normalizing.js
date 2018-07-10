@@ -56,22 +56,6 @@ const normalizePhone = value => {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// Form Field
-//
-const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
-const labelStyle = {width: 120, textAlign: "right"};
-
-const renderField = ({input, label, type, meta: {touched, error}}) => (
-    <div style={rowStyle}>
-        <label style={labelStyle}>{label}：</label>
-        <div>
-            <Input {...input} placeholder={label} type={type}/>
-            {touched && error && <span>{error}</span>}
-        </div>
-    </div>
-);
-
-/////////////////////////////////////////////////////////////////////////////
 // Form
 //
 @reduxForm({
@@ -146,6 +130,21 @@ class FieldNormalizingForm extends React.Component {
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// Form Field
+//
+const rowStyle = {display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: 10};
+const labelStyle = {width: 120, textAlign: "right"};
+
+const renderField = ({input, label, type, meta: {touched, error}}) => (
+    <div style={rowStyle}>
+        <label style={labelStyle}>{label}：</label>
+        <div>
+            <Input {...input} placeholder={label} type={type}/>
+            {touched && error && <span>{error}</span>}
+        </div>
+    </div>
+);
 
 /////////////////////////////////////////////////////////////////////////////
 // Start
