@@ -17,5 +17,3 @@ export default class Tab extends React.Component {
         );
     }
 }
-
-Tab.TabPage = Tabs.TabPane;

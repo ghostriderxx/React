@@ -5,10 +5,10 @@ import Hlayout from "./hlayout/Hlayout";
 import LaneContainer from "./lane/LaneContainer";
 import Grid from "./grid/Grid";
 
-import Tab from "./tab/Tab";
-import Buttons from "./button/Buttons";
-import Form from "./form/Form";
-import Tree from "./tree/Tree";
+import Tab from "./tab";
+import Buttons from "./button";
+import Form from "./form";
+import Tree from "./tree";
 
 export {
     Grid,

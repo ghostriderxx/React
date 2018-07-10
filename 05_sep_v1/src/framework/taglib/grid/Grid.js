@@ -116,7 +116,9 @@ class Grid extends React.Component{
                                 type: `${namespace}/setCurrentRowNumberSuccess`,
                                 payload: (index+1)
                             });
-                            onRowClick(record);
+                            if(onRowClick){
+                                onRowClick(record);
+                            }
                         },
                     };
                 }} dataSource={data} loading={this.props.loading}></Table>

@@ -65,6 +65,3 @@ export default class FormWrapper extends React.Component{
 FormWrapper.PropTypes = {
     name: PropTypes.string.isRequired
 };
-
-FormWrapper.NumberInput = NumberInput;
-FormWrapper.StringInput = StringInput;
