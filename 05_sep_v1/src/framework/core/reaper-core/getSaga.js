@@ -118,8 +118,8 @@ function createEffects(model) {
     //
     // 自定义函数 - begin
     //
-    function invoke(type, payload) {
-        return put({
+    function* invoke(type, payload) {
+        return yield yield put({
             type,
             payload
         });

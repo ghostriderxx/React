@@ -168,22 +168,18 @@ export const modelCachetMng = {
         // 点击章类别信息
         *cachetTypeGridClick({payload}, RUI) {
             const grid = yield RUI.getObject("dwCachetTypeInfo");
-
             const rowCount = yield grid.getRowCount();
             if(rowCount <= 0){
                 return;
             }
-
             const rowNu = yield grid.getCurrentRow();
             if(rowNu <= 0){
                 return;
             }
-
             const zlbbh = yield grid.getCellValue(rowNu, "zlbbh");
-
-            yield yield RUI.invoke("queryCachetList", zlbbh);
-            yield yield RUI.invoke("queryCachetLoca", zlbbh);
-            yield yield RUI.invoke("viewCachetImage");
+            yield RUI.invoke("queryCachetList", zlbbh);
+            yield RUI.invoke("queryCachetLoca", zlbbh);
+            yield RUI.invoke("viewCachetImage");
         },
 
         // 根据章类别编号查询章信息
@@ -195,6 +191,7 @@ export const modelCachetMng = {
 
             const url = new URL("/sep/CachetServlet/queryCachetList");
             url.addPara("zlbbh", zlbbh)
+
             const vdo = yield request(url.getURLString());
 
             const grid = yield RUI.getObject("dwCachetInfo");
@@ -210,6 +207,7 @@ export const modelCachetMng = {
 
             const url = new URL("/sep/CachetServlet/queryCachetLoca");
             url.addPara("zlbbh", zlbbh);
+
             const vdo = yield request(url.getURLString());
 
             const grid = yield RUI.getObject("dwTempInfor");
@@ -219,12 +217,10 @@ export const modelCachetMng = {
         // 显示章图片
         * viewCachetImage({payload}, RUI) {
             const grid = yield RUI.getObject("dwCachetInfo");
-
             const rowCount = yield grid.getRowCount();
             if(rowCount <= 0){
                 return;
             }
-
             const rowNu = yield grid.getCurrentRow();
             if(rowNu == 0){
                 alert("请先选中一行！");
@@ -233,16 +229,15 @@ export const modelCachetMng = {
 
             const zbh = yield grid.getCellValue(rowNu, "zbh");
 
-            const cacheImageUrl = `/sep/CachetServlet/viewCachetImage?zbh=${zbh}&_=${Math.random()}`;
+            const url = `/sep/CachetServlet/viewCachetImage?zbh=${zbh}&_=${Math.random()}`;
 
-            yield RUI.invoke(`viewCachetImageSuccess`, cacheImageUrl);
+            yield RUI.invoke(`viewCachetImageSuccess`, url);
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 新增章类别信息
         * cachetTypeAdd({payload}, RUI) {
-            // openRES
             const ret = yield RUI.openRES("新增章类别信息", "app/cachetMng/ResCachetTypeAdd.js", 600);
 
             // RES关闭后回调
@@ -259,15 +254,13 @@ export const modelCachetMng = {
                 return;
             }
 
-            // zlbbh
             const zlbbh = yield grid.getCellValue(rowNu, "zlbbh");
 
-            // openRES
             const ret = yield RUI.openRES("修改章类别信息", "app/cachetMng/ResCachetTypeModify.js", 600, 600, {
                 zlbbh,
             });
 
-            // RES关闭后的回调
+            // RES关闭后回调
             yield RUI.invoke("afterSavaCachetTypeInfo", ret);
         },
 
@@ -279,14 +272,11 @@ export const modelCachetMng = {
                 alert("请先选中一行！");
                 return;
             }
-
             const zlbbh = yield grid.getCellValue(rowNu, "zlbbh");
             const zlbmc = yield grid.getCellValue(rowNu, "zlbmc");
             if(!confirm("您确认要删除【"+zlbmc+"】吗？")){
                 return;
             }
-
-            // 删除
             const url = new URL("/sep/CachetServlet/deleteCachetTypeInfo");
             url.addPara("zlbbh", zlbbh);
             yield request(url.getURLString());
@@ -317,7 +307,7 @@ export const modelCachetMng = {
                 zlbbh
             });
 
-            // RES关闭后的回调
+            // RES关闭后回调
             yield RUI.invoke("actionAfterSubmit", ret);
         },
 
@@ -330,21 +320,38 @@ export const modelCachetMng = {
                 return;
             }
 
-            // zbh
             const zbh = yield grid.getCellValue(rowNu, "zbh");
 
-            // openRES
             const ret = yield RUI.openRES("修改章信息", "app/cachetMng/ResCachetModify.js", 600, 600, {
                 zbh
             });
 
-            // RES关闭后的回调
+            // RES关闭后回调
             yield invoke("actionAfterSubmit", ret);
         },
 
         // 提交数据后执行的方法
         * actionAfterSubmit({payload}, RUI) {
             alert("actionAfterSubmit:"+payload);
+
+            const grid = yield RUI.getObject("dwCachetTypeInfo");
+            const rowCount = yield grid.getRowCount();
+            if(rowCount <= 0){
+                return;
+            }
+            const rowNu = yield grid.getCurrentRow();
+            if(rowNu == 0){
+                return;
+            }
+
+            var zlbbh = yield grid.getCellValue(rowNu, "zlbbh");
+            var zbh = payload;
+
+            yield RUI.invoke("queryCachetList", zlbbh);
+            yield RUI.invoke("goCachetGridRow", zbh);
+            yield RUI.invoke("viewCachetImage");
+
+            MsgBox.show("保存成功");
         },
 
 
@@ -357,22 +364,19 @@ export const modelCachetMng = {
                 return;
             }
 
-            // 获取zbh、zmc
             const zbh = yield grid.getCellValue(rowNu, "zbh");
             const zmc = yield grid.getCellValue(rowNu, "zmc");
             if(!confirm("您确认要删除【"+zmc+"】吗？")){
                 return false;
             }
 
-            // 删除
             const url = new URL("/sep/CachetServlet/deleteCachetInfo");
             url.addPara("zbh", zbh);
+
             yield request(url.getURLString());
 
-            // 重新查询
-            yield invoke(`cachetTypeGridClick`);
+            yield RUI.invoke(`cachetTypeGridClick`);
 
-            // 消息提示
             MsgBox.show("删除成功!");
         },
 
@@ -385,9 +389,10 @@ export const modelCachetMng = {
                 return;
             }
 
-            yield yield RUI.invoke("queryCachetList", zlbbh);
-            yield yield RUI.invoke("queryCachetLoca", zlbbh);
-            yield yield RUI.invoke("viewCachetImage");
+            yield RUI.invoke("queryCachetTypeList");
+            yield RUI.invoke("goCachetTypeGridRow", zlbbh);
+            yield RUI.invoke("queryCachetList", zlbbh);
+            yield RUI.invoke("viewCachetImage");
         },
 
 
