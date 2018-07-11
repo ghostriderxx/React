@@ -179,7 +179,7 @@ function createEffects(model) {
             return {
                 checkFormValues: function*() {
                     const errors = yield sagaEffects.select((state)=>{
-                        return getFormSyncErrors(name)(state);
+                        return getFormSyncErrors(`${model.namespace}_${name}`)(state);
                     });
 
                     let valid = true;
@@ -195,7 +195,7 @@ function createEffects(model) {
 
                 getFormValues: function*() {
                     const values = yield sagaEffects.select((state)=>{
-                        return getFormValues(name)(state);
+                        return getFormValues(`${model.namespace}_${name}`)(state);
                     });
 
                     return values;
@@ -203,7 +203,7 @@ function createEffects(model) {
 
                 fillData: function*(ds) {
                     if(ds.length){
-                        yield sagaEffects.put(initialize(name, ds[0]));
+                        yield sagaEffects.put(initialize(`${model.namespace}_${name}`, ds[0]));
                     }
                 },
             };

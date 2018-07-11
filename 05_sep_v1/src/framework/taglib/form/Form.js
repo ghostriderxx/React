@@ -9,13 +9,8 @@ import PropTypes from "prop-types"
 // ## redux-form
 import {Field, reduxForm} from 'redux-form'
 
-// ## antd
-import { Form as AntdForm, Input, message} from 'antd';
-
 // ## Framework
-import StringInput from "./StringInput"
-import NumberInput from "./NumberInput"
-import Frame from "../../../index";
+import ModelNamespaceContext from "../../context/ModelNamespaceContext"
 import {connect} from "react-redux";
 
 
@@ -38,14 +33,14 @@ class Form extends React.Component{
 
 
 @connect()
-export default class FormWrapper extends React.Component{
+class FormWrapper extends React.Component{
     constructor(props) {
         super(props);
     }
 
     componentWillMount(){
         this.WrappedForm = reduxForm({
-            form: `${this.props.name}`,
+            form: `${this.props.modelNamespace}_${this.props.name}`,
         })(Form);
     }
 
@@ -54,14 +49,20 @@ export default class FormWrapper extends React.Component{
 
         return (
             <div>
-                <WrappedForm initialValues={
-                    this.props.dataSource && this.props.dataSource.length ? this.props.dataSource[0] : undefined
-                } {...this.props}/>
+                <WrappedForm {...this.props}/>
             </div>
         );
     }
 }
-
 FormWrapper.PropTypes = {
     name: PropTypes.string.isRequired
 };
+
+
+export default (props) => (
+    <ModelNamespaceContext.Consumer>
+        {
+            ({modelNamespace}) => <FormWrapper {...props} modelNamespace={modelNamespace} />
+        }
+    </ModelNamespaceContext.Consumer>
+);
