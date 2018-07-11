@@ -6,7 +6,7 @@ import reaperLoading from "./reaper-loading/index";
 import Rui from "./Rui";
 import ModelNamespaceContext from "../context/ModelNamespaceContext"
 
-export const connect = (namespace) => (Component) => {
+export const RUIConnect = (namespace) => (Component) => {
     return ReduxConnect(
         (state) => ({[namespace]: state[namespace]}),
         (dispatch) => ({

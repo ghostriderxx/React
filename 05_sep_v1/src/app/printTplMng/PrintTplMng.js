@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect,Rui} from  "../../framework/core";
+import {RUIConnect,Rui} from  "../../framework/core";
 import {
     Buttons,
     Panel,

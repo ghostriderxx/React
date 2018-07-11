@@ -6,7 +6,7 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect,
+    RUIConnect,
     Rui,
 } from "../../framework/core";
 import {
@@ -25,7 +25,7 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect("cachetMng")
+@RUIConnect("cachetMng")
 export default class CachetMng extends Rui {
     constructor(props){
         super(props);
@@ -90,7 +90,6 @@ export default class CachetMng extends Rui {
             </Hlayout>
         )
     }
-
 
     componentDidMount(){
         this.queryCachetTypeList();
@@ -327,13 +326,11 @@ export const modelCachetMng = {
             });
 
             // RES关闭后回调
-            yield invoke("actionAfterSubmit", ret);
+            yield RUI.invoke("actionAfterSubmit", ret);
         },
 
         // 提交数据后执行的方法
         * actionAfterSubmit({payload}, RUI) {
-            alert("actionAfterSubmit:"+payload);
-
             const grid = yield RUI.getObject("dwCachetTypeInfo");
             const rowCount = yield grid.getRowCount();
             if(rowCount <= 0){

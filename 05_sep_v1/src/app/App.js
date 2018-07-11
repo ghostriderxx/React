@@ -6,7 +6,7 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect,
+    RUIConnect,
 } from "../framework/core"
 
 import {
@@ -21,7 +21,7 @@ import Top from "./top/Top";
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect("app")
+@RUIConnect("app")
 export default class App extends React.Component{
     constructor(props){
         super(props)

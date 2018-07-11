@@ -6,7 +6,7 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect,
+    RUIConnect,
     Rui,
 } from "../../framework/core";
 
@@ -25,8 +25,7 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-// @Form.create()
-@connect("resCachetTypeAdd")
+@RUIConnect("resCachetTypeAdd")
 export default class ResCachetTypeAdd extends Rui {
     constructor(props) {
         super(props);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect,Rui} from  "../../framework/core";
+import {RUIConnect,Rui} from  "../../framework/core";
 import {
     Buttons,
     Panel,
@@ -8,7 +8,7 @@ import {
 
 import {request,MsgBox} from "../../framework/util";
 
-@connect("resAddSms")
+@RUIConnect("resAddSms")
 export default class ResAddSms extends Rui{
     constructor(props){
         super(props)

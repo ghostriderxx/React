@@ -6,7 +6,7 @@ import React from 'react';
 
 // ## FrameWork
 import {
-    connect,
+    RUIConnect,
     Rui,
 } from "../../framework/core";
 import {
@@ -23,7 +23,7 @@ import {
 /////////////////////////////////////////////////////////////////////////////
 // UI
 //
-@connect("resCachetModify")
+@RUIConnect("resCachetModify")
 export default class ResCachetModify extends Rui {
     constructor(props) {
         super(props);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    connect,
+    RUIConnect,
     Rui,
 } from "../../framework/core";
 
@@ -11,7 +11,7 @@ import {
     SheetContainer
 } from "../../framework/taglib";
 
-@connect("smsMng")
+@RUIConnect("smsMng")
 export default class SmsMng extends Rui {
     constructor(props){
         super(props);

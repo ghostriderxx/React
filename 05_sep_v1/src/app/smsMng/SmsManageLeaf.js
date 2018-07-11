@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect,Rui} from  "../../framework/core";
+import {RUIConnect,Rui} from  "../../framework/core";
 import {
     Buttons,
     Panel,
@@ -10,7 +10,7 @@ import {
 
 import {MsgBox, request} from "../../framework/util";
 
-@connect("smsManageLeaf")
+@RUIConnect("smsManageLeaf")
 export default class SmsManageLeaf extends Rui{
     constructor(props){
         super(props);
