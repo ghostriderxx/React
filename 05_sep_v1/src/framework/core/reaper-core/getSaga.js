@@ -141,26 +141,26 @@ function createEffects(model) {
     function* getObject(name) {
 
         const o = yield sagaEffects.select((state)=>{
-            return state[name];
+            return state[`${model.namespace}_${name}`];
         });
 
         if(o){
             return {
                 getRowCount: function*(){
                     return yield yield sagaEffects.put({
-                        type: `${name}/getRowCount`
+                        type: `${model.namespace}_${name}/getRowCount`
                     });
                 },
 
                 getCurrentRow: function*(){
                     return yield yield sagaEffects.put({
-                        type: `${name}/getCurrentRow`
+                        type: `${model.namespace}_${name}/getCurrentRow`
                     });
                 },
 
                 getCellValue: function*(rowNumber, columnName){
                     return yield yield sagaEffects.put({
-                        type: `${name}/getCellValue`,
+                        type: `${model.namespace}_${name}/getCellValue`,
                         payload: {
                             rowNumber: rowNumber,
                             columnName: columnName,
@@ -170,7 +170,7 @@ function createEffects(model) {
 
                 fillData: function*(vds){
                     yield yield sagaEffects.put({
-                        type: `${name}/fillData`,
+                        type: `${model.namespace}_${name}/fillData`,
                         payload: vds
                     });
                 }

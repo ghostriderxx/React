@@ -1,9 +1,10 @@
+import React from "react"
 import {connect as ReduxConnect} from "react-redux";
 import reaper from "./reaper";
 import dynamic from "./reaper/dynamic";
 import reaperLoading from "./reaper-loading/index";
 import Rui from "./Rui";
-
+import ModelNamespaceContext from "../context/ModelNamespaceContext"
 
 export const connect = (namespace) => (Component) => {
     return ReduxConnect(
@@ -35,7 +36,17 @@ export const connect = (namespace) => (Component) => {
                 });
             },
         }),
-    )(Component);
+    )(class extends React.Component{
+        constructor(props){
+            super(props);
+        }
+
+        render(){
+            return <ModelNamespaceContext.Provider value={{modelNamespace:namespace}}>
+                <Component {...this.props}/>
+            </ModelNamespaceContext.Provider>;
+        }
+    });
 };
 
 export {

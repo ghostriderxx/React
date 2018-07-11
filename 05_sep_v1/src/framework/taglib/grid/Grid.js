@@ -12,9 +12,7 @@ import {
 
 // ## FrameWork
 import Frame from "../../../index"
-import {delay} from "redux-saga";
-
-import Column from "./Column"
+import ModelNamespaceContext from "../../context/ModelNamespaceContext"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -132,13 +130,13 @@ Grid.displayName = "不知道这个displayName能干啥用...";
 /////////////////////////////////////////////////////////////////////////////
 // Component Warpper
 //
-export default class GridWarpper extends React.Component{
+class GridWarpper extends React.Component{
     constructor(props){
         super(props);
 
         // 给Grid分配唯一命名空间
-        this.namespace = this.props.name;
-        this.model = _modelGridFactory(this.namespace);
+        this.gridNamespace = `${this.props.modelNamespace}_${this.props.name}`;
+        this.model = _modelGridFactory(this.gridNamespace);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -148,8 +146,8 @@ export default class GridWarpper extends React.Component{
 
         const connector = connect(
             (store)=>({
-                grid: store[this.namespace],
-                namespace: this.namespace,
+                grid: store[this.gridNamespace],
+                namespace: this.gridNamespace,
                 loading: store.loading.global
             }),
             (dispatch) => ({dispatch}),
@@ -163,7 +161,7 @@ export default class GridWarpper extends React.Component{
     }
 
     componentWillUnmount(){
-        Frame.deleteModel(this.model.namespace);
+        Frame.deleteModel(this.gridNamespace);
     }
 
     render(){
@@ -179,4 +177,11 @@ export default class GridWarpper extends React.Component{
         );
     }
 }
-GridWarpper.Column = Column;
+
+export default (props) => (
+    <ModelNamespaceContext.Consumer>
+        {
+            ({modelNamespace}) => <GridWarpper {...props} modelNamespace={modelNamespace} />
+        }
+    </ModelNamespaceContext.Consumer>
+);
