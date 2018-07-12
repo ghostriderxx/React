@@ -91,6 +91,11 @@ export default class CachetMng extends Rui {
         )
     }
 
+    //defer
+    componentDidMount(){
+        this.props.invoke("defer");
+    }
+
     // 查询章类别信息
     queryCachetTypeList = () => {
         this.props.invoke("queryCachetTypeList");

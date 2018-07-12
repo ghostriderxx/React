@@ -36,9 +36,6 @@ export default class App extends React.Component{
             </Panel>
         );
     }
-
-    componentDidMount() {
-    }
 }
 
 /////////////////////////////////////////////////////////////////////////////

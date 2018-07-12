@@ -26,8 +26,6 @@ function asyncComponent(config) {
 
 
             this.state = {
-                initialised: false,
-                modelNamespace: null,
                 AsyncComponent: null,
             };
 
@@ -42,19 +40,12 @@ function asyncComponent(config) {
         }
 
         componentDidUpdate(){
-            if(this.state.initialised){
-                this.props.dispatch({
-                    type:`${this.state.modelNamespace}/defer`
-                });
-            }
         }
 
         load() {
             resolve().then((m) => {
                 const [model, AsyncComponent] = m;
                 this.setState({
-                    initialised:true,
-                    modelNamespace: model.namespace,
                     AsyncComponent
                 });
             });
