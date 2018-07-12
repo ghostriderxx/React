@@ -2,7 +2,8 @@ import React from "react"
 import {connect} from "react-redux";
 import reaper from "./reaper";
 import dynamic from "./reaper/dynamic";
-import reaperLoading from "./reaper-loading/index";
+import reaperLoading from "./reaper-loading";
+import reaperDefer from "./reaper-defer";
 import Rui from "./Rui";
 import ModelNamespaceContext from "../context/ModelNamespaceContext"
 
@@ -53,5 +54,6 @@ export {
     reaper,
     dynamic,
     reaperLoading,
+    reaperDefer,
     Rui
 }

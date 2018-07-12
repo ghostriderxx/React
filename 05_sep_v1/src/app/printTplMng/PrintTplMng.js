@@ -7,7 +7,7 @@ import {
 } from "../../framework/taglib";
 
 
-import {MsgBox, request} from "../../framework/util";
+import {MsgBox, request, URL} from "../../framework/util";
 
 export default class PrintTplMng extends Rui {
     constructor(props){
@@ -23,3 +23,16 @@ export default class PrintTplMng extends Rui {
     componentDidMount() {
     }
 }
+
+export const model = {
+    namespace: 'printTplMng',
+
+    state: {
+    },
+
+    reducers: {
+    },
+
+    effects: {
+    },
+};

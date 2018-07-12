@@ -158,7 +158,7 @@ class GridWarpper extends React.Component{
     }
 
     componentWillUnmount(){
-        Frame.deleteModel(this.gridNamespace);
+        //Frame.deleteModel(this.gridNamespace);
     }
 
     render(){

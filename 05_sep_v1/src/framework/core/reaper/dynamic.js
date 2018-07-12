@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {connect} from "react-redux"
+
 
 const cached = {};
 
@@ -15,33 +17,46 @@ let defaultLoadingComponent = () => null;
 function asyncComponent(config) {
     const {resolve} = config;
 
-    return class DynamicComponent extends Component {
+    return connect()(class DynamicComponent extends React.Component {
         constructor(...args) {
             super(...args);
+
             this.LoadingComponent =
                 config.LoadingComponent || defaultLoadingComponent;
+
+
             this.state = {
+                initialised: false,
+                modelNamespace: null,
                 AsyncComponent: null,
             };
+
+
             this.load();
         }
 
         componentDidMount() {
-            this.mounted = true;
         }
 
         componentWillUnmount() {
-            this.mounted = false;
+        }
+
+        componentDidUpdate(){
+            if(this.state.initialised){
+                this.props.dispatch({
+                    type:`${this.state.modelNamespace}/defer`
+                });
+            }
         }
 
         load() {
             resolve().then((m) => {
-                const AsyncComponent = m.default || m;
-                if (this.mounted) {
-                    this.setState({AsyncComponent});
-                } else {
-                    this.state.AsyncComponent = AsyncComponent; // eslint-disable-line
-                }
+                const [model, AsyncComponent] = m;
+                this.setState({
+                    initialised:true,
+                    modelNamespace: model.namespace,
+                    AsyncComponent
+                });
             });
         }
 
@@ -52,7 +67,7 @@ function asyncComponent(config) {
 
             return <LoadingComponent {...this.props} />;
         }
-    };
+    });
 }
 
 
@@ -76,7 +91,7 @@ export default function dynamic(config) {
 
                     registerModel(app, model);
 
-                    resolve(ui);
+                    resolve([model, ui]);
                 });
             });
         },

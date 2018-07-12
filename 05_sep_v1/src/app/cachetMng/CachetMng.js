@@ -91,10 +91,6 @@ export default class CachetMng extends Rui {
         )
     }
 
-    componentDidMount(){
-        this.queryCachetTypeList();
-    }
-
     // 查询章类别信息
     queryCachetTypeList = () => {
         this.props.invoke("queryCachetTypeList");
@@ -141,20 +137,32 @@ export default class CachetMng extends Rui {
 export const model = {
     namespace: 'cachetMng',
     state: {
+        deferred: false,
         cachetImageUrl: "",
     },
     reducers: {
-        viewCachetImageSuccess(state, {payload}) {
+        deferredSuccess(state, {payload}) {
             return {
                 ...state,
                 cachetImageUrl: payload,
+            };
+        },
+
+        viewCachetImageSuccess(state, {payload}) {
+            return {
+                ...state,
+                deferred: true,
             };
         },
     },
     effects: {
         // defer = defer
         * defer({payload}, RUI) {
-            yield RUI.invoke("queryCachetTypeList");
+            const deferred = yield RUI.select(({cachetMng})=>(cachetMng.deferred));
+            if(!deferred){
+                yield RUI.invoke("queryCachetTypeList");
+                yield RUI.invoke("deferredSuccess");
+            }
         },
 
         // 查询章类别信息
@@ -417,6 +425,7 @@ export const model = {
             }
 
             // goRow
+            alert(zlbbh);
         },
     },
 };
