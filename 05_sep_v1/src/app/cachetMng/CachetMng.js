@@ -142,17 +142,9 @@ export default class CachetMng extends Rui {
 export const model = {
     namespace: 'cachetMng',
     state: {
-        deferred: false,
         cachetImageUrl: "",
     },
     reducers: {
-        deferredSuccess(state, {payload}) {
-            return {
-                ...state,
-                cachetImageUrl: payload,
-            };
-        },
-
         viewCachetImageSuccess(state, {payload}) {
             return {
                 ...state,
@@ -163,11 +155,7 @@ export const model = {
     effects: {
         // defer = defer
         * defer({payload}, RUI) {
-            const deferred = yield RUI.select(({cachetMng})=>(cachetMng.deferred));
-            if(!deferred){
-                yield RUI.invoke("queryCachetTypeList");
-                yield RUI.invoke("deferredSuccess");
-            }
+            yield RUI.invoke("queryCachetTypeList");
         },
 
         // 查询章类别信息
