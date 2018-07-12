@@ -40,12 +40,17 @@ export default class StringInput extends React.Component{
     render(){
         const {name, labelValue, initialValue} = this.props;
 
+        const validateArry = [];
+        if (this.props.required == true) {
+            validateArry.push(required);
+        }
+
         return <Field
             name={name}
             type="text"
             component={renderField}
             labelValue={labelValue}
-            validate={[required]}
+            validate={validateArry}
         />
     }
 }

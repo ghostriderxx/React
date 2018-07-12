@@ -4,32 +4,29 @@ import {
     Buttons,
     Panel,
     Form,
-    getCellValue
+    Grid
 } from "../../framework/taglib";
 
-
-import {MsgBox, request} from "../../framework/util";
+import {MsgBox, request,URL} from "../../framework/util";
 
 @RUIConnect("smsManageLeaf")
 export default class SmsManageLeaf extends Rui{
     constructor(props){
         super(props);
     }
-
     render(){
-        const {smsds,mbbh,mbmc} = this.props.smsManageLeaf;
         return (
             <Panel>
-                <Form wrappedComponentRef={(init) => this.formCachetType = init}>
-                    <Form.StringInput name={"mbbh"} labelValue={"模板编号"} required={false} initialValue={mbbh} />
-                    <Form.StringInput name={"mbmc"} labelValue={"模板名称"} required={false} initialValue={mbmc}/>
+                <Form name={"newform"}>
+                    <Form.StringInput name={"mbbh"} labelValue={"模板编号"} required={false}  />
+                    <Form.StringInput name={"mbmc"} labelValue={"模板名称"} required={false}  />
                 </Form>
                 <Buttons align={"right"}>
-                    <Buttons.Button onClick={this.querySmsInfo}>查询</Buttons.Button>
+                    <Buttons.Button onClick={this.loadData}>查询</Buttons.Button>
                     <Buttons.Button onClick={this.clear}>清空</Buttons.Button>
                 </Buttons>
 
-                <Grid name={"smsinfo"} dataSource={smsds} onRowClick={(a)=>(a)}>
+                <Grid name={"smsinfo"}>
                     <Grid.Column name={"mbbh"} head={"模板编号"}/>
                     <Grid.Column name={"mbmc"} head={"模板名称"}/>
                     <Grid.Column name={"mbnr"} head={"模板内容"}/>
@@ -47,179 +44,116 @@ export default class SmsManageLeaf extends Rui{
         );
     }
 
-
-    synchFormData =()=>{
-        //没有getVlaue
-        //同步数据，之后要删除！！！！！！
-
-        this.formCachetType.checkFormValues((err, values) => {
-            if (!err) {
-                let {mbbh,mbmc} = values;
-                if (mbbh === undefined){
-                    mbbh = "";
-                }
-
-                if (mbmc === undefined){
-                    mbmc = "";
-                }
-
-                this.props.invoke("syncFormData",{
-                    mbbh,
-                    mbmc
-                })
-            }
-        });
+    componentDidMount() {
+        this.props.invoke("defer");
     }
 
-    querySmsInfo = () =>{
-        this.synchFormData();
-        this.formCachetType.checkFormValues((err, values) => {
-            if (!err) {
-                let {mbbh,mbmc} = values;
-                if (mbbh === undefined){
-                    mbbh = "";
-                }
-
-                if (mbmc === undefined){
-                    mbmc = "";
-                }
-
-                this.props.invoke("querySmsInfo",{
-                    mbbh,
-                    mbmc
-                })
-            }
-        });
+    loadData = () =>{
+        this.props.invoke("loadData");
     }
 
     clear = () =>{
-        this.props.invoke("clearSuccess");
-
+        this.props.invoke("clear");
     }
 
     xzSms = ()=>{
-
-        this.synchFormData();
-
-        //为了获取当前form的value
-        this.formCachetType.checkFormValues((err, values) => {
-            const {mbbh,mbmc} = values;
-            this.props.invoke("resAddSms",{
-                mbbh,
-                mbmc
-            });
-        });
+        this.props.invoke("xzSms");
     }
 
     xgSms = ()=>{
-        this.synchFormData();
-
-        this.formCachetType.checkFormValues((err, values) => {
-            const {mbbh,mbmc} = values;
-            this.props.invoke("resUpdateSms",{
-                mbbh,
-                mbmc
-            });
-        });
+        this.props.invoke("xgSms");
     }
 
     scSms = ()=>{
-
-        this.synchFormData();
-
-        this.props.invoke("deleteSms");
+        this.props.invoke("scSms");
     }
 }
 
-export const modelSmsManageLeaf = {
+export const model  = {
     namespace : "smsManageLeaf",
     state: {
-        smsds: [],
-        mbbh: '',
-        mbmc:'',
     },
     effects:{
-        * querySmsInfo({payload}, {invoke,select}){
+         *defer({payload},RUI){
+            yield RUI.invoke("loadData");
+         },
 
-            const mbbh = yield select(state => state["smsManageLeaf"].mbbh);
-            const mbmc = yield select(state => state["smsManageLeaf"].mbmc);
-            const vdo = yield request(`/sep/SmsServlet/querySmsInfo?mbbh=${mbbh}&mbmc=${mbmc}`);
-            const {vds} = vdo;
-            yield invoke("querySmsInfoSuccess",{
-                vds
-            });
+        * loadData({payload},RUI){
+            let formObj = yield RUI.getObject("newform");
+            let checkResult = yield formObj.checkFormValues();
+            if(!checkResult){
+                return;
+            }
+
+            let formValues = yield formObj.getFormValues();
+
+          //  let mbbh = formValues.mbbh;
+           // let mbmc = formValues.mbmc;
+
+            let url = new URL("/sep/SmsServlet/querySmsInfo");
+           // url.addPara("mbbh",mbbh);
+           // url.addPara("mbmc",mbmc);
+            const vdo = yield request(url.getURLString());
+
+            const grid = yield RUI.getObject("smsinfo");
+            yield grid.fillData(vdo.vds);
         },
 
-        *resAddSms({payload}, {invoke,openRES}){
-            yield yield openRES("新增短信模板","app/smsMng/ResAddSms.js",600);// openRES
-            const {mbbh} = payload;
-            yield invoke("querySmsInfo",{mbbh});// RES关闭后的回调函数; 平面化代码结构
+
+        *clear ({payload}, RUI){
+            let formObj = yield RUI.getObject("newform");
+            let gridObj = yield RUI.getObject("smsinfo");
+            yield formObj.fillData([]);
+            yield gridObj.fillData([]);
+
+        },
+
+        *xzSms({payload},RUI){
+            yield RUI.openRES("新增短信模板","app/smsMng/ResAddSms.js",600);// openRES
+            yield RUI.invoke("loadData");// RES关闭后的回调函数; 平面化代码结构
         },
 
         // 修改章类别信息
-        * resUpdateSms({payload}, {invoke,openRES}) {
-            const rowNum = yield yield invoke("smsinfo/gridGetCurrentRowNumber");
-            if(rowNum == 0){
+        * xgSms({payload},RUI) {
+            const grid = yield RUI.getObject("smsinfo");
+            const row = yield grid.getCurrentRow();
+            if(row == 0){
                 alert("请先选中一行！");
-                return;
+                return false;
             }
-            const mbbh = yield yield invoke("smsinfo/gridGetCellValue",{ // 用消息手段操作Grid;
-                    rowNumber: rowNum,
-                    columnName: "mbbh",
-            });
-            yield yield openRES("修改短信模板","app/smsMng/ResUpdateSms.js",600,600,{
-                "mbbh":mbbh
+            const mbbh = yield grid.getCellValue(row,"mbbh");
+            const mbmc = yield grid.getCellValue(row,"mbbh");
+
+            yield RUI.openRES("修改短信模板","app/smsMng/ResUpdateSms.js",600,600,{
+                "mbbh":mbbh,
+                "mbmc":mbmc
             });
 
-            yield invoke("querySmsInfo");
+            yield RUI.invoke("loadData");
         },
 
-        * deleteSms({payload}, {invoke,openRES}){
-            const rowNum = yield yield invoke("smsinfo/gridGetCurrentRowNumber");
-            if(rowNum == 0){
+        * scSms({payload}, RUI){
+            const grid = yield RUI.getObject("smsinfo");
+            const row = yield grid.getCurrentRow();
+            if(row == 0){
                 alert("请先选中一行！");
+                return false;
+            }
+            const mbbh = yield grid.getCellValue(row,"mbbh");
+            const mbmc = yield grid.getCellValue(row,"mbbh");
+
+            if(!confirm("您确认要删除【"+mbmc+"】吗？")){
                 return;
             }
-            const mbbhResult = yield yield invoke("smsinfo/gridGetCellValue",{ // 用消息手段操作Grid;
-                rowNumber: rowNum,
-                columnName: "mbbh",
-            });
-            const mbmcResult = yield yield invoke("smsinfo/gridGetCellValue",{ // 用消息手段操作Grid;
-                rowNumber: rowNum,
-                columnName: "mbmc",
-            });
-            if(!confirm("您确认要删除【"+mbmcResult+"】吗？")){
-                return;
-            }
-            yield request(`/sep/SmsServlet/delSmsInfo?mbbh=${mbbhResult}`);
+
+            let url = new URL("/sep/SmsServlet/delSmsInfo");
+            url.addPara("mbbh",mbbh);
+           yield request(url.getURLString());
+
             MsgBox.show("删除成功!");
-
-
-            yield invoke("querySmsInfo");
+            yield RUI.invoke("loadData");
         }
     },
     reducers:{
-
-        syncFormData(state, {payload}){
-            return{
-                ...state,
-                mbbh:payload.mbbh,
-                mbmc:payload.mbmc,
-            }
-        },
-
-        querySmsInfoSuccess(state, {payload}) {
-            return {
-                ...state,
-                smsds: payload.vds
-            };
-        },
-        clearSuccess(state, {payload}){
-            return {
-                smsds: [],
-                mbbh: '',
-                mbmc:''
-            };
-        },
     },
 };

@@ -88,10 +88,6 @@ export default {
 app.model(modelApp);
 
 //短信模板
-app.model(modelSmsMng);
-app.model(modelSmsManageLeaf);
-app.model(modelResAddSms);
-app.model(modelResUpdateSms);
 
 
 // 框架启动页
