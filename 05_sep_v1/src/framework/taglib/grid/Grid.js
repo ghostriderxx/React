@@ -14,7 +14,6 @@ import {
 import Frame from "../../../index"
 import ModelNamespaceContext from "../../context/ModelNamespaceContext"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // ModelFactory
 //

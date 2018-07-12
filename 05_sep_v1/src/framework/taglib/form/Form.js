@@ -4,57 +4,59 @@
 // ## React
 import React from 'react';
 
-import PropTypes from "prop-types"
+// ## Redux
+import {connect} from "react-redux";
 
 // ## redux-form
-import {Field, reduxForm} from 'redux-form'
+import {reduxForm} from 'redux-form'
+
+// ## prop-types
+import PropTypes from "prop-types"
 
 // ## Framework
 import ModelNamespaceContext from "../../context/ModelNamespaceContext"
-import {connect} from "react-redux";
-
-
-class Form extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
-    render(){
-
-        const {handleSubmit, pristine, reset, submitting} = this.props;
-
-        return (
-            <form>
-                {this.props.children}
-            </form>
-        );
-    }
-}
 
 
 @connect()
-class FormWrapper extends React.Component{
+class RUIForm extends React.Component{
     constructor(props) {
         super(props);
     }
 
     componentWillMount(){
-        this.WrappedForm = reduxForm({
+        class RUIFormCore extends React.Component{
+            constructor(props) {
+                super(props);
+            }
+
+            render(){
+                const {handleSubmit, pristine, reset, submitting} = this.props;
+                return (
+                    <form>
+                        {this.props.children}
+                    </form>
+                );
+            }
+        }
+
+        const reduxFormCreator = reduxForm({
             form: `${this.props.modelNamespace}_${this.props.name}`,
-        })(Form);
+        });
+
+        this.ReduxForm = reduxFormCreator(RUIFormCore);
     }
 
     render(){
-        const WrappedForm = this.WrappedForm;
+        const {ReduxForm} = this;
 
         return (
             <div>
-                <WrappedForm {...this.props}/>
+                <ReduxForm {...this.props}/>
             </div>
         );
     }
 }
-FormWrapper.PropTypes = {
+RUIForm.PropTypes = {
     name: PropTypes.string.isRequired
 };
 
@@ -62,7 +64,7 @@ FormWrapper.PropTypes = {
 export default (props) => (
     <ModelNamespaceContext.Consumer>
         {
-            ({modelNamespace}) => <FormWrapper {...props} modelNamespace={modelNamespace} />
+            ({modelNamespace}) => <RUIForm {...props} modelNamespace={modelNamespace} />
         }
     </ModelNamespaceContext.Consumer>
 );
