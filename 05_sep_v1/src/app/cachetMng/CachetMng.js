@@ -152,6 +152,11 @@ export const modelCachetMng = {
         },
     },
     effects: {
+        // defer = defer
+        * defer({payload}, RUI) {
+            yield RUI.invoke("queryCachetTypeList");
+        },
+
         // 查询章类别信息
         * queryCachetTypeList({payload}, RUI) {
             const url = new URL("/sep/CachetServlet/queryCachetTypeList");

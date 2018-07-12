@@ -1,5 +1,5 @@
 import React from "react"
-import {connect as ReduxConnect} from "react-redux";
+import {connect} from "react-redux";
 import reaper from "./reaper";
 import dynamic from "./reaper/dynamic";
 import reaperLoading from "./reaper-loading/index";
@@ -7,7 +7,7 @@ import Rui from "./Rui";
 import ModelNamespaceContext from "../context/ModelNamespaceContext"
 
 export const RUIConnect = (namespace) => (Component) => {
-    return ReduxConnect(
+    return connect(
         (state) => ({[namespace]: state[namespace]}),
         (dispatch) => ({
             invoke: (type, payload) => {
@@ -36,13 +36,22 @@ export const RUIConnect = (namespace) => (Component) => {
                 });
             },
         }),
-    )(class extends React.Component{
-        constructor(props){
+    )(class extends React.Component {
+        constructor(props) {
             super(props);
         }
 
-        render(){
-            return <ModelNamespaceContext.Provider value={{modelNamespace:namespace}}>
+        componentDidMount(){
+            // this.props.invoke(`${namespace}/defer`);
+            console.log("------core--mount", namespace);
+        }
+
+        componentWillUnmount(){
+            console.log("------core--unmount", namespace);
+        }
+
+        render() {
+            return <ModelNamespaceContext.Provider value={{modelNamespace: namespace}}>
                 <Component {...this.props}/>
             </ModelNamespaceContext.Provider>;
         }

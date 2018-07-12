@@ -44,14 +44,14 @@ import {modelResAddSms} from "./app/smsMng/ResAddSms"
 import {modelResUpdateSms} from  "./app/smsMng/ResUpdateSms"
 
 
-
-const {extraReducers, onEffect} = reaperLoading();
-const app = reaper({
+const app = reaper();
+app.use(reaperLoading());
+app.use({
     extraReducers: {
         form: reduxFormReducer,
-        ...extraReducers
-    },
-    onEffect,
+    }
+});
+app.use({
     onError(e) {
         if(e instanceof BusinessException){ // BusinessExcetpion
             alert(e.message);
@@ -62,6 +62,7 @@ const app = reaper({
         }
     },
 });
+
 
 // 框架级模型
 app.model(require('./framework/taglib/lane/_modelLane').default);
