@@ -75,7 +75,7 @@ export default class ResCachetAdd extends Rui {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-export const modelResCachetAdd = {
+export const model = {
     namespace: 'resCachetAdd',
 
     state: {

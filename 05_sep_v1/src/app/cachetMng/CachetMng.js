@@ -138,7 +138,7 @@ export default class CachetMng extends Rui {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-export const modelCachetMng = {
+export const model = {
     namespace: 'cachetMng',
     state: {
         cachetImageUrl: "",
@@ -337,6 +337,9 @@ export const modelCachetMng = {
         // 提交数据后执行的方法
         * actionAfterSubmit({payload}, RUI) {
             const grid = yield RUI.getObject("dwCachetTypeInfo");
+
+            console.log(grid);
+
             const rowCount = yield grid.getRowCount();
             if(rowCount <= 0){
                 return;

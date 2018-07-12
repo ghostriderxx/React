@@ -149,10 +149,7 @@ class GridWarpper extends React.Component{
                 grid: store[this.gridNamespace],
                 namespace: this.gridNamespace,
                 loading: store.loading.global
-            }),
-            (dispatch) => ({dispatch}),
-            null,
-            {withRef:true}
+            })
         );
 
         const ConnectedGrid = connector(Grid);

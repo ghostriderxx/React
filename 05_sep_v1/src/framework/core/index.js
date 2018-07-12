@@ -41,15 +41,6 @@ export const RUIConnect = (namespace) => (Component) => {
             super(props);
         }
 
-        componentDidMount(){
-            // this.props.invoke(`${namespace}/defer`);
-            console.log("------core--mount", namespace);
-        }
-
-        componentWillUnmount(){
-            console.log("------core--unmount", namespace);
-        }
-
         render() {
             return <ModelNamespaceContext.Provider value={{modelNamespace: namespace}}>
                 <Component {...this.props}/>

@@ -88,11 +88,6 @@ export default {
 
 // 业务级模型
 app.model(modelApp);
-app.model(modelCachetMng);
-app.model(modelResCachetAdd);
-app.model(modelResCachetModify);
-app.model(modelResCachetTypeAdd);
-app.model(modelResCachetTypeModify);
 
 //短信模板
 app.model(modelSmsMng);

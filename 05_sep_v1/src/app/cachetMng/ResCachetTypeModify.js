@@ -62,7 +62,7 @@ export default class ResCachetTypeModify extends Rui {
 /////////////////////////////////////////////////////////////////////////////
 // Model
 //
-export const modelResCachetTypeModify = {
+export const model = {
     namespace: 'resCachetTypeModify',
 
     state: {
