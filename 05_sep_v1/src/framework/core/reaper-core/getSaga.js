@@ -204,6 +204,8 @@ function createEffects(model) {
                 fillData: function*(ds) {
                     if(ds.length){
                         yield sagaEffects.put(initialize(`${model.namespace}_${name}`, ds[0]));
+                    }else{
+                        yield sagaEffects.put(initialize(`${model.namespace}_${name}`, []));
                     }
                 },
             };

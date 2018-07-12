@@ -6,7 +6,7 @@ import {
     Form
 } from "../../framework/taglib";
 
-import {request,MsgBox} from "../../framework/util";
+import {request,MsgBox,URL} from "../../framework/util";
 
 @RUIConnect("resUpdateSms")
 export  default  class  ResUpdateSms extends Rui{
@@ -16,8 +16,7 @@ export  default  class  ResUpdateSms extends Rui{
     render(){
         return (
             <Panel>
-                <Form wrappedComponentRef={(formObj) => this.formObj = formObj}
-                      dataSource={this.props.resUpdateSms.smsds}>
+                <Form name={"formUpdateTemplate"}>
                     <Form.StringInput name={"mbbh"} labelValue={"模板编号"} required={true}  requiredMessage={"请填写模板编号!"} />
                     <Form.StringInput name={"mbmc"} labelValue={"模板名称"} required={true} requiredMessage={"请填写模板名称!"}/>
                     <Form.StringInput name={"appid"} labelValue={"应用系统"} required={true}  requiredMessage={"请填写应用系统名称!"}/>
@@ -36,69 +35,57 @@ export  default  class  ResUpdateSms extends Rui{
 
     componentDidMount() {
         const mbbh = this.props.params.mbbh;
-        this.props.invoke("initUpdateDs",{
+        this.props.invoke("defer",{
                 mbbh
         });
     }
 
     saveAddTemplate = ()=>{
-
-        this.formObj.checkFormValues((err, values) => {
-            if (!err) {
-                const ymbbh = this.props.resUpdateSms.smsds[0].ymbbh;
-                this.props.invoke("saveAddTemplate",{
-                    values,
-                    ymbbh
-                });
-            }
-        });
-
+        this.props.invoke("saveAddTemplate");
     }
 
     cancel = ()=>{
-        this.props.closeRES();
+        this.props.invoke("cancel");
     }
 }
 
-export const modelResUpdateSms = {
+export const model = {
     namespace:"resUpdateSms",
     state:{
-        smsds:[]
     },
     effects:{
-        * initUpdateDs ({payload}, {invoke}){
-            const {mbbh} = payload;
-            const data = yield request(`/sep/SmsServlet/initUpdateDs?mbbh=${mbbh}`);
-            const smsds = data.vds;
-            yield invoke("initUpdateDsSuccess",{
-                smsds
-            });
+        *defer({payload}, RUI){
+            yield RUI.invoke("initUpdateDs",payload);
         },
 
-        * saveAddTemplate({payload}, {invoke,closeRES}){
-            const {
-                mbbh,
-                mbmc,
-                mbnr,
-                sql,
-                tfbz,
-                appid,
-            } = payload.values;
+        * initUpdateDs ({payload}, RUI){
+            const mbbh = payload.mbbh;
+            var url = new URL("/sep/SmsServlet/initUpdateDs");
+            url.addPara("mbbh",mbbh);
+            const data = yield request(url.getURLString());
+            const smsds = data.vds;
 
-            const ymbbh = payload.ymbbh;
-            yield request(`/sep/SmsServlet/saveUpdateSmsTemplate?mbbh=${mbbh}&ymbbh=${ymbbh}&mbmc=${mbmc}&mbnr=${mbnr}
-                &sql=${sql}&tfbz=${tfbz}&appid=${appid}`);
+            const formObj = yield RUI.getObject("formUpdateTemplate");
+            yield formObj.fillData(smsds);
+        },
+
+        * saveAddTemplate({payload}, RUI){
+            const formObj = yield RUI.getObject("formUpdateTemplate");
+            const checkResult = yield formObj.checkFormValues();
+            if (!checkResult){
+                return;
+            }
+
+            const formVlaues = yield formObj.getFormValues();
+            var url = new URL("/sep/SmsServlet/saveUpdateSmsTemplate");
+            url.addForm(formVlaues);
+            yield request(url.getURLString());
+
             MsgBox.show("修改成功");
-            yield closeRES();
+            // 关闭RES
+            yield RUI.closeRES();
         }
     },
     reducers:{
-        initUpdateDsSuccess(state,{payload}){
-
-            return {
-                ...state,
-                smsds:payload.smsds
-            }
-        }
     }
 }

@@ -11,6 +11,7 @@ import {
     SheetContainer
 } from "../../framework/taglib";
 
+
 @RUIConnect("smsMng")
 export default class SmsMng extends Rui {
     constructor(props){
@@ -34,7 +35,7 @@ export default class SmsMng extends Rui {
     }
 }
 
-export const modelSmsMng = {
+export const model = {
     namespace: 'smsMng',
     state: {
         treeItems: [{
