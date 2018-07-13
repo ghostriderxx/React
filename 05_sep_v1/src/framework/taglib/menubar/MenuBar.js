@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux"
-
 import { Link } from 'react-router-dom'
-
 /////////////////////////////////////////////////////////////////////////////
 
 import {Menu} from "antd"
@@ -33,6 +31,8 @@ export default class MenuBar extends React.Component {
         });
 
         const currentSelectedMenuItemKey = matchedMenuItem.length ? matchedMenuItem[0].id : "";
+
+
 
         return (
             <Menu className={"dw-menubar"}

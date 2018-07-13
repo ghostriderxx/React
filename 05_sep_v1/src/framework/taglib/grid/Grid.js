@@ -101,7 +101,7 @@ class Grid extends React.Component{
     render(){
         const namespace = this.props.namespace;
         const data = this.props.grid.data;
-        const {onRowClick, ...rest} = this.props;
+        const {onRowClick,onDblClickRow,...rest} = this.props;
         return (
             <div style={{
                 padding:10,
@@ -117,6 +117,16 @@ class Grid extends React.Component{
                                 onRowClick(record);
                             }
                         },
+                        onDoubleClick:() => { // 双击行
+                            this.props.dispatch({
+                                type: `${namespace}/setCurrentRowNumberSuccess`,
+                                payload: (index+1)
+                            });
+
+                            if(onDblClickRow){
+                                onDblClickRow(record);
+                            }
+                        }
                     };
                 }} dataSource={data} loading={this.props.loading}></Table>
             </div>

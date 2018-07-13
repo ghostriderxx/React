@@ -32,13 +32,6 @@ import { message } from 'antd';
 
 // ## APP
 import {modelApp} from "./app/App"
-// ##sms
-import {modelSmsMng} from "./app/smsMng/SmsMng";
-
-import {modelSmsManageLeaf} from "./app/smsMng/SmsManageLeaf"
-import {modelResAddSms} from "./app/smsMng/ResAddSms"
-import {modelResUpdateSms} from  "./app/smsMng/ResUpdateSms"
-
 
 const app = reaper();
 app.use(reaperLoading());
@@ -86,8 +79,6 @@ export default {
 
 // 业务级模型
 app.model(modelApp);
-
-//短信模板
 
 
 // 框架启动页

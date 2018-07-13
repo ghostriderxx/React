@@ -41,6 +41,7 @@ class RUIForm extends React.Component{
 
         const reduxFormCreator = reduxForm({
             form: `${this.props.modelNamespace}_${this.props.name}`,
+            destroyOnUnmount : false,
         });
 
         this.ReduxForm = reduxFormCreator(RUIFormCore);
@@ -51,7 +52,7 @@ class RUIForm extends React.Component{
 
         return (
             <div>
-                <ReduxForm {...this.props}/>
+                <ReduxForm {...this.props} />
             </div>
         );
     }
