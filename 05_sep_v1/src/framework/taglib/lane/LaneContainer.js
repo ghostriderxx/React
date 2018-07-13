@@ -59,17 +59,9 @@ export default class LaneContainer extends React.Component {
                                     ))
                                 }
                                 {
-                                    lane.res.map(({component: Content, width, height, title, params, actionAfterClose}, key) => (
+                                    lane.res.map(({component: Content, width, height, title, params}, key) => (
                                         <Res key={key} {...this.props} title={title} width={width} height={height}>
-                                            <Content
-                                                params={params}
-                                                closeRES={(params)=>{
-                                                    this.props.dispatch({
-                                                        type: "lane/closeRes",
-                                                        payload: params,
-                                                    });
-                                                }}
-                                            ></Content>
+                                            <Content params={params}></Content>
                                         </Res>)
                                     )
                                 }
