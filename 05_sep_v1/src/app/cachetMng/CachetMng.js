@@ -148,7 +148,7 @@ export const model = {
         viewCachetImageSuccess(state, {payload}) {
             return {
                 ...state,
-                deferred: true,
+                cachetImageUrl: payload,
             };
         },
     },
@@ -162,7 +162,7 @@ export const model = {
         * queryCachetTypeList({payload}, RUI) {
             const url = new URL("/sep/CachetServlet/queryCachetTypeList");
 
-            const vdo = yield request(url.getURLString());
+            const vdo = yield request(url);
 
             const grid = yield RUI.getObject("dwCachetTypeInfo");
             yield grid.fillData(vdo.cachettypeds);
@@ -197,7 +197,7 @@ export const model = {
             const url = new URL("/sep/CachetServlet/queryCachetList");
             url.addPara("zlbbh", zlbbh)
 
-            const vdo = yield request(url.getURLString());
+            const vdo = yield request(url);
 
             const grid = yield RUI.getObject("dwCachetInfo");
             yield grid.fillData(vdo.cachetds);
@@ -213,7 +213,7 @@ export const model = {
             const url = new URL("/sep/CachetServlet/queryCachetLoca");
             url.addPara("zlbbh", zlbbh);
 
-            const vdo = yield request(url.getURLString());
+            const vdo = yield request(url);
 
             const grid = yield RUI.getObject("dwTempInfor");
             yield grid.fillData(vdo.tempds);
@@ -284,7 +284,7 @@ export const model = {
             }
             const url = new URL("/sep/CachetServlet/deleteCachetTypeInfo");
             url.addPara("zlbbh", zlbbh);
-            yield request(url.getURLString());
+            yield request(url);
 
             // 重新查询章类别
             yield RUI.invoke("queryCachetTypeList");
@@ -338,9 +338,6 @@ export const model = {
         // 提交数据后执行的方法
         * actionAfterSubmit({payload}, RUI) {
             const grid = yield RUI.getObject("dwCachetTypeInfo");
-
-            console.log(grid);
-
             const rowCount = yield grid.getRowCount();
             if(rowCount <= 0){
                 return;
@@ -379,7 +376,7 @@ export const model = {
             const url = new URL("/sep/CachetServlet/deleteCachetInfo");
             url.addPara("zbh", zbh);
 
-            yield request(url.getURLString());
+            yield request(url);
 
             yield RUI.invoke(`cachetTypeGridClick`);
 

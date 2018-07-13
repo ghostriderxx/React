@@ -93,7 +93,7 @@ export const model  = {
             let url = new URL("/sep/SmsServlet/querySmsInfo");
            // url.addPara("mbbh",mbbh);
            // url.addPara("mbmc",mbmc);
-            const vdo = yield request(url.getURLString());
+            const vdo = yield request(url);
 
             const grid = yield RUI.getObject("smsinfo");
             yield grid.fillData(vdo.vds);
@@ -148,7 +148,7 @@ export const model  = {
 
             let url = new URL("/sep/SmsServlet/delSmsInfo");
             url.addPara("mbbh",mbbh);
-           yield request(url.getURLString());
+           yield request(url);
 
             MsgBox.show("删除成功!");
             yield RUI.invoke("loadData");

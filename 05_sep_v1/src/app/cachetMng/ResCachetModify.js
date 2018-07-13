@@ -40,6 +40,7 @@ export default class ResCachetModify extends Rui {
                     <Form.StringInput name={"sigzbh"} labelValue={"数字签章名称"} required={true} requiredMessage={"数字签章名称!"}/>
                     <Form.NumberInput name={"zgd"} labelValue={"章高度"} required={true} requiredMessage={"请填写章高度!"}/>
                     <Form.NumberInput name={"zkd"} labelValue={"章宽度"} required={true} requiredMessage={"请填写章宽度!"}/>
+                    <Form.FileSelector name={"image"} labelValue={"选择章图片"}/>
                 </Form>
 
                 <Buttons align={"right"}>
@@ -52,7 +53,7 @@ export default class ResCachetModify extends Rui {
 
     componentDidMount() {
         const zbh = this.props.params.zbh;
-        this.props.invoke("queryCachetInfo", zbh);
+        this.props.invoke("defer", zbh);
     }
 
     saveCachetInfoModify = () => {
@@ -77,12 +78,16 @@ export const model = {
     },
 
     effects: {
+        * defer({payload}, RUI) {
+            yield RUI.invoke("queryCachetInfo", payload);
+        },
+
         * queryCachetInfo({payload}, RUI) {
             const url = new URL("/sep/CachetServlet/queryCachetInfo");
 
             url.addPara("zbh", payload);
 
-            const vdo = yield request(url.getURLString());
+            const vdo = yield request(url);
 
             const form = yield RUI.getObject("formCachetModify");
 
@@ -101,7 +106,7 @@ export const model = {
 
                 url.addForm(formValues);
 
-                yield request(url.getURLString());
+                yield request(url);
 
                 MsgBox.show("修改成功!");
 

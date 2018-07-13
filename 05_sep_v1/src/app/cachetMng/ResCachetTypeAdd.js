@@ -73,6 +73,9 @@ export const model = {
     },
 
     effects: {
+        * defer({payload}, RUI) {
+        },
+
         * saveCachetTypeInfoAdd({payload}, RUI) {
 
             const form = yield RUI.getObject("formCachetTypeAdd");
@@ -86,7 +89,7 @@ export const model = {
 
                 url.addForm(formValues);
 
-                yield request(url.getURLString());
+                yield request(url);
 
                 MsgBox.show("保存成功!");
 

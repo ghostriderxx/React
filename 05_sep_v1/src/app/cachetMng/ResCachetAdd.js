@@ -39,6 +39,7 @@ export default class ResCachetAdd extends Rui {
                     <Form.StringInput name={"sigzbh"} labelValue={"数字签章名称"} required={true} requiredMessage={"数字签章名称!"}/>
                     <Form.NumberInput name={"zgd"} labelValue={"章高度"} required={true} requiredMessage={"请填写章高度!"}/>
                     <Form.NumberInput name={"zkd"} labelValue={"章宽度"} required={true} requiredMessage={"请填写章宽度!"}/>
+                    <Form.FileSelector name={"image"} labelValue={"选择章图片"}/>
                 </Form>
 
                 <Buttons align={"right"}>
@@ -51,13 +52,8 @@ export default class ResCachetAdd extends Rui {
 
     // defer = defer
     componentDidMount() {
-        this.fwdPageCachetAdd();
-    }
-
-    // 跳转到新增章信息页面[只保留取数据逻辑]
-    fwdPageCachetAdd = () => {
         const zlbbh = this.props.params.zlbbh;
-        this.props.invoke("fwdPageCachetAdd", zlbbh);
+        this.props.invoke("defer", zlbbh);
     }
 
     // 保存增加的章信息
@@ -85,12 +81,16 @@ export const model = {
     },
 
     effects: {
+        * defer({payload}, RUI) {
+            yield RUI.invoke("fwdPageCachetAdd", payload);
+        },
+
         * fwdPageCachetAdd({payload}, RUI) {
             const url = new URL("/sep/CachetServlet/fwdPageCachetAdd");
 
             url.addPara("zlbbh", payload);
 
-            const vdo = yield request(url.getURLString());
+            const vdo = yield request(url);
 
             const form = yield RUI.getObject("formCachetAdd");
 
@@ -111,7 +111,7 @@ export const model = {
 
                 url.addForm(formValues);
 
-                yield request(url.getURLString());
+                yield request(url);
 
                 MsgBox.show("新增成功!");
 

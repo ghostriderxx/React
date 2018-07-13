@@ -60,7 +60,7 @@ export const model = {
 
             var url = new URL("/sep/SmsServlet/saveAddTemplate");
             url.addForm(formVlaues);
-            yield request(url.getURLString());
+            yield request(url);
 
             MsgBox.show("新增成功");
             // 关闭RES

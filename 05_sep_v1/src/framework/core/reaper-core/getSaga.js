@@ -197,7 +197,6 @@ function createEffects(model) {
                     const values = yield sagaEffects.select((state)=>{
                         return getFormValues(`${model.namespace}_${name}`)(state);
                     });
-
                     return values;
                 },
 

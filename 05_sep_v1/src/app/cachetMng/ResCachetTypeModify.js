@@ -47,7 +47,7 @@ export default class ResCachetTypeModify extends Rui {
 
     componentDidMount() {
         const zlbbh = this.props.params.zlbbh;
-        this.props.invoke("queryCachetTypeInfo", zlbbh);
+        this.props.invoke("defer", zlbbh);
     }
 
     saveCachetTypeInfoModify = () => {
@@ -72,10 +72,14 @@ export const model = {
     },
 
     effects: {
+        * defer({payload}, RUI) {
+            yield RUI.invoke("queryCachetTypeInfo", payload)
+        },
+
         * queryCachetTypeInfo({payload}, RUI) {
             const url = new URL("/sep/CachetServlet/queryCachetTypeInfo");
             url.addPara("zlbbh", payload);
-            const data = yield request(url.getURLString());
+            const data = yield request(url);
 
             // 填充Form
             const form = yield RUI.getObject("formCachetTypeModify");
@@ -95,7 +99,7 @@ export const model = {
 
                 url.addForm(formValues);
 
-                yield request(url.getURLString());
+                yield request(url);
 
                 MsgBox.show("保存成功!");
 

@@ -62,7 +62,7 @@ export const model = {
             const mbbh = payload.mbbh;
             var url = new URL("/sep/SmsServlet/initUpdateDs");
             url.addPara("mbbh",mbbh);
-            const data = yield request(url.getURLString());
+            const data = yield request(url);
             const smsds = data.vds;
 
             const formObj = yield RUI.getObject("formUpdateTemplate");
@@ -79,7 +79,7 @@ export const model = {
             const formVlaues = yield formObj.getFormValues();
             var url = new URL("/sep/SmsServlet/saveUpdateSmsTemplate");
             url.addForm(formVlaues);
-            yield request(url.getURLString());
+            yield request(url);
 
             MsgBox.show("修改成功");
             // 关闭RES
