@@ -1,5 +1,5 @@
 {
-  "name": "08_react_context",
+  "name": "router_demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,8 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "history": "^4.7.2",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
