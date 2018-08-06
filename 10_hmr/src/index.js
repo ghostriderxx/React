@@ -1,15 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./style.css"
+import "./style.css";
 
-const App = (props) => {
-    return (
-        <div className="bgcolor">
-            HelloWorld!
-        </div>
-    );
-}
+import App from "./App.js";
 
 ReactDOM.render(
     <App/>,
