@@ -1,11 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import hello from "./hello"
 
-import "./style.css";
+hello();
 
-import App from "./App.js";
+if (module.hot) {
 
-ReactDOM.render(
-    <App/>,
-    document.getElementById("app")
-);
+    module.hot.accept("./hello", function(){
+
+        const reloadedHello = require("./hello");
+
+        console.log(reloadedHello);
+
+    });
+}

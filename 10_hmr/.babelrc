@@ -3,7 +3,6 @@
         "env", "react"
     ],
     "plugins": [
-        "react-hot-loader/babel",
         "transform-class-properties",
         "syntax-dynamic-import",
         "transform-decorators-legacy",

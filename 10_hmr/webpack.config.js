@@ -11,13 +11,12 @@ module.exports = {
         filename: 'bundle.js'
     },
     cache: true,
-    devtool: "source-map",
+    devtool: "eval",
     devServer: {
         publicPath: "/",
         port: 9000,
         open: true,
         hot: true,
-        inline: true,
         historyApiFallback: true,
     },
     module: {
