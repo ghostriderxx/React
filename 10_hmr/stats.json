@@ -1,0 +1,443 @@
+{
+  "errors": [],
+  "warnings": [],
+  "version": "4.16.4",
+  "hash": "697b920203d1895bb2b6",
+  "time": 491,
+  "builtAt": 1533612509181,
+  "publicPath": "",
+  "outputPath": "F:\\git_webj2ee\\React\\10_hmr\\dist",
+  "assetsByChunkName": {
+    "main": [
+      "bundle.js",
+      "bundle.js.map"
+    ]
+  },
+  "assets": [
+    {
+      "name": "bundle.js",
+      "size": 30466,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "emitted": true
+    },
+    {
+      "name": "bundle.js.map",
+      "size": 31279,
+      "chunks": [
+        "main"
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "emitted": true
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "bundle.js",
+        "bundle.js.map"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "namedChunkGroups": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "bundle.js",
+        "bundle.js.map"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "chunks": [
+    {
+      "id": "main",
+      "rendered": true,
+      "initial": true,
+      "entry": true,
+      "size": 559,
+      "names": [
+        "main"
+      ],
+      "files": [
+        "bundle.js",
+        "bundle.js.map"
+      ],
+      "hash": "ec9053dd684aae27eae2",
+      "siblings": [],
+      "parents": [],
+      "children": [],
+      "childrenByOrder": {},
+      "modules": [
+        {
+          "id": "./src/hello.js",
+          "identifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\hello.js",
+          "name": "./src/hello.js",
+          "index": 2,
+          "index2": 0,
+          "size": 152,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+          "issuerId": "./src/index.js",
+          "issuerName": "./src/index.js",
+          "issuerPath": [
+            {
+              "id": 0,
+              "identifier": "multi ./src/index.js",
+              "name": "multi ./src/index.js",
+              "profile": {
+                "factory": 1,
+                "building": 3
+              }
+            },
+            {
+              "id": "./src/index.js",
+              "identifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+              "name": "./src/index.js",
+              "profile": {
+                "factory": 32,
+                "building": 353
+              }
+            }
+          ],
+          "profile": {
+            "factory": 29,
+            "building": 11
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": "./src/index.js",
+              "moduleIdentifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+              "module": "./src/index.js",
+              "moduleName": "./src/index.js",
+              "type": "cjs require",
+              "userRequest": "./hello",
+              "loc": "3:13-31"
+            },
+            {
+              "moduleId": "./src/index.js",
+              "moduleIdentifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+              "module": "./src/index.js",
+              "moduleName": "./src/index.js",
+              "type": "module.hot.accept",
+              "userRequest": "./hello",
+              "loc": "13:4-18:6"
+            },
+            {
+              "moduleId": "./src/index.js",
+              "moduleIdentifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+              "module": "./src/index.js",
+              "moduleName": "./src/index.js",
+              "type": "cjs require",
+              "userRequest": "./hello",
+              "loc": "15:28-46"
+            }
+          ],
+          "providedExports": null,
+          "optimizationBailout": [],
+          "depth": 2,
+          "source": "\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nexports.default = function () {\n    console.log(\"Hello World 8!\");\n};"
+        },
+        {
+          "id": "./src/index.js",
+          "identifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+          "name": "./src/index.js",
+          "index": 1,
+          "index2": 1,
+          "size": 379,
+          "cacheable": true,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": "multi ./src/index.js",
+          "issuerId": 0,
+          "issuerName": "multi ./src/index.js",
+          "issuerPath": [
+            {
+              "id": 0,
+              "identifier": "multi ./src/index.js",
+              "name": "multi ./src/index.js",
+              "profile": {
+                "factory": 1,
+                "building": 3
+              }
+            }
+          ],
+          "profile": {
+            "factory": 32,
+            "building": 353
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": 0,
+              "moduleIdentifier": "multi ./src/index.js",
+              "module": "multi ./src/index.js",
+              "moduleName": "multi ./src/index.js",
+              "type": "single entry",
+              "userRequest": "./src/index.js",
+              "loc": "main[0]"
+            }
+          ],
+          "providedExports": null,
+          "optimizationBailout": [],
+          "depth": 1,
+          "source": "\"use strict\";\n\nvar _hello = require(\"./hello\");\n\nvar _hello2 = _interopRequireDefault(_hello);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n(0, _hello2.default)();\n\nif (module.hot) {\n\n    module.hot.accept(\"./hello\", function () {\n\n        var reloadedHello = require(\"./hello\");\n\n        console.log(reloadedHello);\n    });\n}"
+        },
+        {
+          "id": 0,
+          "identifier": "multi ./src/index.js",
+          "name": "multi ./src/index.js",
+          "index": 0,
+          "index2": 2,
+          "size": 28,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            "main"
+          ],
+          "issuer": null,
+          "issuerId": null,
+          "issuerName": null,
+          "issuerPath": null,
+          "profile": {
+            "factory": 1,
+            "building": 3
+          },
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": null,
+              "moduleIdentifier": null,
+              "module": null,
+              "moduleName": null,
+              "type": "multi entry"
+            }
+          ],
+          "providedExports": null,
+          "optimizationBailout": [],
+          "depth": 0
+        }
+      ],
+      "filteredModules": 0,
+      "origins": [
+        {
+          "module": "",
+          "moduleIdentifier": "",
+          "moduleName": "",
+          "loc": "main",
+          "request": null,
+          "reasons": []
+        }
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "id": "./src/hello.js",
+      "identifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\hello.js",
+      "name": "./src/hello.js",
+      "index": 2,
+      "index2": 0,
+      "size": 152,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+      "issuerId": "./src/index.js",
+      "issuerName": "./src/index.js",
+      "issuerPath": [
+        {
+          "id": 0,
+          "identifier": "multi ./src/index.js",
+          "name": "multi ./src/index.js",
+          "profile": {
+            "factory": 1,
+            "building": 3
+          }
+        },
+        {
+          "id": "./src/index.js",
+          "identifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+          "name": "./src/index.js",
+          "profile": {
+            "factory": 32,
+            "building": 353
+          }
+        }
+      ],
+      "profile": {
+        "factory": 29,
+        "building": 11
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": "./src/index.js",
+          "moduleIdentifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+          "module": "./src/index.js",
+          "moduleName": "./src/index.js",
+          "type": "cjs require",
+          "userRequest": "./hello",
+          "loc": "3:13-31"
+        },
+        {
+          "moduleId": "./src/index.js",
+          "moduleIdentifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+          "module": "./src/index.js",
+          "moduleName": "./src/index.js",
+          "type": "module.hot.accept",
+          "userRequest": "./hello",
+          "loc": "13:4-18:6"
+        },
+        {
+          "moduleId": "./src/index.js",
+          "moduleIdentifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+          "module": "./src/index.js",
+          "moduleName": "./src/index.js",
+          "type": "cjs require",
+          "userRequest": "./hello",
+          "loc": "15:28-46"
+        }
+      ],
+      "providedExports": null,
+      "optimizationBailout": [],
+      "depth": 2,
+      "source": "\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nexports.default = function () {\n    console.log(\"Hello World 8!\");\n};"
+    },
+    {
+      "id": "./src/index.js",
+      "identifier": "F:\\git_webj2ee\\React\\10_hmr\\node_modules\\babel-loader\\lib\\index.js!F:\\git_webj2ee\\React\\10_hmr\\src\\index.js",
+      "name": "./src/index.js",
+      "index": 1,
+      "index2": 1,
+      "size": 379,
+      "cacheable": true,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": "multi ./src/index.js",
+      "issuerId": 0,
+      "issuerName": "multi ./src/index.js",
+      "issuerPath": [
+        {
+          "id": 0,
+          "identifier": "multi ./src/index.js",
+          "name": "multi ./src/index.js",
+          "profile": {
+            "factory": 1,
+            "building": 3
+          }
+        }
+      ],
+      "profile": {
+        "factory": 32,
+        "building": 353
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": 0,
+          "moduleIdentifier": "multi ./src/index.js",
+          "module": "multi ./src/index.js",
+          "moduleName": "multi ./src/index.js",
+          "type": "single entry",
+          "userRequest": "./src/index.js",
+          "loc": "main[0]"
+        }
+      ],
+      "providedExports": null,
+      "optimizationBailout": [],
+      "depth": 1,
+      "source": "\"use strict\";\n\nvar _hello = require(\"./hello\");\n\nvar _hello2 = _interopRequireDefault(_hello);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n(0, _hello2.default)();\n\nif (module.hot) {\n\n    module.hot.accept(\"./hello\", function () {\n\n        var reloadedHello = require(\"./hello\");\n\n        console.log(reloadedHello);\n    });\n}"
+    },
+    {
+      "id": 0,
+      "identifier": "multi ./src/index.js",
+      "name": "multi ./src/index.js",
+      "index": 0,
+      "index2": 2,
+      "size": 28,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        "main"
+      ],
+      "issuer": null,
+      "issuerId": null,
+      "issuerName": null,
+      "issuerPath": null,
+      "profile": {
+        "factory": 1,
+        "building": 3
+      },
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": null,
+          "moduleIdentifier": null,
+          "module": null,
+          "moduleName": null,
+          "type": "multi entry"
+        }
+      ],
+      "providedExports": null,
+      "optimizationBailout": [],
+      "depth": 0
+    }
+  ],
+  "filteredModules": 0,
+  "children": []
+}

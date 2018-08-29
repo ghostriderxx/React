@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "pack": "webpack",
+    "stats": "webpack --profile --json > stats.json"
   },
   "author": "",
   "license": "ISC",

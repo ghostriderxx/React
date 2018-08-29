@@ -1,3 +1,3 @@
-export default ()=>{
-    console.log("Hello World 2!");
+export default function(){
+    console.log("Hello World 8!");
 }

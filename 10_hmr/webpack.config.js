@@ -11,7 +11,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     cache: true,
-    devtool: "eval",
+    devtool: "source-map",
     devServer: {
         publicPath: "/",
         port: 9000,
