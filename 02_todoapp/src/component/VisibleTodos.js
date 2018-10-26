@@ -2,10 +2,7 @@
 import React from "react"
 import {connect} from 'react-redux'
 
-@connect(
-    ({todoapp}) => ({todoapp}),
-    (dispatch) => ({dispatch})
-)
+@connect(({todoapp}) => ({todoapp}))
 export default class VisibleTodos extends React.Component {
     constructor(props) {
         super(props);
