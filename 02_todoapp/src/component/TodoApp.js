@@ -1,13 +1,13 @@
 // React、Redux
-import React from "react"
+import React from 'react';
 
 // Component
-import TodoFilter from "./TodoFilter";
-import AddTodo from "./AddTodo";
-import VisibleTodos from "./VisibleTodos";
+import TodoFilter from './TodoFilter';
+import AddTodo from './AddTodo';
+import VisibleTodos from './VisibleTodos';
 
 // CSS
-import "./TodoApp.css"
+import './TodoApp.css';
 
 export default class TodoApp extends React.Component {
     constructor(props) {
@@ -16,10 +16,10 @@ export default class TodoApp extends React.Component {
 
     render() {
         return (
-            <div className={"todoapp"}>
-                <AddTodo/>
-                <VisibleTodos/>
-                <TodoFilter/>
+            <div className={'todoapp'}>
+                <AddTodo />
+                <VisibleTodos />
+                <TodoFilter />
             </div>
         );
     }

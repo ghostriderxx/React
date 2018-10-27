@@ -1,8 +1,34 @@
 // React、Redux
-import React from "react"
-import {connect} from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
-@connect(({todoapp}) => ({todoapp}))
+// reselect
+const getTodos = (todoapp) => todoapp.todos;
+const getVisibilityFilter = (todoapp) => todoapp.visibilityFilter;
+const getVisibilityTodos = createSelector(
+    [getTodos, getVisibilityFilter],
+    (todos, visibilityFilter) => {
+        switch (visibilityFilter) {
+            case 'SHOW_ALL':
+                return {
+                    visibilityTodos: todos
+                };
+            case 'SHOW_ACTIVE':
+                return {
+                    visibilityTodos: todos.filter((todo) => !todo.complete)
+                };
+            case 'SHOW_COMPLETED':
+                return {
+                    visibilityTodos: todos.filter((todo) => todo.complete)
+                };
+        }
+    }
+);
+
+@connect(({ todoapp }) => {
+    return getVisibilityTodos(todoapp);
+})
 export default class VisibleTodos extends React.Component {
     constructor(props) {
         super(props);
@@ -10,38 +36,32 @@ export default class VisibleTodos extends React.Component {
 
     toggleTodo(id) {
         this.props.dispatch({
-            type: "TOGGLE_TODO_COMPLETE_STATE",
-            payload: id,
+            type: 'TOGGLE_TODO_COMPLETE_STATE',
+            payload: id
         });
     }
 
     render() {
         // todos + visibilityFilter ==> visibilityTodos
-        const todos = this.props.todoapp.todos;
-        const visibilityFilter = this.props.todoapp.visibilityFilter;
-        const visibilityTodos = todos.filter((todo)=>{
-            if(visibilityFilter == "SHOW_ALL"){
-                return true;
-            }else if(visibilityFilter == "SHOW_ACTIVE"){
-                return !todo.complete;
-            }else if(visibilityFilter == "SHOW_COMPLETED"){
-                return todo.complete;
-            }else{
-                throw new Error(`Wrong visiblilityFilter: ${visibilityFilter}`);
-            }
-        })
-
+        const visibilityTodos = this.props.visibilityTodos;
         return (
             <ul>
-                {
-                    visibilityTodos.map(todo => <li key={todo.id}>
-                            <span className={todo.complete ? "todoapp-visibletodos-todo complete" : "todoapp-visibletodos-todo"}
-                                  onClick={() => this.toggleTodo(todo.id)}>
-                                {todo.text}>>>>{todo.date.toLocaleTimeString()}
-                            </span>
-                        </li>
-                    )
-                }
+                {visibilityTodos.map(({ id, text, complete, date }) => (
+                    <li key={id}>
+                        <span
+                            className={
+                                complete
+                                    ? 'todoapp-visibletodos-todo complete'
+                                    : 'todoapp-visibletodos-todo'
+                            }
+                            onClick={() => this.toggleTodo(id)}
+                        >
+                            {text}
+                            >>>>
+                            {date.toLocaleTimeString()}
+                        </span>
+                    </li>
+                ))}
             </ul>
         );
     }
