@@ -27,5 +27,9 @@ dir("./tmp/*").then((matches)=>{
         return del(pathToDelete);
     }));
 }).then((files)=>{
-    console.log(chalk.red.bold(`${files.join(",")} deleted!`));
+    console.log(chalk.red.bold(`Files:
+
+${files.join("\n")}
+
+deleted!`));
 });
