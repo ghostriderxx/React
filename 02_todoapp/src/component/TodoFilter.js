@@ -2,10 +2,7 @@
 import React from "react"
 import {connect} from "react-redux";
 
-@connect(
-    ({todoapp}) => ({todoapp}),
-    (dispatch) => ({dispatch})
-)
+@connect(({todoapp:{visibilityFilter}}) => ({visibilityFilter}))
 export default class TodoFilter extends React.Component {
     constructor(props) {
         super(props);
@@ -19,7 +16,7 @@ export default class TodoFilter extends React.Component {
     }
 
     getBtnClassName(p){
-        const visibilityFilter = this.props.todoapp.visibilityFilter;
+        const visibilityFilter = this.props.visibilityFilter;
         const activeClassName = p == visibilityFilter ? "active" : "";
         return `todoapp-todofilter-btn ${activeClassName}`;
     }

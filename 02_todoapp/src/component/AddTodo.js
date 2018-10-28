@@ -6,13 +6,17 @@ import {connect} from "react-redux";
 let todoId = 0;
 const genTodoId = () => todoId++
 
-@connect(null, (dispatch) => ({dispatch}))
+@connect()
 export default class AddTodo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             text: ""
-        }
+        };
+
+        // 避免 button 组件额外的渲染工作
+        this.addTodo = this.addTodo.bind(this);
+        this.textOnChange = this.textOnChange.bind(this);
     }
     textOnChange(e) {
         this.setState({
@@ -38,8 +42,8 @@ export default class AddTodo extends React.Component {
             <div className={"todoapp-addtodo"}>
                 <input className={"todoapp-addtodo-text"}
                        value={this.state.text}
-                       onChange={(e) => this.textOnChange(e)}/>
-                <button className={"todoapp-addtodo-btnadd"} onClick={() => this.addTodo()}>
+                       onChange={this.textOnChange}/>
+                <button className={"todoapp-addtodo-btnadd"} onClick={this.addTodo}>
                     AddTodo
                 </button>
             </div>
