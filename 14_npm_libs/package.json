@@ -1,0 +1,16 @@
+{
+  "name": "14_npm_libs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^7.0.0",
+    "parse5": "^5.1.0",
+    "svgo": "^1.1.1"
+  }
+}
