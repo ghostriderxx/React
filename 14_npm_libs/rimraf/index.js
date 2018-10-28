@@ -1,10 +1,11 @@
 const rimraf = require("rimraf");
 const glob = require("glob");
 const path = require("path");
+const chalk = require("chalk");
 
 // 包装 rimraf 为 Promise 模式，方便使用
 function del(path){
-    return new Promise((resolve) => rimraf(path, resolve));
+    return new Promise((resolve) => rimraf(path, ()=>resolve(path)));
 }
 
 // 包装 glob 为 Promise 模式，方便使用
@@ -23,10 +24,8 @@ dir("./tmp/*").then((matches)=>{
 
         const pathToDelete = path.resolve(__dirname, match);
 
-        console.log(`ready to delete ${pathToDelete}!`);
-
         return del(pathToDelete);
     }));
-}).then(()=>{
-    console.log(`All done success!`);
+}).then((files)=>{
+    console.log(chalk.red.bold(`${files.join(",")} deleted!`));
 });
