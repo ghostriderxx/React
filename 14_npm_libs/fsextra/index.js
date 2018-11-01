@@ -16,14 +16,18 @@ fse.access(p2).then(()=>{
     console.log(`${p2} Not Exist!`);
 });
 
-
 // 2. 重命名
 const p3 = path.resolve(__dirname, "./file1.txt.bak");
 fse.rename(p1, p3).then(()=>{
     console.log(`rename success: ${p1} ==> ${p3}`);
 });
 
+// 3. 读取文件
+fse.readFile(p1, "utf8").then((data)=>{
+    console.log(`\nData read from ${p1}:`);
+    console.log(data);
+    console.log(`\n`);
+});
 
-// readFile
-
-// writeFile
+// 4. 写文件
+const p4 = path.resolve(__dirname, "./file2.txt");
