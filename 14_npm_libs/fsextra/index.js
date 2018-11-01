@@ -17,10 +17,13 @@ fse.access(p2).then(()=>{
 });
 
 
-// rename
+// 2. 重命名
+const p3 = path.resolve(__dirname, "./file1.txt.bak");
+fse.rename(p1, p3).then(()=>{
+    console.log(`rename success: ${p1} ==> ${p3}`);
+});
+
 
 // readFile
 
 // writeFile
-
-// access
