@@ -1,6 +1,6 @@
 const fse = require('fs-extra');
 const path = require('path');
-const SVGO = require('svgo/svgo');
+const SVGO = require('svgo');
 
 // SVGO 插件控制参数
 const options = {
