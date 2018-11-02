@@ -1,7 +1,6 @@
 const path = require("path");
 const fse = require("fs-extra");
 
-
 // 1. 判定文件是否存在
 const p1 = path.resolve(__dirname, "./file1.txt");
 const p2 = path.resolve(__dirname, "./fileXYZ.txt");
