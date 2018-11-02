@@ -4,7 +4,7 @@ const fse = require("fs-extra");
 
 // 1. 判定文件是否存在
 const p1 = path.resolve(__dirname, "./file1.txt");
-const p2 = path.resolve(__dirname, "./file2.txt");
+const p2 = path.resolve(__dirname, "./fileXYZ.txt");
 fse.access(p1).then(()=>{
     console.log(`${p1} Exist!`);
 }).catch(()=>{
@@ -17,9 +17,10 @@ fse.access(p2).then(()=>{
 });
 
 // 2. 重命名
-const p3 = path.resolve(__dirname, "./file1.txt.bak");
-fse.rename(p1, p3).then(()=>{
-    console.log(`rename success: ${p1} ==> ${p3}`);
+const p3 = path.resolve(__dirname, "./file2.txt");
+const p4 = path.resolve(__dirname, "./file2.txt.bak");
+fse.rename(p3, p4).then(()=>{
+    console.log(`rename success: ${p3} ==> ${p4}`);
 });
 
 // 3. 读取文件
@@ -30,4 +31,7 @@ fse.readFile(p1, "utf8").then((data)=>{
 });
 
 // 4. 写文件
-const p4 = path.resolve(__dirname, "./file2.txt");
+const p5 = path.resolve(__dirname, "./file3.txt");
+fse.writeFile(p5, "This is file2.txt!", "utf8").then(()=>{
+    console.log("Write file success!");
+});
