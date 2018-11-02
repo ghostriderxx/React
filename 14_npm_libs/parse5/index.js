@@ -16,19 +16,19 @@ const assert = require('assert');
  *
  */
 function normalizeNode(node){
-    // 分离 tagName
+    // 分离 tagName --> tag
     const tag = node.tagName;
     if (!tag) {
         throw new TypeError(`Element should have no no-tag node`);
     }
 
-    // 分离 attrs
+    // 分离 attrs --> attrs
     const attrs = node.attrs.reduce((acc, { name, value }) => {
         Object.defineProperty(acc, name, { value, enumerable: true });
         return acc;
     }, {});
 
-    // 分离 childNodes
+    // 分离 childNodes --> children
     const children = node.childNodes.map((child) =>
         normalizeNode(child)
     );
