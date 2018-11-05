@@ -17,46 +17,25 @@ class App extends React.Component{
         super(props);
 
         this.initialized = false;
+
         this.interval_id = null;
 
         this.barLength = 0;
 
 
+        this.globalColor = 2;
+        this.rawColor = 0;
+        this.debounceColor = 0;
 
 
-
-        var $rawDiv = $('#raw-events'),
-            $debounceDiv = $('#debounced-events'),
-            $triggerArea = $('.trigger-area'),
-            initialized = false,
-            globalColor = 2,
-            interval_id,
-            rawColor = 0,
-            debounceColor = 0;
-
-
-
-
-
-        var drawDebouncedEvent = _.debounce(function(div){
-            debounceColor = globalColor;
-        }, FREQUENCY*4, {leading:false, trailing:true});
-
-
-        var changeDebouncedColor = _.debounce(function(div){
-            // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
-
-            globalColor++;
-            if (globalColor > 9){
-                globalColor = 2;
-            }
-        }, FREQUENCY*4, {leading:false, trailing:true});
+        this.drawDebouncedEvent = _.debounce(this.drawDebouncedEvent, FREQUENCY*4);
+        this.changeDebouncedColor = _.debounce(this.changeDebouncedColor, FREQUENCY*4);
     }
 
     render() {
         return (
             <div>
-                <a className="trigger-area" onMouseMove={}>Trigger area</a>
+                <a className="trigger-area" onMouseMove={this.handleMouseMove}>Trigger area</a>
                 <a className="reset" onClick={this.handleReset}> Reset </a>
                 <div className="visualizations">
                     <h2>Raw events over time</h2>
@@ -69,22 +48,32 @@ class App extends React.Component{
         );
     }
 
-    handleMouseMode(){
+    drawDebouncedEvent = () => function(){
+        this.debounceColor = this.globalColor;
+    };
+
+    changeDebouncedColor = () => {
+        // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
+        this.globalColor++;
+        if (this.globalColor > 9){
+            this.globalColor = 2;
+        }
+    };
+
+    handleMouseMove = () => {
         if (!this.initialized) {
             this.initialized = true;
-            draw_tick_marks();
-            $(this).addClass('active');
+            this.draw_tick_marks();
         }
-        rawColor = globalColor;
-        drawDebouncedEvent();
-        changeDebouncedColor();
+        this.rawColor = this.globalColor;
+        this.drawDebouncedEvent();
+        this.changeDebouncedColor();
     }
 
-    handleReset(){
+    handleReset = () =>{
         this.initialized = false;
-        $triggerArea.removeClass('active');
-        $rawDiv.empty();
-        $debounceDiv.empty();
+        // $rawDiv.empty();
+        // $debounceDiv.empty();
 
         this.barLength = 0;
         window.clearInterval(this.interval_id);
@@ -94,10 +83,11 @@ class App extends React.Component{
         // every x seconds, draw a tick mark in the bar
         this.interval_id = window.setInterval(function(){
             this.barLength++;
-            $rawDiv.append('<span class="color' + rawColor + '" >');
-            $debounceDiv.append('<span class="color' + debounceColor + '" >');
-            rawColor = 0; // make it transparent again
-            debounceColor = 0; // make it transparent again
+            // $rawDiv.append('<span class="color' + rawColor + '" >');
+            // $debounceDiv.append('<span class="color' + debounceColor + '" >');
+            //
+            this.rawColor = 0; // make it transparent again
+            this.debounceColor = 0; // make it transparent again
 
             if (this.barLength > MAX_BAR_LENGTH){
                 window.clearInterval(this.interval_id);
