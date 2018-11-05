@@ -16,6 +16,12 @@ class App extends React.Component{
     constructor(props) {
         super(props);
 
+        this.state = {
+            rawColors:[],
+            debounceColors:[],
+        };
+
+
         this.initialized = false;
 
         this.interval_id = null;
@@ -39,10 +45,22 @@ class App extends React.Component{
                 <a className="reset" onClick={this.handleReset}> Reset </a>
                 <div className="visualizations">
                     <h2>Raw events over time</h2>
-                    <div id="raw-events" className="events"></div>
+                    <div id="raw-events" className="events">
+                        {
+                            this.state.rawColors.map((rawColor) => (
+                                <span className={`color${rawColor}`}/>
+                            ))
+                        }
+                    </div>
                     <h2>Debounced events
                         <span className="details"> 400ms, trailing</span></h2>
-                    <div id="debounced-events" className="events"></div>
+                    <div id="debounced-events" className="events">
+                        {
+                            this.state.debounceColors.map((debounceColor) => (
+                                <span className={`color${debounceColor}`}/>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
         );
@@ -68,24 +86,36 @@ class App extends React.Component{
         this.rawColor = this.globalColor;
         this.drawDebouncedEvent();
         this.changeDebouncedColor();
-    }
+    };
 
     handleReset = () =>{
         this.initialized = false;
-        // $rawDiv.empty();
-        // $debounceDiv.empty();
-
         this.barLength = 0;
+
+        this.setState({
+            rawColors:[],
+            debounceColors:[],
+        });
+
         window.clearInterval(this.interval_id);
-    }
+    };
 
     draw_tick_marks = ()=>{
         // every x seconds, draw a tick mark in the bar
         this.interval_id = window.setInterval(function(){
             this.barLength++;
-            // $rawDiv.append('<span class="color' + rawColor + '" >');
-            // $debounceDiv.append('<span class="color' + debounceColor + '" >');
-            //
+
+            this.setState({
+                rawColors:[
+                    ...this.state.rawColors,
+                    this.rawColor,
+                ],
+                debounceColors:[
+                    ...this.state.debounceColors,
+                    this.debounceColor,
+                ],
+            });
+
             this.rawColor = 0; // make it transparent again
             this.debounceColor = 0; // make it transparent again
 
