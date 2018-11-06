@@ -1,9 +1,8 @@
-
-export default function RookieDebounce(func, wait){
+export default function RookieDebounce(func, wait) {
     let timerID = null;
 
-    return function(){
+    return function (...args) {
         clearTimeout(timerID);
-        timerID = setTimeout(func, wait);
+        timerID = setTimeout(func, wait, ...args);
     }
 }
