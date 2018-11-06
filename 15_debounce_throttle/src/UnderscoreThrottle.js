@@ -1,3 +1,10 @@
+const _ = function(){};
+
+// A (possibly faster) way to get the current timestamp as an integer.
+_.now = Date.now || function() {
+    return new Date().getTime();
+};
+
 // Returns a function, that, when invoked, will only be triggered at most once
 // during a given window of time. Normally, the throttled function will run
 // as much as it can, without ever going more than once per `wait` duration;
@@ -43,3 +50,5 @@ _.throttle = function(func, wait, options) {
 
     return throttled;
 };
+
+export default _;

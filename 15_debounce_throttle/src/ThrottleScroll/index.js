@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-
+import yyyy from "../UnderscoreThrottle"
 const style = {
     container: {width: 400, height: 400, border: "1px solid blue", overflow: "auto"},
     tall: {
@@ -49,7 +49,7 @@ export default class DebounceScroll extends React.Component {
         console.log(pos);
     };
 
-    logPosThrottle = _.throttle((pos)=>{
+    logPosThrottle = yyyy.throttle((pos)=>{
         console.log(pos);
     }, 100);
 }
