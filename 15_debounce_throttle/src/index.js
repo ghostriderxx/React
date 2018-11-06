@@ -12,52 +12,43 @@ import "./style.css"
 const MAX_BAR_LENGTH = 87;
 const FREQUENCY = 100;
 
-class App extends React.Component{
+class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            rawColors:[],
-            debounceColors:[],
-        };
-
-
         this.initialized = false;
-
         this.interval_id = null;
 
+        this.state = {
+            globalColor: 2,
+            rawColors: [],
+            debounceColors: [],
+            rawColor: 0,
+            debounceColor: 0
+        };
+
         this.barLength = 0;
-
-
-        this.globalColor = 2;
-        this.rawColor = 0;
-        this.debounceColor = 0;
-
-
-        this.drawDebouncedEvent = _.debounce(this.drawDebouncedEvent, FREQUENCY*4);
-        this.changeDebouncedColor = _.debounce(this.changeDebouncedColor, FREQUENCY*4);
     }
 
     render() {
         return (
             <div>
-                <a className="trigger-area" onMouseMove={this.handleMouseMove}>Trigger area</a>
-                <a className="reset" onClick={this.handleReset}> Reset </a>
+                <a className="trigger-area" onMouseMove={this.handleMouseMove}>感应区</a>
+                <a className="reset" onClick={this.handleReset}>重置</a>
                 <div className="visualizations">
-                    <h2>Raw events over time</h2>
+                    <h2>原始</h2>
                     <div id="raw-events" className="events">
                         {
-                            this.state.rawColors.map((rawColor) => (
-                                <span className={`color${rawColor}`}/>
+                            this.state.rawColors.map((rawColor, index) => (
+                                <span key={index} className={`color${rawColor}`}/>
                             ))
                         }
                     </div>
-                    <h2>Debounced events
-                        <span className="details"> 400ms, trailing</span></h2>
+                    <h2>防抖[400ms]</h2>
                     <div id="debounced-events" className="events">
                         {
-                            this.state.debounceColors.map((debounceColor) => (
-                                <span className={`color${debounceColor}`}/>
+                            this.state.debounceColors.map((debounceColor, index) => (
+                                <span key={index} className={`color${debounceColor}`}/>
                             ))
                         }
                     </div>
@@ -66,67 +57,73 @@ class App extends React.Component{
         );
     }
 
-    drawDebouncedEvent = () => function(){
-        this.debounceColor = this.globalColor;
+    // 绘制原始事件
+    drawRawEvent = () => {
+        this.setState({
+            rawColor: this.state.globalColor
+        });
     };
 
-    changeDebouncedColor = () => {
-        // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
-        this.globalColor++;
-        if (this.globalColor > 9){
-            this.globalColor = 2;
-        }
-    };
+    // 绘制防抖事件
+    drawDebouncedEvent = _.debounce(() => {
+        this.setState({
+            debounceColor: this.state.globalColor,
+            // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
+            globalColor: this.state.globalColor > 9 ? 2 : this.state.globalColor + 1
+        });
+    }, FREQUENCY * 4);
 
     handleMouseMove = () => {
         if (!this.initialized) {
             this.initialized = true;
             this.draw_tick_marks();
         }
-        this.rawColor = this.globalColor;
+        this.drawRawEvent();
         this.drawDebouncedEvent();
-        this.changeDebouncedColor();
     };
 
-    handleReset = () =>{
-        this.initialized = false;
-        this.barLength = 0;
-
-        this.setState({
-            rawColors:[],
-            debounceColors:[],
-        });
-
-        window.clearInterval(this.interval_id);
-    };
-
-    draw_tick_marks = ()=>{
-        // every x seconds, draw a tick mark in the bar
-        this.interval_id = window.setInterval(function(){
+    draw_tick_marks = () => {
+        // 每间隔 FREQUENCY 毫秒，绘制一帧
+        this.interval_id = window.setInterval(() => {
             this.barLength++;
 
             this.setState({
-                rawColors:[
+                rawColors: [
                     ...this.state.rawColors,
-                    this.rawColor,
+                    this.state.rawColor,
                 ],
-                debounceColors:[
+                debounceColors: [
                     ...this.state.debounceColors,
-                    this.debounceColor,
+                    this.state.debounceColor,
                 ],
+                rawColor: 0, // make it transparent again
+                debounceColor: 0, // make it transparent again
             });
 
-            this.rawColor = 0; // make it transparent again
-            this.debounceColor = 0; // make it transparent again
-
-            if (this.barLength > MAX_BAR_LENGTH){
+            if (this.barLength > MAX_BAR_LENGTH) {
                 window.clearInterval(this.interval_id);
             }
 
         }, FREQUENCY);
     };
+
+    handleReset = () => {
+        this.initialized = false;
+        window.clearInterval(this.interval_id);
+        this.interval_id = null;
+
+        this.barLength = 0;
+
+        this.setState({
+            globalColor: 2,
+            rawColors: [],
+            debounceColors: [],
+            rawColor: 0,
+            debounceColor: 0
+        });
+    };
 }
 
 ReactDOM.render(
     <App/>
-, document.getElementById("app"));
+    , document.getElementById("app"));
