@@ -3,9 +3,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 
 
-//import DebounceAnimation from "./DebounceAnimation"
-import DebounceScroll from "./DebounceScroll"
-
+//import App from "./DebounceAnimation"
+//import App from "./DebounceScroll"
+import App from "./ThrottleScroll"
 ReactDOM.render(
-    <DebounceScroll/>
+    <App/>
     , document.getElementById("app"));
