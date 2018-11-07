@@ -5,6 +5,9 @@ var _ = function(){};
 // on. This helper accumulates all remaining arguments past the function’s
 // argument length (or an explicit `startIndex`), into an array that becomes
 // the last argument. Similar to ES6’s "rest parameter".
+//
+// 模拟 ES6 的 rest parameter
+//
 var restArguments = function(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
     return function() {
