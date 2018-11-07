@@ -69,8 +69,6 @@ export default class DebounceAnimation extends React.Component {
     drawDebouncedEvent = _.debounce(() => {
         this.setState({
             debounceColor: this.state.globalColor,
-            // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
-            globalColor: this.state.globalColor > 9 ? 2 : this.state.globalColor + 1
         });
     }, FREQUENCY * 4);
 
@@ -78,10 +76,14 @@ export default class DebounceAnimation extends React.Component {
     drawLeadingDebouncedEvent = _.debounce(() => {
         this.setState({
             debounceColor: this.state.globalColor,
-            // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
-            globalColor: this.state.globalColor > 9 ? 2 : this.state.globalColor + 1
         });
     }, FREQUENCY * 4, {leading:true, trailing:false});
+
+    changeDebouncedColor = _.debounce(() => {
+        this.setState({
+            globalColor: this.state.globalColor > 9 ? 2 : this.state.globalColor + 1
+        });
+    }, FREQUENCY * 4, {leading:false, trailing:true});
 
     handleMouseMove = () => {
         if (!this.initialized) {
@@ -94,6 +96,7 @@ export default class DebounceAnimation extends React.Component {
         }else{
             this.drawDebouncedEvent();
         }
+        this.changeDebouncedColor();
     };
 
     handleLeadingChange = (event) => {
