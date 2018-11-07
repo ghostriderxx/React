@@ -33,7 +33,7 @@ export default class DebounceAnimation extends React.Component {
             <div>
                 <a className="trigger-area" onMouseMove={this.handleMouseMove}>感应区</a>
                 <span style={{margin:"0 25px"}}>
-                    <label>leading:</label><input type={"checkbox"} value={this.state.leading} onChange={this.handleLeadingChange}/>
+                    <label>leading:</label><input type={"checkbox"} checked={this.state.leading} onChange={this.handleLeadingChange}/>
                 </span>
                 <button className="reset" onClick={this.handleReset}>重置</button>
                 <div className="visualizations">
@@ -138,6 +138,8 @@ export default class DebounceAnimation extends React.Component {
         this.barLength = 0;
 
         this.setState({
+            leading: false,
+
             globalColor: 2,
             rawColors: [],
             debounceColors: [],
