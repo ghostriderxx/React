@@ -6,7 +6,19 @@ var _ = function(){};
 // argument length (or an explicit `startIndex`), into an array that becomes
 // the last argument. Similar to ES6’s "rest parameter".
 //
-// 模拟 ES6 的 rest parameter
+// 用途：
+//      模拟 ES6 的 rest parameter
+//
+// 示例:
+//      const t = restArguments((p1, p2, p3, args) => {
+//          console.log(Object.prototype.toString.call(args));
+//          console.log(args.join(","));
+//      });
+//      t(1,2,3,4,5,6,7);
+//
+// 输出：
+//      [object Array]
+//      4,5,6,7
 //
 var restArguments = function(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
