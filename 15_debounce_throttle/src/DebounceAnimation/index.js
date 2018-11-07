@@ -16,11 +16,13 @@ export default class DebounceAnimation extends React.Component {
         this.interval_id = null;
 
         this.state = {
+            leading: false,
+
             globalColor: 2,
             rawColors: [],
             debounceColors: [],
             rawColor: 0,
-            debounceColor: 0
+            debounceColor: 0,
         };
 
         this.barLength = 0;
@@ -30,7 +32,10 @@ export default class DebounceAnimation extends React.Component {
         return (
             <div>
                 <a className="trigger-area" onMouseMove={this.handleMouseMove}>感应区</a>
-                <a className="reset" onClick={this.handleReset}>重置</a>
+                <span style={{margin:"0 25px"}}>
+                    <label>leading:</label><input type={"checkbox"} value={this.state.leading} onChange={this.handleLeadingChange}/>
+                </span>
+                <button className="reset" onClick={this.handleReset}>重置</button>
                 <div className="visualizations">
                     <h2>原始</h2>
                     <div id="raw-events" className="events">
@@ -69,13 +74,32 @@ export default class DebounceAnimation extends React.Component {
         });
     }, FREQUENCY * 4);
 
+    // 绘制前缘防抖事件
+    drawLeadingDebouncedEvent = _.debounce(() => {
+        this.setState({
+            debounceColor: this.state.globalColor,
+            // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
+            globalColor: this.state.globalColor > 9 ? 2 : this.state.globalColor + 1
+        });
+    }, FREQUENCY * 4, {leading:true, trailing:false});
+
     handleMouseMove = () => {
         if (!this.initialized) {
             this.initialized = true;
             this.draw_tick_marks();
         }
         this.drawRawEvent();
-        this.drawDebouncedEvent();
+        if(this.state.leading){
+            this.drawLeadingDebouncedEvent();
+        }else{
+            this.drawDebouncedEvent();
+        }
+    };
+
+    handleLeadingChange = (event) => {
+        this.setState({
+            leading: event.target.checked
+        })
     };
 
     draw_tick_marks = () => {

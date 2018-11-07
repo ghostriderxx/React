@@ -61,12 +61,11 @@ h2 {
 }
 .reset {
     display:inline-block;
-    width: 120px;
-    padding: 10px 0 0 0;
+    width: 100px;
+    padding: 5px 0;
     text-align: center;
     font-size:14px;
     cursor:pointer;
-    color:#eee;
 }
 .visualizations {
     margin-top:10px;
