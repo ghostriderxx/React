@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container{
+			width: 200px; 
+			height: 300px; 
+			border: 1px solid blue;
+			overflow: auto;
+		}
+
+		.tall{
+			width: 100px; 
+			height: 3000px; 
+		}
+	</style>
+</head>
+<body>
+	<label>onScroll 触发次数: </label>
+	<span id="count">0</span>
+	<button onclick="reset()">重置</button>
+	<div class="container" onscroll="handleScroll()">
+		<div class="tall" />
+	</div>
+
+	<script type="text/javascript">
+		function handleScroll(){
+			var x = document.getElementById("count");
+			x.innerText = +x.innerText + 1;
+		}
+
+		function reset(){
+			var x = document.getElementById("count");
+			x.innerText = "0";
+		}
+	</script>
+</body>
+</html>
