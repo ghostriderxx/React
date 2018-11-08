@@ -76,8 +76,27 @@ _.delay = restArguments(function (func, wait, args) {
 // N milliseconds. If `immediate` is passed, trigger the function on the
 // leading edge, instead of the trailing.
 _.debounce = function (func, wait, immediate) {
+    /**
+     * timeout 是定制器句柄，它表示：
+     *
+     * 1. timeout === null 时，代表之前的周期已正常结束，当前不处于周期中；
+     * 2. timeout !== null 时，代表现在正处于一个周期过程中；
+     */
     var timeout, result;
 
+    /**
+     * later 实际上担负两个职责（个人认为这也是可读性比较差的地方）：
+     *
+     * 1. immediate = false 时（即：trailing edge debouce）
+     *
+     *      later 负责：
+     *          a. 指示一个周期已结束（清空 timeout 计时器变量）
+     *          b. 执行用于定义的动作（func）
+     *
+     * 2. immediate = true 时（即：leading edge debounce）
+     *      later 负责：
+     *          a. 指示一个周期已结束（清空 timeout 计时器变量）
+     */
     var later = function (context, args) {
         timeout = null;
         if (args) result = func.apply(context, args);
@@ -86,6 +105,14 @@ _.debounce = function (func, wait, immediate) {
     var debounced = restArguments(function (args) {
         if (timeout) clearTimeout(timeout);
         if (immediate) {
+            /**
+             * immediate === true 即 leading edge debounce
+             *
+             *      即：新的一个周期开始的时候，执行动作；
+             *
+             *      a. timeout === null 时，代表之前的周期已经结束，即将开始一个新的周期；
+             *      b. 周期结束后，通过 later 函数清空 timeout，指示周期结束；
+             */
             var callNow = !timeout;
             timeout = setTimeout(later, wait);
             if (callNow) result = func.apply(this, args);
