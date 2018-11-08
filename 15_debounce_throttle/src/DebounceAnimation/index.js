@@ -15,17 +15,19 @@ export default class DebounceAnimation extends React.Component {
         this.initialized = false;
         this.interval_id = null;
 
+        this.globalColor = 2;
+        this.rawColor = 0;
+        this.debounceColor = 0;
+
+        this.barLength = 0;
+
         this.state = {
             leading: false,
 
-            globalColor: 2,
+            // 已采样的帧
             rawColors: [],
             debounceColors: [],
-            rawColor: 0,
-            debounceColor: 0,
         };
-
-        this.barLength = 0;
     }
 
     render() {
@@ -33,7 +35,7 @@ export default class DebounceAnimation extends React.Component {
             <div>
                 <a className="trigger-area" onMouseMove={this.handleMouseMove}>感应区</a>
                 <span style={{margin:"0 25px"}}>
-                    <label>leading:</label><input type={"checkbox"} checked={this.state.leading} onChange={this.handleLeadingChange}/>
+                    <label>leading edge:</label><input type={"checkbox"} checked={this.state.leading} onChange={this.handleLeadingChange}/>
                 </span>
                 <button className="reset" onClick={this.handleReset}>重置</button>
                 <div className="visualizations">
@@ -60,29 +62,22 @@ export default class DebounceAnimation extends React.Component {
 
     // 绘制原始事件
     drawRawEvent = () => {
-        this.setState({
-            rawColor: this.state.globalColor
-        });
+        this.rawColor = this.globalColor;
     };
 
     // 绘制防抖事件
     drawDebouncedEvent = _.debounce(() => {
-        this.setState({
-            debounceColor: this.state.globalColor,
-        });
-    }, FREQUENCY * 4);
+        this.debounceColor = this.globalColor;
+    }, FREQUENCY * 4, {leading:false, trailing:true});
 
     // 绘制前缘防抖事件
     drawLeadingDebouncedEvent = _.debounce(() => {
-        this.setState({
-            debounceColor: this.state.globalColor,
-        });
+        this.debounceColor = this.globalColor;
     }, FREQUENCY * 4, {leading:true, trailing:false});
 
+    // 更换颜色，便于可视分组
     changeDebouncedColor = _.debounce(() => {
-        this.setState({
-            globalColor: this.state.globalColor > 9 ? 2 : this.state.globalColor + 1
-        });
+        this.globalColor = this.globalColor > 9 ? 2 : this.globalColor + 1;
     }, FREQUENCY * 4, {leading:false, trailing:true});
 
     handleMouseMove = () => {
@@ -113,15 +108,16 @@ export default class DebounceAnimation extends React.Component {
             this.setState({
                 rawColors: [
                     ...this.state.rawColors,
-                    this.state.rawColor,
+                    this.rawColor,
                 ],
                 debounceColors: [
                     ...this.state.debounceColors,
-                    this.state.debounceColor,
+                    this.debounceColor,
                 ],
-                rawColor: 0, // make it transparent again
-                debounceColor: 0, // make it transparent again
             });
+
+            this.rawColor = 0; // make it transparent again
+            this.debounceColor = 0; // make it transparent again
 
             if (this.barLength > MAX_BAR_LENGTH) {
                 window.clearInterval(this.interval_id);
@@ -137,14 +133,14 @@ export default class DebounceAnimation extends React.Component {
 
         this.barLength = 0;
 
+        this.globalColor = 2;
+        this.rawColor = 0;
+        this.debounceColor = 0;
+
         this.setState({
             leading: false,
-
-            globalColor: 2,
             rawColors: [],
-            debounceColors: [],
-            rawColor: 0,
-            debounceColor: 0
+            debounceColors: []
         });
     };
 }
