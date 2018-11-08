@@ -15,22 +15,29 @@ export default class DebounceAnimation extends React.Component {
         this.initialized = false;
         this.interval_id = null;
 
-        this.state = {
-            globalColor: 2,
-            rawColors: [],
-            debounceColors: [],
-            rawColor: 0,
-            debounceColor: 0
-        };
+        this.globalColor = 2;
+        this.rawColor = 0;
+        this.debounceColor = 0;
 
         this.barLength = 0;
+
+        this.state = {
+            leading: false,
+
+            // 已采样的帧
+            rawColors: [],
+            debounceColors: [],
+        };
     }
 
     render() {
         return (
             <div>
                 <a className="trigger-area" onMouseMove={this.handleMouseMove}>感应区</a>
-                <a className="reset" onClick={this.handleReset}>重置</a>
+                <span style={{margin:"0 25px"}}>
+                    <label>leading edge:</label><input type={"checkbox"} checked={this.state.leading} onChange={this.handleLeadingChange}/>
+                </span>
+                <button className="reset" onClick={this.handleReset}>重置</button>
                 <div className="visualizations">
                     <h2>原始</h2>
                     <div id="raw-events" className="events">
@@ -55,19 +62,23 @@ export default class DebounceAnimation extends React.Component {
 
     // 绘制原始事件
     drawRawEvent = () => {
-        this.setState({
-            rawColor: this.state.globalColor
-        });
+        this.rawColor = this.globalColor;
     };
 
     // 绘制防抖事件
     drawDebouncedEvent = _.debounce(() => {
-        this.setState({
-            debounceColor: this.state.globalColor,
-            // Change colors, to visualize easier the "group of events" that is reperesenting this debounced event
-            globalColor: this.state.globalColor > 9 ? 2 : this.state.globalColor + 1
-        });
-    }, FREQUENCY * 4);
+        this.debounceColor = this.globalColor;
+    }, FREQUENCY * 4, {leading:false, trailing:true});
+
+    // 绘制前缘防抖事件
+    drawLeadingDebouncedEvent = _.debounce(() => {
+        this.debounceColor = this.globalColor;
+    }, FREQUENCY * 4, {leading:true, trailing:false});
+
+    // 更换颜色，便于可视分组
+    changeDebouncedColor = _.debounce(() => {
+        this.globalColor = this.globalColor > 9 ? 2 : this.globalColor + 1;
+    }, FREQUENCY * 4, {leading:false, trailing:true});
 
     handleMouseMove = () => {
         if (!this.initialized) {
@@ -75,7 +86,18 @@ export default class DebounceAnimation extends React.Component {
             this.draw_tick_marks();
         }
         this.drawRawEvent();
-        this.drawDebouncedEvent();
+        if(this.state.leading){
+            this.drawLeadingDebouncedEvent();
+        }else{
+            this.drawDebouncedEvent();
+        }
+        this.changeDebouncedColor();
+    };
+
+    handleLeadingChange = (event) => {
+        this.setState({
+            leading: event.target.checked
+        })
     };
 
     draw_tick_marks = () => {
@@ -86,15 +108,16 @@ export default class DebounceAnimation extends React.Component {
             this.setState({
                 rawColors: [
                     ...this.state.rawColors,
-                    this.state.rawColor,
+                    this.rawColor,
                 ],
                 debounceColors: [
                     ...this.state.debounceColors,
-                    this.state.debounceColor,
+                    this.debounceColor,
                 ],
-                rawColor: 0, // make it transparent again
-                debounceColor: 0, // make it transparent again
             });
+
+            this.rawColor = 0; // make it transparent again
+            this.debounceColor = 0; // make it transparent again
 
             if (this.barLength > MAX_BAR_LENGTH) {
                 window.clearInterval(this.interval_id);
@@ -110,12 +133,14 @@ export default class DebounceAnimation extends React.Component {
 
         this.barLength = 0;
 
+        this.globalColor = 2;
+        this.rawColor = 0;
+        this.debounceColor = 0;
+
         this.setState({
-            globalColor: 2,
+            leading: false,
             rawColors: [],
-            debounceColors: [],
-            rawColor: 0,
-            debounceColor: 0
+            debounceColors: []
         });
     };
 }
