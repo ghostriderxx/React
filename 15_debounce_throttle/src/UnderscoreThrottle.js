@@ -22,7 +22,6 @@ _.throttle = function(func, wait, options) {
     if (!options) options = {};
 
     var later = function() {
-        // leadingEdge 靠 previous 来保证；
         previous = options.leading === false ? 0 : _.now();
         timeout = null;
         result = func.apply(context, args);
@@ -32,26 +31,28 @@ _.throttle = function(func, wait, options) {
     var throttled = function() {
         var now = _.now();
 
-        // 第一次执行回调（此时 previous 为 0，之后 previous 值为上一次时间戳）
-        // 并且如果程序设定第一个回调不是立即执行的（options.leading === false）
-        // 则将 previous 值（表示上次执行的时间戳）设为 now 的时间戳（第一次触发时）
-        // 表示刚执行过，这次就不用执行了
         if (!previous && options.leading === false) previous = now;
         var remaining = wait - (now - previous);
 
-        // 每次调用都记录 context、args，即保持参数、this都是最新的；
+        // 每次被调用时，都将“调用上下文（this）”、“调用参数（arguments）” 存下来，
+        //
+        // 注：trailing edge 的定时器只于周期内的第二次调用时设置、于周期结束时触发，
+        //    但最终触发的应该是周期内的最后一次调用。这里始终记录的是周期内最后一次调用
+        //    的“调用上下文”和“调用参数”；
         context = this;
         args = arguments;
 
-        console.log(remaining, !timeout);
-
-        // 时间轴上
+        // remaining = wait - (now - previous);
+        //
         //        0        wait
         //        |          |
         // ................................
+        //
+        // 1. remaining <=0，说明本次调用已超出 wait 周期外，立即执行；
+        // 2. remaining > wait，即 now < previous，可能客户端时钟被调过，立即执行；
+        // 3. 0 < remaining <= wait 时，说明本次调用仍处于 wait 周期内，不需要执行；
+        //
         if (remaining <= 0 || remaining > wait) {
-            // a. <=0 超出时长
-            // b. > wait 向前调过表
             if (timeout) {
                 clearTimeout(timeout);
                 timeout = null;
@@ -60,10 +61,14 @@ _.throttle = function(func, wait, options) {
             result = func.apply(context, args);
             if (!timeout) context = args = null;
         } else if (!timeout && options.trailing !== false) {
-            /**
-             * 保持在一个周期最后的触发...
-             * @type {number}
-             */
+            //
+            //     |<-----------wait----------->|
+            //     |                            |
+            // ----|--------|----|--------|-----|-----------
+            //     |        | saveArgs saveArgs ^
+            //     |        |                   |
+            //     |        ---------------------
+            //    执行   设置定时器       执行最后一次在周期内的调用
             timeout = setTimeout(later, remaining);
         }
         return result;
