@@ -25,6 +25,14 @@ _.throttle = function(func, wait, options) {
         previous = options.leading === false ? 0 : _.now();
         timeout = null;
         result = func.apply(context, args);
+
+        // 在 func 被调用后，重新判定 timeout 是否为空，是考虑到场景：
+        // const x = _.throttle((a)=>{
+        //     x(7);  <<======
+        //     x(8);  <<======
+        // }, 3000);
+        // x(1);
+        // x(2);
         if (!timeout) context = args = null;
     };
 
@@ -59,6 +67,14 @@ _.throttle = function(func, wait, options) {
             }
             previous = now;
             result = func.apply(context, args);
+
+            // 在 func 被调用后，重新判定 timeout 是否为空，是考虑到场景：
+            // const x = _.throttle((a)=>{
+            //     x(7);  <<======
+            //     x(8);  <<======
+            // }, 3000);
+            // x(1);
+            // x(2);
             if (!timeout) context = args = null;
         } else if (!timeout && options.trailing !== false) {
             //
@@ -82,17 +98,5 @@ _.throttle = function(func, wait, options) {
 
     return throttled;
 };
-
-console.log("begin");
-const x = _.throttle((a, b)=>{
-    console.log(a, b);
-}, 3000);
-x(1,2);
-x(2,3);
-x(3,4);
-x(4,5);
-x(5,6);
-x(6,7);
-
 
 export default _;
