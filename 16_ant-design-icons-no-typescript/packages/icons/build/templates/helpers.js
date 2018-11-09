@@ -1,5 +1,3 @@
-import { AbstractNode, HelperRenderOptions, IconDefinition } from './types';
-
 export function renderIconDefinitionToSVGElement(icon, options) {
     if (typeof icon.icon === 'function') {
         // two-tone

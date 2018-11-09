@@ -23,16 +23,6 @@ import {
 } from './constants';
 
 import { renderIconDefinitionToSVGElement } from './templates/helpers';
-import {
-    BuildTimeIconMetaData,
-    Environment,
-    IconDefinition,
-    Manifest,
-    NameAndPath,
-    Node,
-    ThemeType,
-    WriteFileMetaData
-} from './typings';
 import { clear, generateAbstractTree, getIdentifier, isAccessable, log, replaceFillColor } from './utils';
 import { normalize } from './utils/normalizeNames';
 
@@ -53,38 +43,35 @@ export async function build(env) {
     const svgBasicNames = await normalize(env);
 
     // SVG Meta Data Flow
-    const svgMetaDataWithTheme$ =
-        from <
-        ThemeType >
-        ['fill', 'outline', 'twotone'].pipe(
-            map((theme) =>
-                from(svgBasicNames).pipe(
-                    map((kebabCaseName) => {
-                        const identifier = getIdentifier(_.upperFirst(_.camelCase(kebabCaseName)), theme);
-                        return { kebabCaseName, identifier };
-                    }),
-                    filter(({ kebabCaseName }) =>
-                        isAccessable(path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`))
-                    ),
-                    mergeMap(async ({ kebabCaseName, identifier }) => {
-                        const tryUrl = path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`);
-                        let optimizer = svgo;
-                        if (singleType.includes(theme)) {
-                            optimizer = svgoForSingleIcon;
+    const svgMetaDataWithTheme$ = from(['fill', 'outline', 'twotone']).pipe(
+        map((theme) =>
+            from(svgBasicNames).pipe(
+                map((kebabCaseName) => {
+                    const identifier = getIdentifier(_.upperFirst(_.camelCase(kebabCaseName)), theme);
+                    return { kebabCaseName, identifier };
+                }),
+                filter(({ kebabCaseName }) =>
+                    isAccessable(path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`))
+                ),
+                mergeMap(async ({ kebabCaseName, identifier }) => {
+                    const tryUrl = path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`);
+                    let optimizer = svgo;
+                    if (singleType.includes(theme)) {
+                        optimizer = svgoForSingleIcon;
+                    }
+                    const { data } = await optimizer.optimize(await fs.readFile(tryUrl, 'utf8'));
+                    const icon = {
+                        name: kebabCaseName,
+                        theme,
+                        icon: {
+                            ...generateAbstractTree(parse5.parseFragment(data).childNodes[0], kebabCaseName)
                         }
-                        const { data } = await optimizer.optimize(await fs.readFile(tryUrl, 'utf8'));
-                        const icon = {
-                            name: kebabCaseName,
-                            theme,
-                            icon: {
-                                ...generateAbstractTree(parse5.parseFragment(data).childNodes[0], kebabCaseName)
-                            }
-                        };
-                        return { identifier, icon };
-                    })
-                )
+                    };
+                    return { identifier, icon };
+                })
             )
-        );
+        )
+    );
 
     // Nomalized build time icon meta data
     const BuildTimeIconMetaData$ = svgMetaDataWithTheme$.pipe(
