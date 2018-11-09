@@ -275,7 +275,7 @@ export async function build(env) {
             .pipe(
                 mergeMap(async ({ path: writeFilePath, content }) => {
                     await fs.writeFile(writeFilePath, content, 'utf8');
-                    log.info(`Generated ./${path.relative(env.base, writeFilePath)}.`);
+                    log.info(`Generated ./${path.relative(env.base, writeFilePath)}`);
                 })
             )
             .subscribe(undefined, reject, () => {
