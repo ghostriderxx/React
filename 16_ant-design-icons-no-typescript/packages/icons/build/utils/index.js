@@ -1,7 +1,7 @@
 import assert from 'assert';
 import chalk from 'chalk';
-import fs from 'fs-extra';
-import _ from 'lodash';
+// import fs from 'fs-extra';
+// import _ from 'lodash';
 import path from 'path';
 import rimraf from 'rimraf';
 //
