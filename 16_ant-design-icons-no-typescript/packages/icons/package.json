@@ -1,11 +1,20 @@
 {
     "name": "icons",
-    "version": "1.0.0",
-    "description": "",
+    "version": "1.1.15",
+    "description": "Ant Design Icons",
     "main": "index.js",
     "scripts": {
+        "build": "npm run build:lib && npm run build:index-es &&  npm run build:umd",
+        "build:lib": "cross-env NODE_ENV=production rimraf lib && tsc --project ./tsconfig.json --outDir lib",
+        "build:index-es": "cross-env NODE_ENV=production rimraf lib/index.es.js && babel --extensions '.ts' --presets @babel/preset-typescript src/index.ts --out-file lib/index.es.js",
+        "generate": "babel-node build/index.js",
         "clean:src": "babel-node build/scripts/clean.js",
-        "clean:build": "rimraf .cache es lib"
+        "test": "npm run test:unit",
+        "test:unit": "jest",
+        "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' 'site/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+        "clean:build": "rimraf .cache es lib",
+        "build:umd": "webpack --config umd.webpack.config.js -p",
+        "prepublish": "npm run lint && npm run test && npm run generate && npm run build"
     },
     "files": [
         "lib",
@@ -16,12 +25,14 @@
     "dependencies": {
         "chalk": "^2.4.1",
         "fs-extra": "^7.0.1",
+        "globby": "^8.0.1",
         "lodash": "^4.17.11",
         "parse5": "^5.1.0",
         "prettier": "1.15.1",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
         "rimraf": "^2.6.2",
+        "rxjs": "^6.3.3",
         "svgo": "^1.1.1"
     },
     "devDependencies": {
