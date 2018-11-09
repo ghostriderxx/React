@@ -139,7 +139,7 @@ export async function build(env) {
             };
         }),
         map(({ identifier, content, theme }) => ({
-            path: path.resolve(env.paths.ICON_OUTPUT_DIR, theme, `./${identifier}.ts`),
+            path: path.resolve(env.paths.ICON_OUTPUT_DIR, theme, `./${identifier}.js`),
             content
         }))
     );
@@ -266,7 +266,7 @@ export async function build(env) {
         concat(manifestFile$),
         concat(indexFile$),
         concat(dist$),
-        concat(types$),
+        // concat(types$),
         concat(helpers$)
     );
 

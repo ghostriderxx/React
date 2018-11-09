@@ -1,4 +1,4 @@
-export function renderIconDefinitionToSVGElement(icon, options) {
+export function renderIconDefinitionToSVGElement(icon, options = {}) {
     if (typeof icon.icon === 'function') {
         // two-tone
         const placeholders = options.placeholders || {};
