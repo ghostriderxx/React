@@ -3,9 +3,13 @@ import _ from "lodash"
 import parse5 from "parse5"
 import path from "path"
 import Prettier from "prettier"
+import SVGO = require('svgo');
+
+
 import { from, Observable, of, Subscription } from 'rxjs';
 import { concat, filter, map, mergeMap, reduce } from 'rxjs/operators';
-import SVGO = require('svgo');
+
+
 import {
   EXPORT_DEFAULT_COMPONENT_FROM_DIR,
   EXPORT_DEFAULT_MANIFEST,
