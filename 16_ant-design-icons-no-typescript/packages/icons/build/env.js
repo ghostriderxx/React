@@ -14,8 +14,6 @@ export const environment = {
         MANIFEST_OUTPUT: path.resolve(__dirname, '../src/manifest.js'),
         DIST_TEMPLATE: path.resolve(__dirname, './templates/dist.js.template'),
         DIST_OUTPUT: path.resolve(__dirname, '../src/dist.js'),
-        // TYPES_TEMPLATE: path.resolve(__dirname, './templates/types.js'),
-        // TYPES_OUTPUT: path.resolve(__dirname, '../src/types.js'),
         HELPERS_TEMPLATE: path.resolve(__dirname, './templates/helpers.js'),
         HELPERS_OUTPUT: path.resolve(__dirname, '../src/helpers.js'),
         INLINE_SVG_OUTPUT_DIR: path.resolve(__dirname, '../inline-svg/'),
