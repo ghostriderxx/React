@@ -128,7 +128,7 @@ export async function build(env) {
                                               ` }`
                                       )
                                   ),
-                              { ...env.options.prettier, parser: 'typescript' }
+                              { ...env.options.prettier, parser: 'babylon' }
                           )
                         : Prettier.format(
                               iconTsTemplate
@@ -203,12 +203,12 @@ export async function build(env) {
                         })
                         .join(',');
                     content = Prettier.format(
-                        `export const ${identifier}: IconDefinition = ` +
+                        `export const ${identifier} = ` +
                             `getIcon('${icon.name}', '${icon.theme}', ${replaceFillColor(
-                                `function (primaryColor: string, secondaryColor: string) {` +
+                                `function (primaryColor, secondaryColor) {` +
                                     ` return getNode('${icon.icon.attrs.viewBox}', ${paths}) }`
                             )})`,
-                        { ...env.options.prettier, parser: 'typescript' }
+                        { ...env.options.prettier, parser: 'babylon' }
                     );
                 }
             } else {
@@ -224,7 +224,7 @@ export async function build(env) {
                         })
                         .join(',');
                     content = Prettier.format(
-                        `export const ${identifier}: IconDefinition = ` +
+                        `export const ${identifier} = ` +
                             `getIcon('${icon.name}', '${icon.theme}', ` +
                             `getNode('${icon.icon.attrs.viewBox}', ${paths})` +
                             `);`,
