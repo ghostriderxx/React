@@ -4,10 +4,15 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "clean:src": "npx babel-node build/scripts/clean.js"
+        "clean:src": "babel-node build/scripts/clean.js",
+        "clean:build": "rimraf .cache es lib"
     },
-    "author": "",
-    "license": "ISC",
+    "files": [
+        "lib",
+        "svg",
+        "inline-svg"
+    ],
+    "license": "MIT",
     "dependencies": {
         "chalk": "^2.4.1",
         "fs-extra": "^7.0.1",
