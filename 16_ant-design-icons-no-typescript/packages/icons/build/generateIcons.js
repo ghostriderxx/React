@@ -247,12 +247,12 @@ export async function build(env) {
         }))
     );
 
-    // Types file content flow
-    const typesTsTemplate = await fs.readFile(env.paths.TYPES_TEMPLATE, 'utf8');
-    const types$ = of({
-        path: env.paths.TYPES_OUTPUT,
-        content: typesTsTemplate
-    });
+    // // Types file content flow
+    // const typesTsTemplate = await fs.readFile(env.paths.TYPES_TEMPLATE, 'utf8');
+    // const types$ = of({
+    //     path: env.paths.TYPES_OUTPUT,
+    //     content: typesTsTemplate
+    // });
 
     // Helpers file content flow
     const helpersTsTemplate = await fs.readFile(env.paths.HELPERS_TEMPLATE, 'utf8');
