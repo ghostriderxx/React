@@ -55,6 +55,10 @@ export async function build(env) {
      */
     await clear(env);
 
+    /**
+     * 获取 svg 目录中经修正后的所有 svg 文件的文件名
+     * （去重、去扩展名）
+     */
     const svgBasicNames = await normalize(env);
 
     // SVG Meta Data Flow
