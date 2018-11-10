@@ -38,6 +38,21 @@ export async function build(env) {
         ]
     });
 
+    /**
+     * 清理目录
+     * src/fill/*.js
+     * src/outline/*.js
+     * src/twotone/*.js
+     * 
+     * inline-svg/fill/*.js
+     * inline-svg/outline/*.js
+     * inline-svg/twotone/*.js
+     * 
+     * src/dist.js
+     * src/index.js
+     * src/helpers.js
+     * src/mainfest.js
+     */
     await clear(env);
 
     const svgBasicNames = await normalize(env);
