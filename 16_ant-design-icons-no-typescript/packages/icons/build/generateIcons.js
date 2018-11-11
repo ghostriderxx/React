@@ -260,9 +260,6 @@ export async function build(env) {
             env.options.prettier
         )
     };
-    console.log(manifestFile);
-    return;
-    
     
     /**
      * 生成 src/dist.js 的 WriteFileMetaData
@@ -338,7 +335,7 @@ export async function build(env) {
      * 批量写文件
      */
     return Promise.all(
-        [inlineSVGFiles, manifestFile, indexFile, dist, helpers].map(async ({path: writeFilePath, content}) => {
+        [/*inlineSVGFiles,*/ manifestFile/*, indexFile, dist, helpers*/].map(async ({path: writeFilePath, content}) => {
             await fs.writeFile(writeFilePath, content, 'utf8');
             log.info(`Generated ./${path.relative(env.base, writeFilePath)}`);
         })
