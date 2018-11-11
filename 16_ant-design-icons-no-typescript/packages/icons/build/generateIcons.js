@@ -200,7 +200,7 @@ export async function build(env) {
                             ICON_JSON,
                             JSON.stringify({...icon, icon: 'FUNCTION'}).replace(
                                 `"FUNCTION"`,
-                                `function (primaryColor: string, secondaryColor: string) {` +
+                                `function (primaryColor, secondaryColor) {` +
                                 ` return ${replaceFillColor(JSON.stringify(icon.icon))};` +
                                 ` }`
                             )
