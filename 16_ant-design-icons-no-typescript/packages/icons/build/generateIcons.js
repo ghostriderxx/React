@@ -242,8 +242,8 @@ export async function build(env) {
     /**
      * 生成 src/manifest.js 的 WriteFileMetaData
      */
-    const manifestTsTemplate = await fs.readFile(env.paths.MANIFEST_TEMPLATE, 'utf8');
-    const manifestFileContent = ['fill', 'outline', 'twotone'].map((theme) => ({
+    const manifestTemplate = await fs.readFile(env.paths.MANIFEST_TEMPLATE, 'utf8');
+    const manifestContent = ['fill', 'outline', 'twotone'].map((theme) => ({
         theme,
         names: svgBasicNames.filter((name) => isAccessable(path.resolve(env.paths.SVG_DIR, theme, `${name}.svg`)))
     })).reduce(
@@ -253,10 +253,10 @@ export async function build(env) {
         },
         {fill: [], outline: [], twotone: []}
     );
-    const manifestFile = {
+    const manifestWriteFileMetaData = {
         path: env.paths.MANIFEST_OUTPUT,
         content: Prettier.format(
-            manifestTsTemplate.replace(EXPORT_DEFAULT_MANIFEST, `export default ${JSON.stringify(manifestFileContent)};`),
+            manifestTemplate.replace(EXPORT_DEFAULT_MANIFEST, `export default ${JSON.stringify(manifestContent)};`),
             env.options.prettier
         )
     };
@@ -335,7 +335,7 @@ export async function build(env) {
      * 批量写文件
      */
     return Promise.all(
-        [/*inlineSVGFiles,*/ manifestFile/*, indexFile, dist, helpers*/].map(async ({path: writeFilePath, content}) => {
+        [/*inlineSVGFiles,*/ manifestWriteFileMetaData/*, indexFile, dist, helpers*/].map(async ({path: writeFilePath, content}) => {
             await fs.writeFile(writeFilePath, content, 'utf8');
             log.info(`Generated ./${path.relative(env.base, writeFilePath)}`);
         })
