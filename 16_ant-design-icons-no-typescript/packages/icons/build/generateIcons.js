@@ -169,14 +169,14 @@ export async function build(env) {
 
     
     /**
-     * 生成 inline-svg 的 WriteFileMetaData
+     * 生成 inline-svg 下文件的 WriteFileMetaData
      * 
      * export interface WriteFileMetaData {
      *      path: string;
      *      content: string;
      * }
      */
-    const inlineSVGFiles = buildTimeIconMetaData.map(({icon}) => {
+    const inlineSVGWriteFileMetaDatas = buildTimeIconMetaData.map(({icon}) => {
         return {
             path: path.resolve(env.paths.INLINE_SVG_OUTPUT_DIR, icon.theme, `./${icon.name}.svg`),
             content: renderIconDefinitionToSVGElement(icon)
@@ -184,17 +184,17 @@ export async function build(env) {
     });
 
     /**
-     * 生成 src/icon/[theme]/ 下文件的 WriteFileMetaData
+     * 生成 src/icon/[theme]/xx.js 下文件的 WriteFileMetaData
      */
-    const iconTsTemplate = await fs.readFile(env.paths.ICON_TEMPLATE, 'utf8');
-    const iconFiles$ = buildTimeIconMetaData.map(({identifier, icon}) => {
+    const iconTemplate = await fs.readFile(env.paths.ICON_TEMPLATE, 'utf8');
+    const iconFilesWriteFileMetaDatas = buildTimeIconMetaData.map(({identifier, icon}) => {
         return {
             identifier,
             theme: icon.theme,
             content:
                 icon.theme === 'twotone'
                     ? Prettier.format(
-                    iconTsTemplate
+                    iconTemplate
                         .replace(ICON_IDENTIFIER, identifier)
                         .replace(
                             ICON_JSON,
@@ -208,7 +208,7 @@ export async function build(env) {
                     {...env.options.prettier, parser: 'babylon'}
                     )
                     : Prettier.format(
-                    iconTsTemplate
+                    iconTemplate
                         .replace(ICON_IDENTIFIER, identifier)
                         .replace(ICON_JSON, JSON.stringify(icon)),
                     env.options.prettier
@@ -336,7 +336,7 @@ export async function build(env) {
      * 批量写文件
      */
     return Promise.all(
-        [/*inlineSVGFiles,*/ manifestWriteFileMetaData, indexWriteFileMetaData, distWriteFileMetaData, helpersWriteFileMetaData].map(async ({path: writeFilePath, content}) => {
+        [...inlineSVGWriteFileMetaDatas, ...iconFilesWriteFileMetaDatas, manifestWriteFileMetaData, indexWriteFileMetaData, distWriteFileMetaData, helpersWriteFileMetaData].map(async ({path: writeFilePath, content}) => {
             await fs.writeFile(writeFilePath, content, 'utf8');
             log.info(`Generated ./${path.relative(env.base, writeFilePath)}`);
         })
