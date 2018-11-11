@@ -5,9 +5,6 @@ import path from 'path';
 import Prettier from 'prettier';
 import SVGO from 'svgo';
 
-import {from, Observable, of, Subscription} from 'rxjs';
-import {concat, filter, map, mergeMap, reduce} from 'rxjs/operators';
-
 import {
     EXPORT_DEFAULT_COMPONENT_FROM_DIR,
     EXPORT_DEFAULT_MANIFEST,
@@ -225,22 +222,26 @@ export async function build(env) {
     /**
      * 生成 src/index.js 的 WriteFileMetaData
      */
-    const indexTsTemplate = await fs.readFile(env.paths.INDEX_TEMPLATE, 'utf8');
-    const indexFileContent = svgMetaDataWithTheme.reduce(
+    const indexTemplate = await fs.readFile(env.paths.INDEX_TEMPLATE, 'utf8');
+    const indexContent = svgMetaDataWithTheme.reduce(
         (acc, {identifier, icon}) =>
             acc + `export { default as ${identifier} } from './${icon.theme}/${identifier}';\n`,
         ''
     );
-    const indexFile = {
+    const indexWriteFileMetaData = {
         path: env.paths.INDEX_OUTPUT,
         content: Prettier.format(
-            indexTsTemplate.replace(EXPORT_DEFAULT_COMPONENT_FROM_DIR, indexFileContent),
+            indexTemplate.replace(EXPORT_DEFAULT_COMPONENT_FROM_DIR, indexContent),
             env.options.prettier
         )
     };
 
     /**
      * 生成 src/manifest.js 的 WriteFileMetaData
+     * 
+     * 1. 读取 build/templates/manifest.js.template 模板文件
+     * 2. 美化、填充模板
+     * 3. 构造 WriteFileMetaData
      */
     const manifestTemplate = await fs.readFile(env.paths.MANIFEST_TEMPLATE, 'utf8');
     const manifestContent = ['fill', 'outline', 'twotone'].map((theme) => ({
@@ -264,7 +265,7 @@ export async function build(env) {
     /**
      * 生成 src/dist.js 的 WriteFileMetaData
      */
-    const distTsTemplate = await fs.readFile(env.paths.DIST_TEMPLATE, 'utf8');
+    const distTemplate = await fs.readFile(env.paths.DIST_TEMPLATE, 'utf8');
     const distContent = buildTimeIconMetaData.map(({identifier, icon}) => {
         let content = '';
         if (icon.theme === 'twotone') {
@@ -317,25 +318,25 @@ export async function build(env) {
             .replace(THEME_TWOTONE, 'twotone');
         return content;
     }).reduce((acc, nextContent) => acc + nextContent, '');
-    const dist = {
+    const distWriteFileMetaData = {
         path: env.paths.DIST_OUTPUT,
-        content: distTsTemplate.replace(EXPORT_DIST, distContent)
+        content: distTemplate.replace(EXPORT_DIST, distContent)
     };
 
     /**
      * 生成 src/helpers.js 的 WriteFileMetaData
      */
-    const helpersTsTemplate = await fs.readFile(env.paths.HELPERS_TEMPLATE, 'utf8');
-    const helpers = {
+    const helpersTemplate = await fs.readFile(env.paths.HELPERS_TEMPLATE, 'utf8');
+    const helpersWriteFileMetaData = {
         path: env.paths.HELPERS_OUTPUT,
-        content: helpersTsTemplate
+        content: helpersTemplate
     };
 
     /**
      * 批量写文件
      */
     return Promise.all(
-        [/*inlineSVGFiles,*/ manifestWriteFileMetaData/*, indexFile, dist, helpers*/].map(async ({path: writeFilePath, content}) => {
+        [/*inlineSVGFiles,*/ manifestWriteFileMetaData, indexWriteFileMetaData, distWriteFileMetaData, helpersWriteFileMetaData].map(async ({path: writeFilePath, content}) => {
             await fs.writeFile(writeFilePath, content, 'utf8');
             log.info(`Generated ./${path.relative(env.base, writeFilePath)}`);
         })
