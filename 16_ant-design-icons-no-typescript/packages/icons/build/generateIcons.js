@@ -5,8 +5,8 @@ import path from 'path';
 import Prettier from 'prettier';
 import SVGO from 'svgo';
 
-import { from, Observable, of, Subscription } from 'rxjs';
-import { concat, filter, map, mergeMap, reduce } from 'rxjs/operators';
+import {from, Observable, of, Subscription} from 'rxjs';
+import {concat, filter, map, mergeMap, reduce} from 'rxjs/operators';
 
 import {
     EXPORT_DEFAULT_COMPONENT_FROM_DIR,
@@ -22,9 +22,9 @@ import {
     THEME_TWOTONE
 } from './constants';
 
-import { renderIconDefinitionToSVGElement } from './templates/helpers';
-import { clear, generateAbstractTree, getIdentifier, isAccessable, log, replaceFillColor } from './utils';
-import { normalize } from './utils/normalizeNames';
+import {renderIconDefinitionToSVGElement} from './templates/helpers';
+import {clear, generateAbstractTree, getIdentifier, isAccessable, log, replaceFillColor} from './utils';
+import {normalize} from './utils/normalizeNames';
 
 export async function build(env) {
     const svgo = new SVGO(env.options.svgo);
@@ -34,7 +34,7 @@ export async function build(env) {
         plugins: [
             ...env.options.svgo.plugins,
             // single color should remove the `fill` attribute.
-            { removeAttrs: { attrs: ['fill'] } }
+            {removeAttrs: {attrs: ['fill']}}
         ]
     });
 
@@ -43,11 +43,11 @@ export async function build(env) {
      * src/fill/*.js
      * src/outline/*.js
      * src/twotone/*.js
-     * 
+     *
      * inline-svg/fill/*.js
      * inline-svg/outline/*.js
      * inline-svg/twotone/*.js
-     * 
+     *
      * src/dist.js
      * src/index.js
      * src/helpers.js
@@ -61,24 +61,75 @@ export async function build(env) {
      */
     const svgBasicNames = await normalize(env);
 
-    // SVG Meta Data Flow
-    const svgMetaDataWithTheme$ = from(['fill', 'outline', 'twotone']).pipe(
-        map((theme) =>
-            from(svgBasicNames).pipe(
-                map((kebabCaseName) => {
+    /**
+     * 获取所有 svg 文件的 BuildTimeIconMetaData
+     * 
+     * export interface BuildTimeIconMetaData {
+     *      identifier: string;
+     *      icon: IconDefinition;
+     * }
+     * 
+     * export interface IconDefinition {
+     *      name: string; // kebab-case-style
+     *      theme: ThemeType;
+     *      icon:
+     *        | ((primaryColor, secondaryColor) => AbstractNode)
+     *        | AbstractNode;
+     * }
+     * 
+     * export interface AbstractNode {
+     *      tag: string;
+     *      attrs: {
+     *          [key: string]: string;
+     *      };
+     *      children?: AbstractNode[];
+     * }
+     */
+    const svgMetaDataWithTheme = await Promise.all(
+        _.flatten(
+            ['fill', 'outline', 'twotone'].map((theme) => {
+                return svgBasicNames.map((kebabCaseName) => {
+                    /**
+                     * 输入：
+                     *      kebabCaseName: account-book
+                     *      theme: fill | outline | twotone
+                     * 输出：
+                     *      {
+                     *          kebabCaseName: account-book,
+                     *          identifier: AccountBookFill | AccountBookOutline | AccountBookTwoTone
+                     *      }
+                     */
                     const identifier = getIdentifier(_.upperFirst(_.camelCase(kebabCaseName)), theme);
-                    return { kebabCaseName, identifier };
-                }),
-                filter(({ kebabCaseName }) =>
-                    isAccessable(path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`))
-                ),
-                mergeMap(async ({ kebabCaseName, identifier }) => {
+                    return {kebabCaseName, identifier};
+                }).filter(({kebabCaseName}) => {
+                    return isAccessable(path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`))
+                }).map(async ({kebabCaseName, identifier}) => {
+                    /**
+                     * 输入：
+                     *      {
+                     *          kebabCaseName: account-book,
+                     *          identifier: AccountBookFill,
+                     *      }
+                     * 输出：
+                     *      {
+                     *          identifier: AccountBookFill,
+                     *          icon: {
+                     *              name: account-book,
+                     *              theme: fill,
+                     *              icon: {
+                     *                  tag: "svg",
+                     *                  attrs: ...,
+                     *                  children: ...,
+                     *              }
+                     *          }
+                     *      }
+                     */
                     const tryUrl = path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`);
                     let optimizer = svgo;
                     if (singleType.includes(theme)) {
                         optimizer = svgoForSingleIcon;
                     }
-                    const { data } = await optimizer.optimize(await fs.readFile(tryUrl, 'utf8'));
+                    const {data} = await optimizer.optimize(await fs.readFile(tryUrl, 'utf8'));
                     const icon = {
                         name: kebabCaseName,
                         theme,
@@ -86,16 +137,51 @@ export async function build(env) {
                             ...generateAbstractTree(parse5.parseFragment(data).childNodes[0], kebabCaseName)
                         }
                     };
-                    return { identifier, icon };
+                    return {identifier, icon};
+                });
+            })
+        )
+    );
+    
+    // SVG Meta Data Flow
+    const svgMetaDataWithTheme$ = from(['fill', 'outline', 'twotone']).pipe(
+        map((theme) =>
+            from(svgBasicNames).pipe(
+                map((kebabCaseName) => {
+                    const identifier = getIdentifier(_.upperFirst(_.camelCase(kebabCaseName)), theme);
+                    return {kebabCaseName, identifier};
+                }),
+                filter(({kebabCaseName}) =>
+                    isAccessable(path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`))
+                ),
+                mergeMap(async ({kebabCaseName, identifier}) => {
+                    const tryUrl = path.resolve(env.paths.SVG_DIR, theme, `${kebabCaseName}.svg`);
+                    let optimizer = svgo;
+                    if (singleType.includes(theme)) {
+                        optimizer = svgoForSingleIcon;
+                    }
+                    const {data} = await optimizer.optimize(await fs.readFile(tryUrl, 'utf8'));
+                    const icon = {
+                        name: kebabCaseName,
+                        theme,
+                        icon: {
+                            ...generateAbstractTree(parse5.parseFragment(data).childNodes[0], kebabCaseName)
+                        }
+                    };
+                    return {identifier, icon};
                 })
             )
         )
     );
 
+    svgMetaDataWithTheme$.subscribe((metaData$) => (metaData$.subscribe((data) => console.log(data))))
+    return;
+
+
     // Nomalized build time icon meta data
     const BuildTimeIconMetaData$ = svgMetaDataWithTheme$.pipe(
         mergeMap((metaData$) => metaData$),
-        map(({ identifier, icon }) => {
+        map(({identifier, icon}) => {
             icon = _.cloneDeep(icon);
             if (typeof icon.icon !== 'function') {
                 if (!oldIcons.includes(icon.name)) {
@@ -112,13 +198,13 @@ export async function build(env) {
                     });
                 }
             }
-            return { identifier, icon };
+            return {identifier, icon};
         })
     );
 
     // Inline SVG files content flow.
     const inlineSVGFiles$ = BuildTimeIconMetaData$.pipe(
-        map(({ icon }) => {
+        map(({icon}) => {
             return {
                 path: path.resolve(env.paths.INLINE_SVG_OUTPUT_DIR, icon.theme, `./${icon.name}.svg`),
                 content: renderIconDefinitionToSVGElement(icon)
@@ -129,35 +215,35 @@ export async function build(env) {
     // Icon files content flow.
     const iconTsTemplate = await fs.readFile(env.paths.ICON_TEMPLATE, 'utf8');
     const iconFiles$ = BuildTimeIconMetaData$.pipe(
-        map(({ identifier, icon }) => {
+        map(({identifier, icon}) => {
             return {
                 identifier,
                 theme: icon.theme,
                 content:
                     icon.theme === 'twotone'
                         ? Prettier.format(
-                              iconTsTemplate
-                                  .replace(ICON_IDENTIFIER, identifier)
-                                  .replace(
-                                      ICON_JSON,
-                                      JSON.stringify({ ...icon, icon: 'FUNCTION' }).replace(
-                                          `"FUNCTION"`,
-                                          `function (primaryColor: string, secondaryColor: string) {` +
-                                              ` return ${replaceFillColor(JSON.stringify(icon.icon))};` +
-                                              ` }`
-                                      )
-                                  ),
-                              { ...env.options.prettier, parser: 'babylon' }
-                          )
+                        iconTsTemplate
+                            .replace(ICON_IDENTIFIER, identifier)
+                            .replace(
+                                ICON_JSON,
+                                JSON.stringify({...icon, icon: 'FUNCTION'}).replace(
+                                    `"FUNCTION"`,
+                                    `function (primaryColor: string, secondaryColor: string) {` +
+                                    ` return ${replaceFillColor(JSON.stringify(icon.icon))};` +
+                                    ` }`
+                                )
+                            ),
+                        {...env.options.prettier, parser: 'babylon'}
+                        )
                         : Prettier.format(
-                              iconTsTemplate
-                                  .replace(ICON_IDENTIFIER, identifier)
-                                  .replace(ICON_JSON, JSON.stringify(icon)),
-                              env.options.prettier
-                          )
+                        iconTsTemplate
+                            .replace(ICON_IDENTIFIER, identifier)
+                            .replace(ICON_JSON, JSON.stringify(icon)),
+                        env.options.prettier
+                        )
             };
         }),
-        map(({ identifier, content, theme }) => ({
+        map(({identifier, content, theme}) => ({
             path: path.resolve(env.paths.ICON_OUTPUT_DIR, theme, `./${identifier}.js`),
             content
         }))
@@ -168,7 +254,7 @@ export async function build(env) {
     const indexFile$ = svgMetaDataWithTheme$.pipe(
         mergeMap((metaData$) => metaData$),
         reduce(
-            (acc, { identifier, icon }) =>
+            (acc, {identifier, icon}) =>
                 acc + `export { default as ${identifier} } from './${icon.theme}/${identifier}';\n`,
             ''
         ),
@@ -189,11 +275,11 @@ export async function build(env) {
             names: svgBasicNames.filter((name) => isAccessable(path.resolve(env.paths.SVG_DIR, theme, `${name}.svg`)))
         })),
         reduce(
-            (acc, { theme, names }) => {
+            (acc, {theme, names}) => {
                 acc[theme] = names;
                 return acc;
             },
-            { fill: [], outline: [], twotone: [] }
+            {fill: [], outline: [], twotone: []}
         ),
         map((names) => ({
             path: env.paths.MANIFEST_OUTPUT,
@@ -207,14 +293,14 @@ export async function build(env) {
     // Dist File content flow
     const distTsTemplate = await fs.readFile(env.paths.DIST_TEMPLATE, 'utf8');
     const dist$ = BuildTimeIconMetaData$.pipe(
-        map(({ identifier, icon }) => {
+        map(({identifier, icon}) => {
             let content = '';
             if (icon.theme === 'twotone') {
                 if (typeof icon.icon !== 'function') {
                     const paths = (icon.icon.children || [])
-                        .filter(({ attrs }) => typeof attrs.d === 'string') // fix the <defs> element in the top level children
-                        .map(({ attrs }) => {
-                            const { fill, d } = attrs;
+                        .filter(({attrs}) => typeof attrs.d === 'string') // fix the <defs> element in the top level children
+                        .map(({attrs}) => {
+                            const {fill, d} = attrs;
                             if (fill && d) {
                                 return `['${fill}', '${d}']`;
                             }
@@ -223,19 +309,19 @@ export async function build(env) {
                         .join(',');
                     content = Prettier.format(
                         `export const ${identifier} = ` +
-                            `getIcon('${icon.name}', '${icon.theme}', ${replaceFillColor(
-                                `function (primaryColor, secondaryColor) {` +
-                                    ` return getNode('${icon.icon.attrs.viewBox}', ${paths}) }`
-                            )})`,
-                        { ...env.options.prettier, parser: 'babylon' }
+                        `getIcon('${icon.name}', '${icon.theme}', ${replaceFillColor(
+                            `function (primaryColor, secondaryColor) {` +
+                            ` return getNode('${icon.icon.attrs.viewBox}', ${paths}) }`
+                        )})`,
+                        {...env.options.prettier, parser: 'babylon'}
                     );
                 }
             } else {
                 if (typeof icon.icon !== 'function') {
                     const paths = (icon.icon.children || [])
-                        .filter(({ attrs }) => typeof attrs.d === 'string')
-                        .map(({ attrs }) => {
-                            const { fill, d } = attrs;
+                        .filter(({attrs}) => typeof attrs.d === 'string')
+                        .map(({attrs}) => {
+                            const {fill, d} = attrs;
                             if (fill && d) {
                                 return `['${fill}', '${d}']`;
                             }
@@ -244,9 +330,9 @@ export async function build(env) {
                         .join(',');
                     content = Prettier.format(
                         `export const ${identifier} = ` +
-                            `getIcon('${icon.name}', '${icon.theme}', ` +
-                            `getNode('${icon.icon.attrs.viewBox}', ${paths})` +
-                            `);`,
+                        `getIcon('${icon.name}', '${icon.theme}', ` +
+                        `getNode('${icon.icon.attrs.viewBox}', ${paths})` +
+                        `);`,
                         env.options.prettier
                     );
                 }
@@ -292,7 +378,7 @@ export async function build(env) {
     return new Promise((resolve, reject) => {
         const subscription = files$
             .pipe(
-                mergeMap(async ({ path: writeFilePath, content }) => {
+                mergeMap(async ({path: writeFilePath, content}) => {
                     await fs.writeFile(writeFilePath, content, 'utf8');
                     log.info(`Generated ./${path.relative(env.base, writeFilePath)}`);
                 })
