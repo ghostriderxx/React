@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import * as allIcons from '@ant-design/icons/lib/dist';
-import ReactIcon from '@ant-design/icons-react';
+import * as allIcons from '@rui/icons/lib/dist';
+import ReactIcon from '@rui/icons-react';
 import createFromIconfontCN from './IconFont';
 import {
   svgBaseProps, withThemeSuffix,
@@ -122,24 +122,6 @@ const Icon = (props) => {
     </i>
   );
 };
-
-function unstable_ChangeThemeOfIconsDangerously(theme) {
-  warning(
-    false,
-    `You are using the unstable method 'Icon.unstable_ChangeThemeOfAllIconsDangerously', ` +
-    `make sure that all the icons with theme '${theme}' display correctly.`,
-  );
-  dangerousTheme = theme;
-}
-
-function unstable_ChangeDefaultThemeOfIcons(theme) {
-  warning(
-    false,
-    `You are using the unstable method 'Icon.unstable_ChangeDefaultThemeOfIcons', ` +
-    `make sure that all the icons with theme '${theme}' display correctly.`,
-  );
-  defaultTheme = theme;
-}
 
 Icon.createFromIconfontCN = createFromIconfontCN;
 Icon.getTwoToneColor = getTwoToneColor;

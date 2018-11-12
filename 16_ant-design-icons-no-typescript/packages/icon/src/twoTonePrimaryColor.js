@@ -1,4 +1,4 @@
-import ReactIcon from "@ant-design/icons-react";
+import ReactIcon from "@rui/icons-react";
 
 export function setTwoToneColor(primaryColor) {
   return ReactIcon.setTwoToneColors({
