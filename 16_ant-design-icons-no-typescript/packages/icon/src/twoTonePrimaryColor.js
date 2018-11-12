@@ -1,4 +1,4 @@
-import ReactIcon from "@rui/icons-react";
+import ReactIcon from "webj2ee-icons-react";
 
 export function setTwoToneColor(primaryColor) {
   return ReactIcon.setTwoToneColors({

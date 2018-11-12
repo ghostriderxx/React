@@ -1,5 +1,5 @@
 
-# @webj2ee/icons
+# webj2ee-icons
 
 ~~~
 本项目的目的是学习、研究 ant-design 的 Icon 管理策略； 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import * as allIcons from '@rui/icons/lib/dist';
-import ReactIcon from '@rui/icons-react';
+import * as allIcons from 'webj2ee-icons/lib/dist';
+import ReactIcon from 'webj2ee-icons-react';
 import createFromIconfontCN from './IconFont';
 import {
   svgBaseProps, withThemeSuffix,

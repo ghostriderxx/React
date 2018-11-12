@@ -1,7 +1,8 @@
 {
-  "name": "@rui/icons-react",
+  "name": "webj2ee-icons-react",
   "version": "1.1.3",
   "main": "./lib/index.js",
+  "repository": "https://github.com/ghostriderxx/React/tree/master/16_ant-design-icons-no-typescript/packages/icons-react",
   "license": "MIT",
   "scripts": {
     "compile": "webpack",

@@ -1,20 +1,22 @@
 {
-    "name": "@rui/icon",
+    "name": "webj2ee-icon",
     "version": "3.10.7",
-    "description": "Ant Design Icon",
+    "description": "based on ant-design's Icon",
     "main": "lib/index.js",
+    "repository": "https://github.com/ghostriderxx/React/tree/master/16_ant-design-icons-no-typescript/packages/icon",
     "license": "MIT",
     "scripts": {
         "compile": "webpack",
         "prepublish": "npm run compile"
     },
     "dependencies": {
-        "@rui/icons": "^1.1.15",
-        "@rui/icons-react": "^1.1.3",
+        "classnames": "^2.2.6",
         "prettier": "1.15.1",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
-        "warning": "^4.0.2"
+        "warning": "^4.0.2",
+        "webj2ee-icons": "^1.1.15",
+        "webj2ee-icons-react": "^1.1.3"
     },
     "devDependencies": {
         "@babel/cli": "^7.1.2",

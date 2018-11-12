@@ -1,7 +1,7 @@
 {
-    "name": "@webj2ee/icons",
+    "name": "webj2ee-icons",
     "version": "1.1.15",
-    "description": "based on ant-design-icons's icons",
+    "description": "based on ant-design-icons",
     "main": "lib/index.js",
     "repository": "https://github.com/ghostriderxx/React/tree/master/16_ant-design-icons-no-typescript/packages/icons",
     "files": [
