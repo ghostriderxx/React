@@ -9,7 +9,5 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {},
-  "dependencies": {
-    "classnames": "^2.2.6"
-  }
+  "dependencies": {}
 }
