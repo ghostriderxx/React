@@ -5,7 +5,10 @@
 
 目的：学习、研究 Ant Design 的 Icon 管理机制
 
-参考：ant-design-icons 1.1.15
+参考：
+
+* ant-design-icons 1.1.15
+* ant-design
 
 主要修改：
 
