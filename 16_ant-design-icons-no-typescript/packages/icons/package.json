@@ -1,8 +1,9 @@
 {
     "name": "@webj2ee/icons",
     "version": "1.1.15",
-    "description": "Ant Design Icons Without TypeScript",
+    "description": "based on ant-design-icons's icons",
     "main": "lib/index.js",
+    "repository": "https://github.com/ghostriderxx/React/tree/master/16_ant-design-icons-no-typescript/packages/icons",
     "files": [
         "lib",
         "svg",
@@ -10,9 +11,7 @@
     ],
     "license": "MIT",
     "scripts": {
-        "build": "npm run build:lib && npm run build:umd",
-        "build:lib": "cross-env NODE_ENV=production rimraf lib && babel src --out-dir lib",
-        "build:umd": "webpack --config umd.webpack.config.js -p",
+        "build": "cross-env NODE_ENV=production rimraf lib && babel src --out-dir lib",
         "generate": "babel-node build/index.js",
         "clean": "npm run clean:src && npm run clean:build",
         "clean:src": "babel-node build/scripts/clean.js",
