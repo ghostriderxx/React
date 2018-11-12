@@ -1,4 +1,3 @@
-import { ThemeType } from "./index";
 import warning from "../_util/warning";
 
 // These props make sure that the SVG behaviours like general text.
@@ -15,8 +14,8 @@ const fillTester = /-fill$/;
 const outlineTester = /-o$/;
 const twoToneTester = /-twotone$/;
 
-export function getThemeFromTypeName(type: string): ThemeType | null {
-  let result: ThemeType | null = null;
+export function getThemeFromTypeName(type){
+  let result = null;
   if (fillTester.test(type)) {
     result = "filled";
   } else if (outlineTester.test(type)) {
@@ -27,14 +26,14 @@ export function getThemeFromTypeName(type: string): ThemeType | null {
   return result;
 }
 
-export function removeTypeTheme(type: string) {
+export function removeTypeTheme(type) {
   return type
     .replace(fillTester, "")
     .replace(outlineTester, "")
     .replace(twoToneTester, "");
 }
 
-export function withThemeSuffix(type: string, theme: ThemeType) {
+export function withThemeSuffix(type, theme) {
   let result = type;
   if (theme === "filled") {
     result += "-fill";
@@ -49,7 +48,7 @@ export function withThemeSuffix(type: string, theme: ThemeType) {
 }
 
 // For alias or compatibility
-export function alias(type: string) {
+export function alias(type) {
   switch (type) {
     case "cross":
       return "close";

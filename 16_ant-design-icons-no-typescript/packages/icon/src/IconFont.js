@@ -1,14 +1,9 @@
-import Icon, { IconProps } from './index';
+import Icon from './index';
 import * as React from 'react';
 
-const customCache = new Set<string>();
+const customCache = new Set();
 
-export interface CustomIconOptions {
-  scriptUrl?: string;
-  extraCommonProps?: { [key: string]: any };
-}
-
-export default function create(options: CustomIconOptions = {}): React.SFC<IconProps> {
+export default function create(options= {}) {
   const { scriptUrl, extraCommonProps = {} } = options;
 
   /**
@@ -29,7 +24,7 @@ export default function create(options: CustomIconOptions = {}): React.SFC<IconP
     document.body.appendChild(script);
   }
 
-  const Iconfont: React.SFC<IconProps> = (props) => {
+  const Iconfont = (props) => {
     const { type, children, ...restProps } = props;
 
     // component > children > type

@@ -12,46 +12,14 @@ import warning from '../_util/warning';
 import { getTwoToneColor, setTwoToneColor } from './twoTonePrimaryColor';
 
 // Initial setting
-ReactIcon.add(...Object.keys(allIcons).map((key) => (allIcons as any)[key]));
+ReactIcon.add(
+    ...Object.keys(allIcons).map((key) => allIcons[key])
+);
 setTwoToneColor('#1890ff');
-let defaultTheme: ThemeType = 'outlined';
-let dangerousTheme: ThemeType | undefined = undefined;
+let defaultTheme = 'outlined';
+let dangerousTheme = undefined;
 
-export interface CustomIconComponentProps {
-  width: string | number;
-  height: string | number;
-  fill: string;
-  viewBox?: string;
-  className?: string;
-  style?: React.CSSProperties;
-  ['aria-hidden']?: string;
-}
-
-export type ThemeType = 'filled' | 'outlined' | 'twoTone';
-
-export interface IconProps {
-  type?: string;
-  className?: string;
-  theme?: ThemeType;
-  title?: string;
-  onClick?: React.MouseEventHandler<HTMLElement>;
-  component?: React.ComponentType<CustomIconComponentProps>;
-  twoToneColor?: string;
-  viewBox?: string;
-  spin?: boolean;
-  style?: React.CSSProperties;
-  prefixCls?: string;
-}
-
-export interface IconComponent<P> extends React.SFC<P> {
-  createFromIconfontCN: typeof createFromIconfontCN;
-  getTwoToneColor: typeof getTwoToneColor;
-  setTwoToneColor: typeof setTwoToneColor;
-  unstable_ChangeThemeOfIconsDangerously?: typeof unstable_ChangeThemeOfIconsDangerously;
-  unstable_ChangeDefaultThemeOfIcons?: typeof unstable_ChangeDefaultThemeOfIcons;
-}
-
-const Icon: IconComponent<IconProps> = (props) => {
+const Icon = (props) => {
   const {
     // affect outter <i>...</i>
     className,
@@ -90,7 +58,7 @@ const Icon: IconComponent<IconProps> = (props) => {
 
   // component > children > type
   if (Component) {
-    const innerSvgProps: CustomIconComponentProps = {
+    const innerSvgProps = {
       ...svgBaseProps,
       className: svgClassString,
       viewBox,
@@ -116,7 +84,7 @@ const Icon: IconComponent<IconProps> = (props) => {
       'Make sure that you provide correct `viewBox`' +
       ' prop (default `0 0 1024 1024`) to the icon.',
     );
-    const innerSvgProps: CustomIconComponentProps = {
+    const innerSvgProps = {
       ...svgBaseProps,
       className: svgClassString,
     };
@@ -155,7 +123,7 @@ const Icon: IconComponent<IconProps> = (props) => {
   );
 };
 
-function unstable_ChangeThemeOfIconsDangerously(theme?: ThemeType) {
+function unstable_ChangeThemeOfIconsDangerously(theme) {
   warning(
     false,
     `You are using the unstable method 'Icon.unstable_ChangeThemeOfAllIconsDangerously', ` +
@@ -164,7 +132,7 @@ function unstable_ChangeThemeOfIconsDangerously(theme?: ThemeType) {
   dangerousTheme = theme;
 }
 
-function unstable_ChangeDefaultThemeOfIcons(theme: ThemeType) {
+function unstable_ChangeDefaultThemeOfIcons(theme) {
   warning(
     false,
     `You are using the unstable method 'Icon.unstable_ChangeDefaultThemeOfIcons', ` +
