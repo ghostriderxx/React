@@ -1,18 +1,20 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
-var _Icon = require('./components/Icon');
+var _Icon = require("./components/Icon");
 
-Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function get() {
-        return _interopRequireDefault(_Icon)['default'];
-    }
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Icon)["default"];
+  }
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-module.exports = exports['default'];
+module.exports = exports["default"];
