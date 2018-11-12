@@ -1,5 +1,5 @@
 {
-    "name": "antd",
+    "name": "@rui/icon",
     "version": "3.10.7",
     "description": "Ant Design Icon",
     "main": "lib/index.js",
