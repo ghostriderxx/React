@@ -57,10 +57,7 @@ export default class TodoApp extends React.Component {
     render() {
         const { visibilityFilter } = this.props.todoapp;
 
-        const t = Date.now();
         const visibleTodos = getVisibilityTodos(this.props.todoapp);
-        const t1 = Date.now();
-        console.log(t1 - t);
 
         return (
             <div className={'todoapp'}>
