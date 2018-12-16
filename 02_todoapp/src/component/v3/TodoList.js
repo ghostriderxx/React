@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // antd
 import { List } from 'antd';
 
-export default class TodoList extends React.Component {
+export default class TodoList extends React.PureComponent {
     constructor(props) {
         super(props);
     }
@@ -14,10 +14,10 @@ export default class TodoList extends React.Component {
         onClick: PropTypes.func
     };
 
-    handleClick(id) {
+    handleClick = (id) => {
         const { onClick } = this.props;
         onClick(id);
-    }
+    };
 
     render() {
         const { todos } = this.props;

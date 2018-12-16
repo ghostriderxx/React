@@ -7,7 +7,7 @@ import { VISIBILITY_FILETER_TYPES } from '../util';
 import { Radio } from 'antd';
 const RadioGroup = Radio.Group;
 
-export default class TodoFilter extends React.Component {
+export default class TodoFilter extends React.PureComponent {
     constructor(props) {
         super(props);
     }
@@ -17,22 +17,19 @@ export default class TodoFilter extends React.Component {
         onChange: PropTypes.func
     };
 
-    handleChange(e) {
+    handleChange = (e) => {
         const value = e.target.value;
 
         const { onChange } = this.props;
         onChange(value);
-    }
+    };
 
     render() {
         const { value } = this.props;
 
         return (
             <div className={'todoapp-todofilter'}>
-                <RadioGroup
-                    onChange={(e) => this.handleChange(e)}
-                    value={value}
-                >
+                <RadioGroup onChange={this.handleChange} value={value}>
                     {VISIBILITY_FILETER_TYPES.map((filterType) => (
                         <Radio value={filterType}>{filterType}</Radio>
                     ))}
