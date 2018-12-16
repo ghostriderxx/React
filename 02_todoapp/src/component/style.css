@@ -1,5 +1,5 @@
 .todoapp {
-    width: 300px;
+    width: 500px;
 }
 
 /**
@@ -21,6 +21,10 @@
 /**
  * VisibleTodos
  */
+.todoapp-visibletodos{
+    height: 200px;
+    overflow: auto;
+}
 .todoapp-visibletodos-todo {
     display: inline-flex;
     flexDirection: row;
@@ -35,16 +39,14 @@
  * TodoFilter
  */
 .todoapp-todofilter {
-    display: flex;
-    flexDirection: row;
-    justify-content: space-between;
-    align-items: center;
+    margin: 20px 0;
 }
 
 .todoapp-todofilter-label,
 .todoapp-todofilter-btn{
     min-width: 40px;
     font: normal 14px/1 "微软雅黑";
+    margin-right: 20px;
 }
 .todoapp-todofilter-btn.active{
     color: red;

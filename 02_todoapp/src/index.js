@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import rootReducer from './reducer/index';
 
 // Component
-import TodoApp from './component/TodoApp';
+import TodoApp from './component/v1/TodoApp';
 
 // Store
 let store = createStore(rootReducer);

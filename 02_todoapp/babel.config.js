@@ -1,7 +1,12 @@
 module.exports = {
-    presets: ['@babel/env', '@babel/react'],
+    presets: [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ],
     plugins: [
         ['@babel/plugin-proposal-decorators', { legacy: true }],
-        '@babel/plugin-syntax-object-rest-spread',
-    ]
-};
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-proposal-object-rest-spread"
+    ],
+}
