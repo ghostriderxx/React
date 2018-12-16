@@ -9,7 +9,8 @@ import rootReducer from './reducer/index';
 
 // Component
 // import TodoApp from './component/v1/TodoApp';
-import TodoApp from './component/v2/TodoApp';
+// import TodoApp from './component/v2/TodoApp';
+import TodoApp from './component/v3/TodoApp';
 
 // antd css
 import 'antd/dist/antd.css';
