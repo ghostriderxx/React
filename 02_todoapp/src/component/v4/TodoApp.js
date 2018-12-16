@@ -1,11 +1,29 @@
 // React、Redux
 import React from 'react';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 // components
 import AddTodo from './AddTodo';
 import TodoFilter from './TodoFilter';
 import TodoList from './TodoList';
+
+// selector
+const getTodos = (todoapp) => todoapp.todos;
+const getVisibilityFilter = (todoapp) => todoapp.visibilityFilter;
+const getVisibilityTodos = createSelector(
+    [getTodos, getVisibilityFilter],
+    (todos, visibilityFilter) => {
+        switch (visibilityFilter) {
+            case 'SHOW_ALL':
+                return todos;
+            case 'SHOW_ACTIVE':
+                return todos.filter((todo) => !todo.complete);
+            case 'SHOW_COMPLETED':
+                return todos.filter((todo) => todo.complete);
+        }
+    }
+);
 
 import '../style.css';
 
@@ -36,21 +54,13 @@ export default class TodoApp extends React.Component {
         });
     };
 
-    filterTodos = (todos, visibilityFilter) => {
-        switch (visibilityFilter) {
-            case 'SHOW_ALL':
-                return todos;
-            case 'SHOW_ACTIVE':
-                return todos.filter((todo) => !todo.complete);
-            case 'SHOW_COMPLETED':
-                return todos.filter((todo) => todo.complete);
-        }
-    };
-
     render() {
-        const { todos, visibilityFilter } = this.props.todoapp;
+        const { visibilityFilter } = this.props.todoapp;
 
-        const visibleTodos = this.filterTodos(todos, visibilityFilter);
+        const t = Date.now();
+        const visibleTodos = getVisibilityTodos(this.props.todoapp);
+        const t1 = Date.now();
+        console.log(t1 - t);
 
         return (
             <div className={'todoapp'}>
