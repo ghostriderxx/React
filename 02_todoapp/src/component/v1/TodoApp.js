@@ -5,6 +5,11 @@ import classnames from 'classnames';
 
 import { genTodoId, VISIBILITY_FILETER_TYPES } from '../util';
 
+// antd
+import 'antd/dist/antd.css';
+import { Button, Input, Row, Col, Radio } from 'antd';
+const RadioGroup = Radio.Group;
+
 import '../style.css';
 
 function filterTodos(todos, visibilityFilter) {
@@ -48,17 +53,18 @@ export default class TodoApp extends React.Component {
         });
     }
 
+    onVisibilityFilterChange(e) {
+        const filter = e.target.value;
+        this.props.dispatch({
+            type: 'SET_VISIBILITY_FILTER',
+            payload: filter
+        });
+    }
+
     toggleTodo(id) {
         this.props.dispatch({
             type: 'TOGGLE_TODO_COMPLETE_STATE',
             payload: id
-        });
-    }
-
-    setVisibilityFilter(filter) {
-        this.props.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            payload: filter
         });
     }
 
@@ -75,34 +81,34 @@ export default class TodoApp extends React.Component {
 
         return (
             <div className={'todoapp'}>
+                {/* addTodo */}
                 <div className={'todoapp-addtodo'}>
-                    <input
-                        className={'todoapp-addtodo-text'}
-                        value={this.state.text}
-                        onChange={(e) => this.textOnChange(e)}
-                    />
-                    <button
-                        className={'todoapp-addtodo-btnadd'}
-                        onClick={() => this.addTodo()}
-                    >
-                        AddTodo
-                    </button>
+                    <div className={'todoapp-addtodo-btnWrapper'}>
+                        <Button block={true} onClick={() => this.addTodo()}>
+                            AddTodo
+                        </Button>
+                    </div>
+                    <div className={'todoapp-addtodo-inputWrapper'}>
+                        <Input
+                            value={this.state.text}
+                            onChange={(e) => this.textOnChange(e)}
+                        />
+                    </div>
                 </div>
-                {/* TodoFilter */}
-                <div className={'todoapp-todofilter'}>
-                    <span className={'todoapp-todofilter-label'}>Filter:</span>
 
-                    {VISIBILITY_FILETER_TYPES.map((filterType) => (
-                        <button
-                            className={classnames('todoapp-todofilter-btn', {
-                                active: visibilityFilter === filterType
-                            })}
-                            onClick={() => this.setVisibilityFilter(filterType)}
-                        >
-                            {filterType}
-                        </button>
-                    ))}
+                {/* todoFilter */}
+                <div className={'todoapp-todofilter'}>
+                    <RadioGroup
+                        onChange={this.onVisibilityFilterChange}
+                        value={this.state.value}
+                    >
+                        {VISIBILITY_FILETER_TYPES.map((filterType) => (
+                            <Radio value={filterType}>{filterType}</Radio>
+                        ))}
+                    </RadioGroup>
                 </div>
+
+                {/* visibleTodos */}
                 <div className={'todoapp-visibletodos'}>
                     <ul>
                         {visibleTodos.map(({ id, text, complete, date }) => {
@@ -114,15 +120,14 @@ export default class TodoApp extends React.Component {
                             );
 
                             return (
-                                <li key={id}>
-                                    <span
-                                        className={todoCls}
-                                        onClick={() => this.toggleTodo(id)}
-                                    >
-                                        {text}
-                                        >>>>
-                                        {date.toLocaleTimeString()}
-                                    </span>
+                                <li
+                                    key={id}
+                                    className={todoCls}
+                                    onClick={() => this.toggleTodo(id)}
+                                >
+                                    {text}
+                                    >>>>
+                                    {date.toLocaleTimeString()}
                                 </li>
                             );
                         })}
