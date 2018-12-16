@@ -7,21 +7,10 @@ import { genTodoId, VISIBILITY_FILETER_TYPES } from '../util';
 
 // antd
 import 'antd/dist/antd.css';
-import { Button, Input, Row, Col, Radio } from 'antd';
+import { Button, Input, Radio, List } from 'antd';
 const RadioGroup = Radio.Group;
 
 import '../style.css';
-
-function filterTodos(todos, visibilityFilter) {
-    switch (visibilityFilter) {
-        case 'SHOW_ALL':
-            return todos;
-        case 'SHOW_ACTIVE':
-            return todos.filter((todo) => !todo.complete);
-        case 'SHOW_COMPLETED':
-            return todos.filter((todo) => todo.complete);
-    }
-}
 
 @connect(({ todoapp }) => ({ todoapp }))
 export default class TodoApp extends React.Component {
@@ -61,23 +50,28 @@ export default class TodoApp extends React.Component {
         });
     }
 
-    toggleTodo(id) {
+    toggleTodoCompleteState(id) {
         this.props.dispatch({
             type: 'TOGGLE_TODO_COMPLETE_STATE',
             payload: id
         });
     }
 
-    getBtnClassName(p) {
-        const visibilityFilter = this.props.visibilityFilter;
-        const activeClassName = p == visibilityFilter ? 'active' : '';
-        return `todoapp-todofilter-btn ${activeClassName}`;
+    filterTodos(todos, visibilityFilter) {
+        switch (visibilityFilter) {
+            case 'SHOW_ALL':
+                return todos;
+            case 'SHOW_ACTIVE':
+                return todos.filter((todo) => !todo.complete);
+            case 'SHOW_COMPLETED':
+                return todos.filter((todo) => todo.complete);
+        }
     }
 
     render() {
         const { todos, visibilityFilter } = this.props.todoapp;
 
-        const visibleTodos = filterTodos(todos, visibilityFilter);
+        const visibleTodos = this.filterTodos(todos, visibilityFilter);
 
         return (
             <div className={'todoapp'}>
@@ -110,28 +104,25 @@ export default class TodoApp extends React.Component {
 
                 {/* visibleTodos */}
                 <div className={'todoapp-visibletodos'}>
-                    <ul>
-                        {visibleTodos.map(({ id, text, complete, date }) => {
-                            const todoCls = classnames(
-                                'todoapp-visibletodos-todo',
-                                {
-                                    complete: complete
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={visibleTodos}
+                        renderItem={({ id, text, complete, date }) => (
+                            <List.Item
+                                onClick={() => this.toggleTodoCompleteState(id)}
+                                key={id}
+                                style={
+                                    complete
+                                        ? { textDecoration: 'line-through' }
+                                        : null
                                 }
-                            );
-
-                            return (
-                                <li
-                                    key={id}
-                                    className={todoCls}
-                                    onClick={() => this.toggleTodo(id)}
-                                >
-                                    {text}
-                                    >>>>
-                                    {date.toLocaleTimeString()}
-                                </li>
-                            );
-                        })}
-                    </ul>
+                            >
+                                {text}
+                                >>>>
+                                {date.toLocaleTimeString()}
+                            </List.Item>
+                        )}
+                    />
                 </div>
             </div>
         );

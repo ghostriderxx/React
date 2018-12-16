@@ -5,7 +5,7 @@ import { genTodoId } from '../component/util';
  * 生成初始化 state
  */
 const initialTodos = [];
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 2000; i++) {
     initialTodos.push({
         text: `测试${_.padStart(i, 3, '0')}`,
         complete: false,

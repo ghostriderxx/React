@@ -34,10 +34,5 @@
 .todoapp-visibletodos{
     height: 200px;
     overflow: auto;
-}
-.todoapp-visibletodos-todo {
     line-height: 1.5;
-}
-.todoapp-visibletodos-todo.complete{
-    text-decoration: line-through;
 }
