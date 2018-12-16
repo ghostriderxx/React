@@ -13,7 +13,7 @@ export default class TodoFilter extends React.PureComponent {
     }
 
     static propTypes = {
-        value: PropTypes.string,
+        value: PropTypes.array,
         onChange: PropTypes.func
     };
 

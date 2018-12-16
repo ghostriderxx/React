@@ -10,7 +10,7 @@ export default class TodoList extends React.PureComponent {
     }
 
     static propTypes = {
-        todos: PropTypes.array,
+        todos: PropTypes.string,
         onClick: PropTypes.func
     };
 
