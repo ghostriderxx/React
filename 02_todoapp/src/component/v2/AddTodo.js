@@ -25,7 +25,6 @@ export default class AddTodo extends React.Component {
 
     handleAddTodo() {
         const { addTodo } = this.props;
-
         addTodo({
             text: this.state.text,
             complete: false,
